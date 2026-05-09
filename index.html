@@ -1,11 +1,388 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+    <title>Selera</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
     
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@1,700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .font-serif-italic {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+        }
+        
+        /* Custom Scrollbar for Dashboard Grid */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #fbcfe8;
+            border-radius: 20px;
+        }
+    </style>
+</head>
+<body class="bg-[#dff0f6] text-gray-800 min-h-screen p-4 flex">
+
+    <!-- Sidebar (Pastel Green/Yellow) -->
+    <aside class="w-[280px] bg-[#edfce3] rounded-[2rem] flex flex-col justify-between p-6 shadow-md z-10 relative flex-shrink-0">
+        <div>
+            <!-- Logo Area -->
+            <div class="text-center mb-8 flex flex-col items-center">
+                <img 
+                    src="assets/Selera.png" 
+                    alt="Tulisan Selera" 
+                    class="w-full max-w-[200px] h-auto object-contain mb-2 drop-shadow-sm"
+                />
+                <div class="h-1 w-full bg-gradient-to-r from-transparent via-yellow-600 to-transparent mb-2 rounded-full opacity-50"></div>
+                <p class="text-xs text-gray-600 px-4">Tempat Terbaik untuk menjadi dirimu sendiri</p>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="space-y-2">
+                <a href="#" class="w-full flex items-center px-4 py-3 rounded-2xl transition-colors bg-[#dff0f6] text-black font-semibold shadow-sm">
+                    <i data-lucide="home" class="w-6 h-6 mr-4"></i>
+                    <span class="text-sm">Home</span>
+                </a>
+                <a href="#" class="w-full flex items-center px-4 py-3 rounded-2xl transition-colors text-gray-600 hover:bg-[#dff0f6] hover:text-black hover:shadow-sm">
+                    <i data-lucide="book" class="w-6 h-6 mr-4"></i>
+                    <span class="text-sm">Diary</span>
+                </a>
+                <a href="#" class="w-full flex items-center px-4 py-3 rounded-2xl transition-colors text-gray-600 hover:bg-[#dff0f6] hover:text-black hover:shadow-sm">
+                    <i data-lucide="check-square" class="w-6 h-6 mr-4"></i>
+                    <span class="text-sm">To Do List</span>
+                </a>
+                <a href="#" class="w-full flex items-center px-4 py-3 rounded-2xl transition-colors text-gray-600 hover:bg-[#dff0f6] hover:text-black hover:shadow-sm">
+                    <i data-lucide="message-circle" class="w-6 h-6 mr-4"></i>
+                    <span class="text-sm">Chat Kira</span>
+                </a>
+                <a href="#" class="w-full flex items-center px-4 py-3 rounded-2xl transition-colors text-gray-600 hover:bg-[#dff0f6] hover:text-black hover:shadow-sm">
+                    <i data-lucide="settings" class="w-6 h-6 mr-4"></i>
+                    <span class="text-sm">Pengaturan</span>
+                </a>
+            </nav>
+        </div>
+
+        <!-- Bottom Sidebar Widget -->
+        <div class="flex flex-col items-center mt-10 relative group">
+            <!-- Gambar Maskot Sidebar (Diperbesar & Tanpa Background Kotak) -->
+            <div class="absolute -top-16 left-2 z-20 transition-transform duration-300 group-hover:-translate-y-2 group-hover:scale-110">
+                <img 
+                    src="assets/bahagia (1).png" 
+                    alt="Kira Mascot" 
+                    class="w-24 h-24 object-contain drop-shadow-md"
+                />
+            </div>
+            
+            <div class="bg-[#feffb5] w-full p-4 pt-8 rounded-xl shadow-md text-center text-sm font-medium relative z-10 border border-yellow-200 transition-all duration-300 hover:shadow-lg hover:scale-[1.02]">
+                Kira akan selalu ada di sisimu :)
+            </div>
+
+            <button class="mt-8 bg-[#fcdcdc] hover:bg-[#f5c6c6] hover:scale-105 transition-all duration-300 py-2 px-8 rounded-xl font-medium shadow-md">
+                By Lucinee
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content Area (Pastel Pink) -->
+    <main class="flex-1 bg-[#fae8e8] rounded-[2rem] ml-4 overflow-hidden flex flex-col shadow-md relative">
+        
+        <!-- Header Section -->
+        <header class="flex justify-between items-start p-8 pb-4 relative flex-shrink-0">
+            <div class="max-w-md z-10">
+                <h2 class="text-3xl font-bold text-gray-800 mb-2">Hai Lucinee..</h2>
+                <p class="text-gray-600 text-sm leading-relaxed">
+                    bagaimana perasaanmu hari ini ? jika ada apa apa ceritakan pada Kira saja
+                </p>
+            </div>
+
+            <!-- Gambar Maskot Utama (Kira Besar - Diperbesar & Tanpa Background) -->
+            <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 z-0 hover:scale-105 transition-transform duration-500">
+                <img 
+                    src="assets/Desain tanpa judul (8).png" 
+                    alt="Kira Big Mascot" 
+                    class="w-60 h-60 object-contain drop-shadow-xl" 
+                />
+            </div>
+
+            <!-- Top Right Profile & Notification -->
+            <div class="flex items-center space-x-4 z-10">
+                <button class="p-2 bg-white/50 rounded-full hover:bg-white/80 hover:scale-110 shadow-sm hover:shadow-md transition-all duration-300">
+                    <i data-lucide="bell" class="w-6 h-6"></i>
+                </button>
+                <div class="flex items-center bg-[#fcdcdc] py-2 px-4 rounded-full shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer hover:scale-105">
+                    <img 
+                        src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=64&h=64" 
+                        alt="Profile" 
+                        class="w-8 h-8 rounded-full object-cover mr-3"
+                    />
+                    <span class="font-medium text-sm">Hai Lucinee</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dashboard Grid -->
+        <div class="flex-1 p-8 pt-2 overflow-y-auto custom-scrollbar flex gap-6 z-10">
+            
+            <!-- Left Column (Motivation, Mood, Tasks) -->
+            <div class="flex-1 flex flex-col gap-6">
+                
+                <!-- Top Row: Motivation & Mood -->
+                <div class="flex gap-6">
+                    <!-- Motivation Card -->
+                    <div class="bg-[#fadcdc] p-6 rounded-[1.5rem] flex-1 flex items-center justify-center shadow-md hover:shadow-xl hover:scale-[1.02] transition-all duration-300 min-h-[160px]">
+                        <p class="text-gray-700 font-medium">Kata kata motivasi dll</p>
+                    </div>
+
+                    <!-- Mood Card -->
+                    <div class="bg-[#fadcdc] p-6 rounded-[1.5rem] flex-[1.5] flex flex-col justify-between shadow-md hover:shadow-xl hover:scale-[1.02] transition-all duration-300 min-h-[160px]">
+                        <div>
+                            <h3 class="font-semibold text-lg mb-1">Gimana Perasaanmu hari ini ?</h3>
+                            <p class="text-xs text-gray-600">Yuk Pilih Mood Mu sekarang agar kira tahu harus berbuat apa :)</p>
+                        </div>
+                        
+                        <!-- Mood Icons (Tanpa background & diperbesar) -->
+                        <div class="flex justify-between mt-4 px-2">
+                            <!-- Mood: Terkejut -->
+                            <button class="flex flex-col items-center gap-2 group">
+                                <img src="assets/kaget.png" alt="Mood Terkejut" class="w-16 h-16 object-contain drop-shadow-md group-hover:scale-125 group-hover:-translate-y-2 transition-all duration-300" />
+                                <span class="text-xs font-medium text-gray-600 group-hover:text-gray-900 group-hover:font-bold transition-all">Terkejut</span>
+                            </button>
+                            <!-- Mood: Marah -->
+                            <button class="flex flex-col items-center gap-2 group">
+                                <img src="assets/marah.png" alt="Mood Marah" class="w-16 h-16 object-contain drop-shadow-md group-hover:scale-125 group-hover:-translate-y-2 transition-all duration-300" />
+                                <span class="text-xs font-medium text-gray-600 group-hover:text-gray-900 group-hover:font-bold transition-all">Marah</span>
+                            </button>
+                            <!-- Mood: Sedih -->
+                            <button class="flex flex-col items-center gap-2 group">
+                                <img src="assets/sedih.png" alt="Mood Sedih" class="w-16 h-16 object-contain drop-shadow-md group-hover:scale-125 group-hover:-translate-y-2 transition-all duration-300" />
+                                <span class="text-xs font-medium text-gray-600 group-hover:text-gray-900 group-hover:font-bold transition-all">Sedih</span>
+                            </button>
+                            <!-- Mood: Senang -->
+                            <button class="flex flex-col items-center gap-2 group">
+                                <img src="assets/bahagia (1).png" alt="Mood Senang" class="w-16 h-16 object-contain drop-shadow-md group-hover:scale-125 group-hover:-translate-y-2 transition-all duration-300" />
+                                <span class="text-xs font-medium text-gray-600 group-hover:text-gray-900 group-hover:font-bold transition-all">Senang</span>
+                            </button>
+                            <!-- Mood: Takut -->
+                            <button class="flex flex-col items-center gap-2 group">
+                                <img src="assets/takut.png" alt="Mood Takut" class="w-16 h-16 object-contain drop-shadow-md group-hover:scale-125 group-hover:-translate-y-2 transition-all duration-300" />
+                                <span class="text-xs font-medium text-gray-600 group-hover:text-gray-900 group-hover:font-bold transition-all">Takut</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tasks Card (Tugas Mendatang) -->
+                <div class="bg-[#fadcdc] p-6 rounded-[1.5rem] flex-1 flex flex-col shadow-md hover:shadow-xl hover:scale-[1.02] transition-all duration-300">
+                    <div class="flex justify-between items-center mb-6">
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="check-square" class="w-5 h-5 text-gray-700"></i>
+                            <h3 class="font-semibold text-lg">Tugas Mendatang</h3>
+                        </div>
+                        <button class="text-xs text-gray-500 hover:text-gray-800 flex items-center hover:translate-x-1 transition-transform">
+                            Lihat semua <i data-lucide="chevron-right" class="w-3.5 h-3.5 ml-1"></i>
+                        </button>
+                    </div>
+
+                    <div class="flex flex-col gap-4">
+                        <!-- Task 1 -->
+                        <div class="flex items-center justify-between group cursor-pointer hover:bg-white/30 p-2 -mx-2 rounded-xl transition-colors">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-xl flex items-center justify-center bg-yellow-100 shadow-sm group-hover:scale-110 transition-transform duration-300">
+                                    <i data-lucide="atom" class="w-5 h-5"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-sm text-gray-800 group-hover:text-black">Belajar Fisika</h4>
+                                    <p class="text-[11px] text-gray-500">Jangan lupa belajar yaa</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-6">
+                                <div class="text-right">
+                                    <p class="text-[10px] font-medium text-gray-600">20 April 2026</p>
+                                    <p class="text-[10px] text-gray-500">00:00</p>
+                                </div>
+                                <button class="bg-gray-100/80 hover:bg-gray-200 px-3 py-1.5 rounded-lg flex items-center text-xs font-medium text-gray-700 hover:scale-105 shadow-sm transition-all">
+                                    <i data-lucide="bell-ring" class="w-3.5 h-3.5 mr-1.5"></i> Ingatkan
+                                </button>
+                            </div>
+                        </div>
+                        <div class="border-b border-pink-200/50"></div>
+                        
+                        <!-- Task 2 -->
+                        <div class="flex items-center justify-between group cursor-pointer hover:bg-white/30 p-2 -mx-2 rounded-xl transition-colors">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-xl flex items-center justify-center bg-indigo-200 shadow-sm group-hover:scale-110 transition-transform duration-300">
+                                    <i data-lucide="book-open" class="w-5 h-5"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-sm text-gray-800 group-hover:text-black">Belajar Fisika</h4>
+                                    <p class="text-[11px] text-gray-500">Jangan lupa belajar yaa</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-6">
+                                <div class="text-right">
+                                    <p class="text-[10px] font-medium text-gray-600">20 April 2026</p>
+                                    <p class="text-[10px] text-gray-500">00:00</p>
+                                </div>
+                                <button class="bg-gray-100/80 hover:bg-gray-200 px-3 py-1.5 rounded-lg flex items-center text-xs font-medium text-gray-700 hover:scale-105 shadow-sm transition-all">
+                                    <i data-lucide="bell-ring" class="w-3.5 h-3.5 mr-1.5"></i> Ingatkan
+                                </button>
+                            </div>
+                        </div>
+                        <div class="border-b border-pink-200/50"></div>
+
+                        <!-- Task 3 -->
+                        <div class="flex items-center justify-between group cursor-pointer hover:bg-white/30 p-2 -mx-2 rounded-xl transition-colors">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-xl flex items-center justify-center bg-green-200 shadow-sm group-hover:scale-110 transition-transform duration-300">
+                                    <i data-lucide="layout-grid" class="w-5 h-5"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-sm text-gray-800 group-hover:text-black">Belajar Fisika</h4>
+                                    <p class="text-[11px] text-gray-500">Jangan lupa belajar yaa</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-6">
+                                <div class="text-right">
+                                    <p class="text-[10px] font-medium text-gray-600">20 April 2026</p>
+                                    <p class="text-[10px] text-gray-500">00:00</p>
+                                </div>
+                                <button class="bg-gray-100/80 hover:bg-gray-200 px-3 py-1.5 rounded-lg flex items-center text-xs font-medium text-gray-700 hover:scale-105 shadow-sm transition-all">
+                                    <i data-lucide="bell-ring" class="w-3.5 h-3.5 mr-1.5"></i> Ingatkan
+                                </button>
+                            </div>
+                        </div>
+                        <div class="border-b border-pink-200/50"></div>
+
+                        <!-- Task 4 -->
+                        <div class="flex items-center justify-between group cursor-pointer hover:bg-white/30 p-2 -mx-2 rounded-xl transition-colors">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-xl flex items-center justify-center bg-pink-200 shadow-sm group-hover:scale-110 transition-transform duration-300">
+                                    <i data-lucide="dumbbell" class="w-5 h-5"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-sm text-gray-800 group-hover:text-black">Belajar Fisika</h4>
+                                    <p class="text-[11px] text-gray-500">Jangan lupa belajar yaa</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-6">
+                                <div class="text-right">
+                                    <p class="text-[10px] font-medium text-gray-600">20 April 2026</p>
+                                    <p class="text-[10px] text-gray-500">00:00</p>
+                                </div>
+                                <button class="bg-gray-100/80 hover:bg-gray-200 px-3 py-1.5 rounded-lg flex items-center text-xs font-medium text-gray-700 hover:scale-105 shadow-sm transition-all">
+                                    <i data-lucide="bell-ring" class="w-3.5 h-3.5 mr-1.5"></i> Ingatkan
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Right Column (Plans, Usage, Streak) -->
+            <div class="w-[320px] flex flex-col gap-6 relative flex-shrink-0">
+                
+                <!-- Hiasan Bunga Kecil di Kanan Atas Plan Card -->
+                <div class="absolute -top-3 right-4 z-20 transition-transform hover:rotate-12 duration-300">
+                    <img src="/path/ke/gambar/hiasan-bunga.png" alt="Flower" class="w-8 h-8 drop-shadow-sm" />
+                </div>
+
+                <!-- Plans Card (Rencana Hari Ini) -->
+                <div class="bg-[#fadcdc] p-6 rounded-[1.5rem] flex flex-col flex-1 relative z-10 shadow-md hover:shadow-xl hover:scale-[1.02] transition-all duration-300">
+                    <div class="flex justify-between items-center mb-4">
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="check-square" class="w-4 h-4 text-gray-700"></i>
+                            <h3 class="font-semibold text-[15px]">Rencana Hari Ini :</h3>
+                        </div>
+                        <button class="bg-[#6b9080] text-white text-[10px] px-2 py-1 rounded-full flex items-center shadow-sm hover:bg-[#5a7a6c] hover:scale-105 transition-all">
+                            <i data-lucide="plus" class="w-2.5 h-2.5 mr-1"></i> Tambah
+                        </button>
+                    </div>
+
+                    <div class="flex flex-col gap-3 mt-2 flex-1">
+                        <!-- Plan Items -->
+                        <div class="flex items-center border-b border-dashed border-pink-300 pb-2 hover:translate-x-1 transition-transform cursor-pointer">
+                            <div class="w-3 h-3 rounded-full bg-[#6b9080] mr-3 shrink-0 shadow-sm"></div>
+                            <p class="text-[11px] text-gray-600 truncate">aku harus bernafas</p>
+                        </div>
+                        <div class="flex items-center border-b border-dashed border-pink-300 pb-2 hover:translate-x-1 transition-transform cursor-pointer">
+                            <div class="w-3 h-3 rounded-full bg-[#6b9080] mr-3 shrink-0 shadow-sm"></div>
+                            <p class="text-[11px] text-gray-600 truncate">aku harus bernafas</p>
+                        </div>
+                        <div class="flex items-center border-b border-dashed border-pink-300 pb-2 hover:translate-x-1 transition-transform cursor-pointer">
+                            <div class="w-3 h-3 rounded-full bg-[#6b9080] mr-3 shrink-0 shadow-sm"></div>
+                            <p class="text-[11px] text-gray-600 truncate">aku harus bernafas</p>
+                        </div>
+                        <div class="flex items-center border-b border-dashed border-pink-300 pb-2 hover:translate-x-1 transition-transform cursor-pointer">
+                            <div class="w-3 h-3 rounded-full bg-[#6b9080] mr-3 shrink-0 shadow-sm"></div>
+                            <p class="text-[11px] text-gray-600 truncate">aku harus bernafas</p>
+                        </div>
+                        <div class="flex items-center border-b border-dashed border-pink-300 pb-2 hover:translate-x-1 transition-transform cursor-pointer">
+                            <div class="w-3 h-3 rounded-full bg-[#6b9080] mr-3 shrink-0 shadow-sm"></div>
+                            <p class="text-[11px] text-gray-600 truncate">aku harus bernafas</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 text-right">
+                        <button class="text-[11px] text-gray-500 hover:text-gray-800 flex items-center justify-end w-full hover:translate-x-1 transition-transform">
+                            Lihat semua <i data-lucide="chevron-right" class="w-3 h-3 ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Usage Time Card -->
+                <div class="bg-[#fadcdc] p-6 rounded-[1.5rem] text-center shadow-md hover:shadow-xl hover:scale-[1.02] transition-all duration-300">
+                    <p class="text-sm font-medium text-gray-700 mb-2">Waktu Pemakaian SELERA</p>
+                    <h2 class="text-4xl font-bold drop-shadow-sm">1j, 50mnt</h2>
+                </div>
+
+                <!-- Streak Card -->
+                <div class="bg-[#fadcdc] p-6 rounded-[1.5rem] text-center relative shadow-md hover:shadow-xl hover:scale-[1.02] transition-all duration-300 group">
+                    <h3 class="text-lg font-semibold mb-2">Runtunan</h3>
+                    <div class="flex items-center justify-center gap-2 mb-4 group-hover:scale-105 transition-transform duration-300">
+                        <i data-lucide="flame" class="text-orange-500 fill-orange-500 w-10 h-10 drop-shadow-md"></i>
+                        <span class="text-5xl font-bold drop-shadow-sm">130</span>
+                    </div>
+                    <div class="flex justify-center gap-2">
+                        <div class="w-4 h-4 bg-[#6b9080] rounded-full opacity-80 shadow-inner"></div>
+                        <div class="w-4 h-4 bg-[#6b9080] rounded-full opacity-80 shadow-inner"></div>
+                        <div class="w-4 h-4 bg-[#6b9080] rounded-full opacity-80 shadow-inner"></div>
+                        <div class="w-4 h-4 bg-[#6b9080] rounded-full opacity-80 shadow-inner"></div>
+                        <div class="w-4 h-4 bg-[#6b9080] rounded-full opacity-80 shadow-inner"></div>
+                        <div class="w-4 h-4 bg-[#6b9080] rounded-full opacity-80 shadow-inner"></div>
+                        <div class="w-4 h-4 bg-[#6b9080] rounded-full opacity-80 shadow-inner"></div>
+                    </div>
+
+                    <!-- Maskot Kecil di Kanan Bawah Streak (Tanpa background) -->
+                    <div class="absolute -bottom-6 -right-6 transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6">
+                        <img 
+                            src="/path/ke/gambar/maskot-kecil-streak.png" 
+                            alt="Kira Small" 
+                            class="w-20 h-20 object-contain drop-shadow-md" 
+                        />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Inisialisasi Lucide Icons -->
+    <script>
+        lucide.createIcons();
+    </script>
 </body>
 </html>
