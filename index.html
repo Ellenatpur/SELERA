@@ -384,5 +384,51 @@
     <script>
         lucide.createIcons();
     </script>
+=======
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diaryku</title>
+
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="container" id="container">
+
+    <div class="header">
+        <span id="date"></span>
+        <span id="time"></span>
+    </div>
+
+    <h1>DIARYKU</h1>
+
+    <div class="diary-box">
+        <textarea id="diaryInput" placeholder="Tuliskan sesuatu..." disabled></textarea>
+    </div>
+
+    <!-- CHAT -->
+    <div id="chatBox" class="chat-box"></div>
+
+    <button class="btn" onclick="startChat()">Mulai</button>
+
+    <div id="toast" class="toast"></div>
+
+    <!-- ASSETS -->
+    <img src="assets/mc.png" class="character">
+    <img src="assets/book.png" class="books">
+    <img src="assets/kupu.png" class="butterfly">
+
+    <!-- MENU -->
+    <div class="dots" onclick="toggleMenu()">⋮</div>
+    <div id="menu" class="menu hidden">
+        <button onclick="editDiary()">✏️ Edit</button>
+        <button onclick="saveDiary()">💾 Simpan</button>
+        <button onclick="deleteDiary()">🗑️ Hapus</button>
+    </div>
+
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>

@@ -1,50 +1,718 @@
 <!DOCTYPE html>
+
 <html lang="id">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Diaryku</title>
 
-<link rel="stylesheet" href="style.css">
-<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Selera - Diaryku</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Sacramento&family=Patrick+Hand&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+
+        :root {
+
+            --bg-green: #e2efd9;
+
+            --sidebar-green: #f2ffe9;
+
+            --card-pink: #f4efef;
+
+            --accent-pink: #f9e2e2;
+
+        }
+
+
+
+        body {
+
+            font-family: 'Inter', sans-serif;
+
+            background-color: var(--bg-green);
+
+            overflow: hidden;
+
+        }
+
+
+
+        .font-logo { font-family: 'Sacramento', cursive; }
+
+        .font-diary { font-family: 'Patrick Hand', cursive; }
+
+
+
+        .sidebar-transition {
+
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+
+        }
+
+
+
+        .diary-paper {
+
+            background: #fff9e6;
+
+            background-image: linear-gradient(#e1d9c1 1px, transparent 1px);
+
+            background-size: 100% 2.5rem;
+
+            line-height: 2.5rem;
+
+            padding: 0 1rem;
+
+            border-radius: 15px;
+
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+
+        }
+
+
+
+        .speech-bubble {
+
+            position: relative;
+
+            background: #ffffff;
+
+            border: 2px solid #ff85a1;
+
+            border-radius: 2rem;
+
+            padding: 1.5rem;
+
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+
+        }
+
+
+
+        .speech-bubble::after {
+
+            content: '';
+
+            position: absolute;
+
+            left: -20px;
+
+            top: 50%;
+
+            border-width: 10px 20px 10px 0;
+
+            border-style: solid;
+
+            border-color: transparent #ff85a1 transparent transparent;
+
+        }
+
+
+
+        .hover-scale {
+
+            transition: transform 0.2s;
+
+        }
+
+        .hover-scale:hover {
+
+            transform: scale(1.05);
+
+        }
+
+
+
+        /* Animation for Kira mascot */
+
+        @keyframes float {
+
+            0% { transform: translateY(0px); }
+
+            50% { transform: translateY(-10px); }
+
+            100% { transform: translateY(0px); }
+
+        }
+
+        .animate-float { animation: float 3s ease-in-out infinite; }
+
+    </style>
+
 </head>
-<body>
 
-<div class="container" id="container">
+<body class="h-screen flex overflow-hidden">
 
-    <div class="header">
-        <span id="date"></span>
-        <span id="time"></span>
-    </div>
 
-    <h1>DIARYKU</h1>
 
-    <div class="diary-box">
-        <textarea id="diaryInput" placeholder="Tuliskan sesuatu..." disabled></textarea>
-    </div>
+    <aside id="sidebar" class="sidebar-transition w-72 h-full bg-[#f2ffe9] border-r border-green-100 flex flex-col p-6 z-50">
 
-    <!-- CHAT -->
-    <div id="chatBox" class="chat-box"></div>
+        <div class="flex flex-col items-center mb-10">
 
-    <button class="btn" onclick="startChat()">Mulai</button>
+            <div class="relative">
 
-    <div id="toast" class="toast"></div>
+                <span class="text-6xl font-logo text-black">Selera</span>
 
-    <!-- ASSETS -->
-    <img src="assets/mc.png" class="character">
-    <img src="assets/book.png" class="books">
-    <img src="assets/kupu.png" class="butterfly">
+                <i class="fas fa-sparkles absolute -top-2 -right-4 text-yellow-400 text-xs"></i>
 
-    <!-- MENU -->
-    <div class="dots" onclick="toggleMenu()">⋮</div>
-    <div id="menu" class="menu hidden">
-        <button onclick="editDiary()">✏️ Edit</button>
-        <button onclick="saveDiary()">💾 Simpan</button>
-        <button onclick="deleteDiary()">🗑️ Hapus</button>
-    </div>
+            </div>
 
-</div>
+            <div class="mt-4 relative">
 
-<script src="script.js"></script>
+                <img src="https://placehold.co/150x100/ffffff/000000?text=Buku+Selera" alt="Logo Book" class="w-32">
+
+                <p class="text-[10px] text-green-700 text-center mt-2 font-medium leading-tight">
+
+                    Tempat Terbaik untuk menjadi<br>dirimu sendiri
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <nav class="space-y-4 flex-1">
+
+            <a href="#" onclick="showSection('home')" class="flex items-center space-x-4 p-3 rounded-xl hover:bg-green-100 text-gray-700">
+
+                <i class="fas fa-home text-2xl"></i>
+
+                <span class="font-semibold">Home</span>
+
+            </a>
+
+            <a href="#" onclick="goToDiary()" class="flex items-center space-x-4 p-3 rounded-xl bg-green-100 text-black shadow-sm">
+
+                <i class="fas fa-book text-2xl"></i>
+
+                <span class="font-semibold">Diary</span>
+
+            </a>
+
+            <a href="#" class="flex items-center space-x-4 p-3 rounded-xl hover:bg-green-100 text-gray-700 opacity-60">
+
+                <i class="fas fa-clipboard-check text-2xl"></i>
+
+                <span class="font-semibold">To Do List</span>
+
+            </a>
+
+            <a href="#" class="flex items-center space-x-4 p-3 rounded-xl hover:bg-green-100 text-gray-700 opacity-60">
+
+                <i class="fas fa-comments text-2xl"></i>
+
+                <span class="font-semibold">Chat Kira</span>
+
+            </a>
+
+            <a href="#" class="flex items-center space-x-4 p-3 rounded-xl hover:bg-green-100 text-gray-700 opacity-60">
+
+                <i class="fas fa-cog text-2xl"></i>
+
+                <span class="font-semibold">Pengaturan</span>
+
+            </a>
+
+        </nav>
+
+
+
+        <div class="mt-auto">
+
+            <div class="bg-yellow-100 p-4 rounded-2xl relative mb-4 shadow-sm border border-yellow-200">
+
+                <div class="flex items-center gap-2 mb-1">
+
+                    <!-- 🔧 assets/mscot.png: w-8 h-8 → w-11 h-11 agar avatar Kira lebih jelas terbaca -->
+                    <img src="assets/mscot.png" class="w-11 h-11 rounded-full border border-blue-200 object-cover" alt="Kira">
+
+                    <span class="text-[10px] font-bold">Kira</span>
+
+                </div>
+
+                <p class="text-xs text-gray-600">Kira akan selalu ada di sisimu :)</p>
+
+            </div>
+
+            <div class="bg-pink-50 p-3 rounded-xl text-center shadow-md border border-pink-100">
+
+                <span class="font-semibold text-gray-800">By Lucinee</span>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- Sidebar Toggle (Hidden by default) -->
+
+    <button id="sidebarToggle" onclick="toggleSidebar()" class="fixed top-4 left-4 z-50 bg-white p-2 rounded-full shadow-lg hidden">
+
+        <i class="fas fa-bars"></i>
+
+    </button>
+
+
+
+    <main class="flex-1 relative overflow-auto p-8 flex items-start justify-center">
+
+       
+
+        <!-- Decoration: Butterfly & Flowers -->
+
+        <div class="absolute top-10 right-10 z-10 animate-float">
+
+            <!-- 🔧 assets/kp.png: w-20 → w-28 agar hiasan pojok kanan atas tidak terlalu kecil -->
+            <img src="assets/kp.png" alt="Butterfly" class="w-28 opacity-80">
+
+        </div>
+
+        <div class="absolute bottom-4 left-4 z-10">
+
+            <!-- 🔧 assets/book.png: w-40 → w-36 sedikit lebih kecil agar tidak mengganggu konten utama -->
+            <img src="assets/book.png" alt="Books and Flowers" class="w-36">
+
+        </div>
+
+
+
+        <div id="section-step-1" class="w-full max-w-5xl bg-[#f8f4f4] rounded-[3rem] p-12 shadow-2xl relative min-h-[600px] flex flex-col hidden">
+
+            <!-- Header Info -->
+
+            <div class="flex justify-between items-center mb-8">
+
+                <div class="flex items-center gap-2 text-sm text-gray-600">
+
+                    <i class="far fa-calendar-alt"></i>
+
+                    <span id="currentDate">Kamis, 30 April 2026</span>
+
+                </div>
+
+                <div class="text-xl font-bold font-diary tracking-widest text-center flex-1">
+
+                    DIARYKU.
+
+                </div>
+
+                <div class="flex items-center gap-2 text-sm text-gray-600">
+
+                    <span id="currentTime">10:11</span>
+
+                    <i class="far fa-bell"></i>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="flex flex-1 items-center gap-12">
+
+                <!-- Mascot Kira -->
+
+                <div class="w-1/3 animate-float flex flex-col items-center">
+
+                    <img src="assets/mscot.png" alt="Kira Mascot" class="w-60 h-60 object-contain drop-shadow-lg">
+
+                </div>
+
+
+
+                <!-- Interaction Area -->
+
+                <div class="w-2/3 flex flex-col">
+
+                    <div class="speech-bubble mb-12 ml-4">
+
+                        <p class="text-gray-800 text-lg leading-relaxed">
+
+                            Hai,<br>
+
+                            Bagaimana perasaan mu hari ini?<br>
+
+                            Aku siap mendengarkan cerita kamu hari ini.
+
+                        </p>
+
+                    </div>
+
+
+
+                    <!-- Emotion Container -->
+
+                    <div class="bg-gray-200/50 rounded-3xl p-6 flex justify-between items-center gap-4 shadow-inner">
+
+                        <button onclick="selectEmotion('Terkejut')" class="flex flex-col items-center bg-white p-4 rounded-2xl shadow-sm hover-scale group">
+
+                            <div class="w-24 h-24 overflow-hidden rounded-xl mb-2">
+                                <img src="assets/mc/gugup.png" style="width:300%; max-width:none; transform:translate(-33%, -30%); mix-blend-mode:multiply;">
+                            </div>
+
+                            <span class="text-xs text-gray-500 font-bold group-hover:text-blue-500 transition-colors">Terkejut</span>
+
+                        </button>
+
+                        <button onclick="selectEmotion('Marah')" class="flex flex-col items-center bg-white p-4 rounded-2xl shadow-sm hover-scale group">
+
+                            <div class="w-24 h-24 overflow-hidden rounded-xl mb-2">
+                                <img src="assets/mc/marah.png" style="width:300%; max-width:none; transform:translate(-33%, -30%); mix-blend-mode:multiply;">
+                            </div>
+
+                            <span class="text-xs text-gray-500 font-bold group-hover:text-red-500 transition-colors">Marah</span>
+
+                        </button>
+
+                        <button onclick="selectEmotion('Sedih')" class="flex flex-col items-center bg-white p-4 rounded-2xl shadow-sm hover-scale group">
+
+                            <div class="w-24 h-24 overflow-hidden rounded-xl mb-2">
+                                <img src="assets/sedih.png" style="width:300%; max-width:none; transform:translate(-33%, -36%); mix-blend-mode:multiply;">
+                            </div>
+
+                            <span class="text-xs text-gray-500 font-bold group-hover:text-blue-700 transition-colors">Sedih</span>
+
+                        </button>
+
+                        <button onclick="selectEmotion('Senang')" class="flex flex-col items-center bg-white p-4 rounded-2xl shadow-sm hover-scale group">
+
+                            <div class="w-24 h-24 overflow-hidden rounded-xl mb-2">
+                                <img src="assets/mc/senang.png" style="width:300%; max-width:none; transform:translate(-33%, -30%); mix-blend-mode:multiply;">
+                            </div>
+
+                            <span class="text-xs text-gray-500 font-bold group-hover:text-green-500 transition-colors">Senang</span>
+
+                        </button>
+
+                        <button onclick="selectEmotion('Gugup')" class="flex flex-col items-center bg-white p-4 rounded-2xl shadow-sm hover-scale group">
+
+                            <div class="w-24 h-24 overflow-hidden rounded-xl mb-2">
+                                <img src="assets/gugup.png" style="width:300%; max-width:none; transform:translate(-36%, -30%); mix-blend-mode:multiply;">
+                            </div>
+
+                            <span class="text-xs text-gray-500 font-bold group-hover:text-orange-500 transition-colors">Gugup</span>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <div id="section-step-2" class="w-full max-w-5xl bg-[#f8f4f4] rounded-[3rem] p-8 shadow-2xl relative flex flex-col hidden">
+
+            <!-- Header -->
+
+            <div class="flex justify-between items-center mb-4">
+
+                <div class="text-sm text-gray-600">Kamis, 30 April 2026</div>
+
+                <div class="text-xl font-bold font-diary tracking-widest">DIARYKU.</div>
+
+                <div class="text-sm text-gray-600">10:11 <i class="far fa-bell ml-1"></i></div>
+
+            </div>
+
+
+
+            <div class="px-6">
+
+                <p id="greeting-response" class="text-lg text-gray-800 mb-4">
+
+                    Bagus! Terimakasih sudah berbagi perasaanmu.<br>
+
+                    Sekarang, mau cerita apa untuk hari ini?
+
+                </p>
+
+
+
+                <!-- Paper writing area -->
+
+                <div class="relative mb-4">
+
+                    <textarea
+
+                        class="w-full diary-paper min-h-[240px] border-none focus:ring-0 text-gray-700 text-lg leading-[2.5rem] resize-none"
+
+                        placeholder="Tuliskan ceritamu di sini..."
+
+                    ></textarea>
+
+                </div>
+
+
+
+                <div class="flex justify-between items-end">
+
+                    <!-- Mini Mascot on right -->
+
+                    <div class="flex-1"></div>
+
+                   
+
+                    <button onclick="saveDiary()" class="bg-[#8fa492] hover:bg-green-700 text-white px-10 py-3 rounded-full flex items-center gap-2 shadow-lg transition-transform hover:scale-105 active:scale-95">
+
+                        <i class="fas fa-save"></i>
+
+                        <span class="font-bold tracking-widest">SIMPAN</span>
+
+                    </button>
+
+
+
+                    <div class="flex-1 flex justify-end">
+
+                        <!-- 🔧 assets/mc/bahgia.png: w-20 → w-28 agar maskot senang di pojok lebih terlihat & seimbang -->
+                        <img src="assets/mscot.png" class="w-28 animate-bounce object-contain" alt="Mascot Happy">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- Placeholder for Home -->
+
+        <div id="section-home" class="text-center my-auto">
+
+            <h1 class="text-4xl font-logo text-gray-700 mb-4">Selamat Datang di Selera</h1>
+
+            <p class="text-gray-500">Klik "Diary" untuk mulai menulis hari ini.</p>
+
+        </div>
+
+
+
+    </main>
+
+
+
+    <script>
+
+        const sidebar = document.getElementById('sidebar');
+
+        const sidebarToggle = document.getElementById('sidebarToggle');
+
+        let autoCloseTimer;
+
+
+
+        // Function to show/hide sections
+
+        function showSection(id) {
+
+            document.getElementById('section-step-1').classList.add('hidden');
+
+            document.getElementById('section-step-2').classList.add('hidden');
+
+            document.getElementById('section-home').classList.add('hidden');
+
+           
+
+            document.getElementById(`section-${id}`).classList.remove('hidden');
+
+        }
+
+
+
+        // Logic for clicking Diary Link
+
+        function goToDiary() {
+
+            showSection('step-1');
+
+           
+
+            // Start 10 seconds timer to close sidebar
+
+            clearTimeout(autoCloseTimer);
+
+            autoCloseTimer = setTimeout(() => {
+
+                closeSidebar();
+
+            }, 10000);
+
+        }
+
+
+
+        function closeSidebar() {
+
+            sidebar.style.transform = 'translateX(-100%)';
+
+            sidebar.classList.add('fixed');
+
+            sidebarToggle.classList.remove('hidden');
+
+        }
+
+
+
+        function toggleSidebar() {
+
+            if (sidebar.style.transform === 'translateX(0%)') {
+
+                sidebar.style.transform = 'translateX(-100%)';
+
+            } else {
+
+                sidebar.style.transform = 'translateX(0%)';
+
+                // Reset timer if reopened
+
+                clearTimeout(autoCloseTimer);
+
+                autoCloseTimer = setTimeout(() => {
+
+                    closeSidebar();
+
+                }, 10000);
+
+            }
+
+        }
+
+
+
+        // Select emotion and transition
+
+        function selectEmotion(mood) {
+
+            const greeting = document.getElementById('greeting-response');
+
+           
+
+            if (mood === 'Senang') {
+
+                greeting.innerHTML = "Wah senangnya! Terimakasih sudah berbagi perasaanmu.<br>Sekarang, mau cerita apa untuk hari ini?";
+
+            } else {
+
+                greeting.innerHTML = `Terimakasih sudah berbagi perasaan ${mood} mu.<br>Sekarang, mau cerita apa untuk hari ini?`;
+
+            }
+
+
+
+            // Transition effect
+
+            document.getElementById('section-step-1').classList.add('opacity-0', 'transition-opacity', 'duration-500');
+
+           
+
+            setTimeout(() => {
+
+                showSection('step-2');
+
+                document.getElementById('section-step-2').classList.add('opacity-0');
+
+                setTimeout(() => {
+
+                    document.getElementById('section-step-2').classList.remove('opacity-0');
+
+                    document.getElementById('section-step-2').classList.add('opacity-100', 'transition-opacity', 'duration-500');
+
+                }, 50);
+
+            }, 500);
+
+        }
+
+
+
+        function saveDiary() {
+
+            const toast = document.createElement('div');
+
+            toast.className = "fixed bottom-10 left-1/2 -translate-x-1/2 bg-green-600 text-white px-6 py-3 rounded-full shadow-2xl z-[100] animate-bounce";
+
+            toast.innerText = "Ceritamu telah tersimpan dengan aman! ✨";
+
+            document.body.appendChild(toast);
+
+           
+
+            setTimeout(() => {
+
+                toast.remove();
+
+                showSection('home');
+
+                sidebar.style.transform = 'translateX(0%)';
+
+                sidebarToggle.classList.add('hidden');
+
+            }, 3000);
+
+        }
+
+
+
+        // Initialize Time & Date
+
+        function updateDateTime() {
+
+            const now = new Date();
+
+            const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+
+            const months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+           
+
+            const dateStr = `${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
+
+            const timeStr = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
+
+           
+
+            const dateElements = document.querySelectorAll('[id^="currentDate"]');
+
+            const timeElements = document.querySelectorAll('[id^="currentTime"]');
+
+           
+
+            dateElements.forEach(el => el.innerText = dateStr);
+
+            timeElements.forEach(el => el.innerText = timeStr);
+
+        }
+
+
+
+        setInterval(updateDateTime, 1000);
+
+        window.onload = function() {
+
+            updateDateTime();
+
+            showSection('home');
+
+        };
+
+    </script>
+
 </body>
+
 </html>
