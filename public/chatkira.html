@@ -3,10 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Selera - Chat Pao</title>
-    <!-- Tailwind CSS CDN -->
+    <title>Selera - Chat Kira</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Lucide Icons CDN -->
     <script src="https://unpkg.com/lucide@latest"></script>
     
     <style>
@@ -40,14 +38,12 @@
             white-space: nowrap;
         }
         
-        /* Class saat sidebar mengecil */
         #sidebar.collapsed {
-            width: 88px; /* Lebar saat hanya menampilkan ikon */
+            width: 88px; 
             padding-left: 1rem;
             padding-right: 1rem;
         }
         
-        /* Sembunyikan elemen teks/gambar saat mengecil */
         #sidebar.collapsed .hide-on-collapse {
             opacity: 0;
             width: 0;
@@ -58,7 +54,6 @@
             display: none;
         }
 
-        /* Rapikan posisi ikon saat mengecil */
         #sidebar.collapsed .nav-item {
             justify-content: center;
             padding-left: 0;
@@ -74,25 +69,26 @@
             flex-direction: column;
             gap: 12px;
         }
+
+        /* Animasi muncul pesan */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-msg {
+            animation: fadeIn 0.3s ease-out forwards;
+        }
     </style>
 </head>
 <body class="text-gray-800 min-h-screen p-4 flex gap-4">
 
-    <!-- Sidebar / Navbar Kiri -->
-    <!-- Ditambahkan id="sidebar" dan class transition -->
     <aside id="sidebar" class="w-[280px] bg-[#edfce3] rounded-[2rem] flex flex-col justify-between p-6 shadow-md z-20 relative flex-shrink-0 transition-all duration-500">
         <div class="flex flex-col h-full">
-            <!-- Logo Area -->
             <div class="text-center mb-6 flex flex-col items-center hide-on-collapse transition-opacity duration-300">
-                <img 
-                    src="assets/Selera.png" 
-                    alt="Tulisan Selera" 
-                    class="w-full max-w-[160px] h-auto object-contain mb-1 drop-shadow-sm"
-                />
+                <img src="assets/Selera.png" alt="Tulisan Selera" class="w-full max-w-[160px] h-auto object-contain mb-1 drop-shadow-sm" />
                 <p class="text-[10px] text-gray-600 px-4 mt-2">Tempat terbaik<br>untuk dirimu sendiri</p>
             </div>
 
-            <!-- Navigation -->
             <nav class="space-y-1.5 flex-1">
                 <a href="index.html" class="nav-item w-full flex items-center px-4 py-2.5 rounded-2xl transition-colors text-gray-600 hover:bg-white/50 hover:text-black group">
                     <i data-lucide="home" class="nav-icon w-5 h-5 mr-4 group-hover:scale-110 transition-transform"></i>
@@ -110,7 +106,6 @@
                     <i data-lucide="message-circle" class="nav-icon w-5 h-5 mr-4 group-hover:scale-110 transition-transform"></i>
                     <span class="hide-on-collapse text-sm">Chat dengan Kira</span>
                 </a>
-
                 <a href="#" class="nav-item w-full flex items-center px-4 py-2.5 rounded-2xl transition-colors text-gray-600 hover:bg-white/50 hover:text-black group">
                     <i data-lucide="star" class="nav-icon w-5 h-5 mr-4 group-hover:scale-110 transition-transform"></i>
                     <span class="hide-on-collapse text-sm font-medium">Quotes & Hiburan</span>
@@ -119,29 +114,19 @@
                     <i data-lucide="smile" class="nav-icon w-5 h-5 mr-4 group-hover:scale-110 transition-transform"></i>
                     <span class="hide-on-collapse text-sm font-medium">Mood Tracker</span>
                 </a>
-                <a href="#" class="nav-item w-full flex items-center px-4 py-2.5 rounded-2xl transition-colors text-gray-600 hover:bg-white/50 hover:text-black mt-4 group">
-                    <i data-lucide="settings" class="nav-icon w-5 h-5 mr-4 group-hover:scale-110 transition-transform"></i>
-                    <span class="hide-on-collapse text-sm font-medium">Pengaturan</span>
-                </a>
             </nav>
 
-            <!-- Bottom Pao Widget -->
             <div class="hide-on-collapse mt-4 bg-[#fef5ed] p-4 rounded-2xl shadow-sm relative text-center border border-orange-100 transition-opacity duration-300">
                 <div class="absolute -top-8 left-1/2 transform -translate-x-1/2">
-                    <img 
-                        src="assets/pao-kepala.png" 
-                        alt="Pao Head" 
-                        class="w-14 h-14 object-contain drop-shadow-md"
-                    />
+                    <img src="assets/kira-kepala.png" alt="Kira Head" class="w-14 h-14 object-contain drop-shadow-md" />
                 </div>
-                <h4 class="font-bold text-sm mt-4 text-gray-800">Pao <span class="text-pink-400">♥</span></h4>
+                <h4 class="font-bold text-sm mt-4 text-gray-800">Kira <span class="text-pink-400">♥</span></h4>
                 <p class="text-[10px] text-gray-500 mb-2">Teman terbaikmu</p>
                 <div class="bg-white rounded-xl p-2 shadow-sm text-[10px] text-gray-700 leading-tight">
                     Aku selalu ada di sini untukmu! ♡
                 </div>
             </div>
 
-            <!-- Theme Toggle -->
             <div class="theme-container mt-4 flex items-center justify-between px-4 transition-all duration-300">
                 <span class="hide-on-collapse text-xs font-medium text-gray-600">Tema</span>
                 <div class="flex gap-2 theme-buttons">
@@ -152,17 +137,15 @@
         </div>
     </aside>
 
-    <!-- Main Chat Area (Tengah) -->
     <main class="flex-[2] bg-white/30 backdrop-blur-lg rounded-[2rem] overflow-hidden flex flex-col shadow-md relative border border-white/50 z-10 transition-all duration-500">
         
-        <!-- Header Chat -->
         <header class="bg-white/40 backdrop-blur-sm p-6 py-4 flex justify-between items-center border-b border-white/30 z-10">
             <div class="flex items-center gap-3">
                 <i data-lucide="message-circle" class="w-6 h-6 text-gray-700"></i>
                 <div>
-                    <h2 class="text-xl font-bold text-gray-800">Chat dengan Pao</h2>
+                    <h2 class="text-xl font-bold text-gray-800">Chat dengan Kira</h2>
                     <p class="text-xs text-gray-600 flex items-center gap-1">
-                        Ngobrol bebas dengan Pao, kapan pun kamu mau! <img src="assets/daun-kecil.png" class="w-3 h-3" alt="">
+                        Ngobrol bebas dengan Kira, kapan pun kamu mau! <img src="assets/daun-kecil.png" class="w-3 h-3" alt="">
                     </p>
                 </div>
             </div>
@@ -171,79 +154,22 @@
             </button>
         </header>
 
-        <!-- Area Obrolan (Messages) -->
-        <div class="flex-1 p-6 overflow-y-auto custom-scrollbar flex flex-col gap-6 relative z-10">
+        <div id="chatBox" class="flex-1 p-6 overflow-y-auto custom-scrollbar flex flex-col gap-6 relative z-10">
             
-            <!-- Pesan Pao 1 -->
-            <div class="flex gap-3 max-w-[85%]">
-                <img src="assets/pao-avatar.png" alt="Pao" class="w-12 h-12 object-contain drop-shadow-sm self-end" />
+            <div class="flex gap-3 max-w-[85%] animate-msg">
+                <img src="assets/kira-avatar.png" alt="Kira" class="w-12 h-12 object-contain drop-shadow-sm self-end" />
                 <div>
-                    <span class="text-xs font-bold text-gray-700 ml-2">Pao <span class="text-pink-400">♥</span></span>
+                    <span class="text-xs font-bold text-gray-700 ml-2">Kira <span class="text-pink-400">♥</span></span>
                     <div class="bg-white p-4 rounded-2xl rounded-bl-none shadow-sm mt-1 text-sm text-gray-700 leading-relaxed relative">
-                        Haiii! 🌸<br>
-                        Mau cerita apa hari ini?<br>
-                        Aku siap jadi pendengar terbaikmu!
-                        <span class="text-[9px] text-gray-400 absolute bottom-2 right-3">11:23</span>
+                        Haii! 🌸<br>
+                        Mau cerita apa hari ini? Aku siap jadi pendengar terbaikmu!
+                        <span class="text-[9px] text-gray-400 absolute bottom-2 right-3">Baru saja</span>
                     </div>
                 </div>
             </div>
 
-            <!-- Pesan User 1 -->
-            <div class="flex gap-3 max-w-[85%] self-end flex-row-reverse">
-                <div class="flex flex-col items-end">
-                    <div class="bg-[#edfce3] p-4 py-3 rounded-2xl rounded-br-none shadow-sm text-sm text-gray-800 relative pr-14">
-                        Hai Pao, hari ini aku capek banget 😔
-                        <div class="absolute bottom-2 right-3 flex items-center gap-1">
-                            <span class="text-[9px] text-gray-500">11:24</span>
-                            <i data-lucide="check-check" class="w-3 h-3 text-green-600"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Pesan Pao 2 -->
-            <div class="flex gap-3 max-w-[85%]">
-                <img src="assets/pao-avatar.png" alt="Pao" class="w-12 h-12 object-contain drop-shadow-sm self-end" />
-                <div>
-                    <span class="text-xs font-bold text-gray-700 ml-2">Pao <span class="text-pink-400">♥</span></span>
-                    <div class="bg-white p-4 rounded-2xl rounded-bl-none shadow-sm mt-1 text-sm text-gray-700 leading-relaxed relative pr-12">
-                        Aww, pasti hari ini banyak banget yang kamu lakuin ya? 🥺<br>
-                        Gapapa kok, istirahat dulu yaa... kamu hebat sudah berusaha sejauh ini! 💚
-                        <span class="text-[9px] text-gray-400 absolute bottom-2 right-3">11:25</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Pesan User 2 -->
-            <div class="flex gap-3 max-w-[85%] self-end flex-row-reverse">
-                <div class="flex flex-col items-end">
-                    <div class="bg-[#edfce3] p-4 py-3 rounded-2xl rounded-br-none shadow-sm text-sm text-gray-800 relative pr-14">
-                        Iya, tugasnya numpuk, terus ada masalah juga
-                        <div class="absolute bottom-2 right-3 flex items-center gap-1">
-                            <span class="text-[9px] text-gray-500">11:26</span>
-                            <i data-lucide="check-check" class="w-3 h-3 text-green-600"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Pesan Pao 3 -->
-            <div class="flex gap-3 max-w-[85%]">
-                <img src="assets/pao-avatar.png" alt="Pao" class="w-12 h-12 object-contain drop-shadow-sm self-end" />
-                <div>
-                    <span class="text-xs font-bold text-gray-700 ml-2">Pao <span class="text-pink-400">♥</span></span>
-                    <div class="bg-white p-4 rounded-2xl rounded-bl-none shadow-sm mt-1 text-sm text-gray-700 leading-relaxed relative pr-12">
-                        Wah, nggak mudah yaa.. 🥺<br>
-                        Tapi inget, kamu nggak sendirian kok!<br>
-                        Coba ceritain pelan-pelan, Pao dengerin yaa 🤗
-                        <span class="text-[9px] text-gray-400 absolute bottom-2 right-3">11:27</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Typing Indicator Pao -->
-            <div class="flex gap-3 mt-2">
-                <img src="assets/pao-avatar.png" alt="Pao" class="w-10 h-10 object-contain opacity-70 self-end" />
+            <div id="typingIndicator" class="flex gap-3 mt-2 hidden animate-msg">
+                <img src="assets/kira-avatar.png" alt="Kira" class="w-10 h-10 object-contain opacity-70 self-end" />
                 <div class="bg-white/80 p-3 px-5 rounded-2xl rounded-bl-none shadow-sm flex items-center gap-2">
                     <span class="text-xs font-medium text-gray-500 mr-2">sedang mengetik</span>
                     <div class="flex gap-1">
@@ -256,18 +182,17 @@
 
         </div>
 
-        <!-- Hiasan Bunga Latar Belakang Chat (Bawah) -->
         <div class="absolute bottom-20 right-0 left-0 z-0 pointer-events-none flex justify-center opacity-80">
             <img src="assets/hiasan-bunga-padang.png" alt="Bunga" class="w-full h-auto object-cover max-h-40 opacity-70">
         </div>
 
-        <!-- Area Input Teks -->
         <div class="p-4 bg-white/40 backdrop-blur-md border-t border-white/30 z-10">
             <div class="flex items-center gap-3 bg-white p-2 rounded-2xl shadow-sm">
                 <button class="p-2 text-gray-400 hover:text-gray-600 transition-colors bg-[#edfce3] rounded-xl">
-                    <img src="assets/ikon-pao-kotak.png" class="w-6 h-6 object-contain" alt="Pao Icon">
+                    <img src="assets/ikon-kira-kotak.png" class="w-6 h-6 object-contain" alt="Kira Icon">
                 </button>
                 <input 
+                    id="userInput"
                     type="text" 
                     placeholder="Ketik pesanmu di sini..." 
                     class="flex-1 bg-transparent outline-none text-sm text-gray-700 px-2 placeholder-gray-400"
@@ -275,7 +200,7 @@
                 <button class="p-2 text-gray-400 hover:text-gray-600 transition-colors">
                     <i data-lucide="smile" class="w-6 h-6"></i>
                 </button>
-                <button class="p-3 bg-[#6b9080] hover:bg-[#5a7a6c] text-white rounded-xl shadow-md transition-all hover:scale-105">
+                <button id="sendBtn" class="p-3 bg-[#6b9080] hover:bg-[#5a7a6c] text-white rounded-xl shadow-md transition-all hover:scale-105">
                     <i data-lucide="send" class="w-5 h-5"></i>
                 </button>
             </div>
@@ -283,115 +208,161 @@
 
     </main>
 
-    <!-- Kolom Kanan (Informasi & Widget) -->
     <aside class="w-[320px] flex flex-col gap-4 flex-shrink-0 z-10">
-        
-        <!-- Pao Profile Card -->
         <div class="bg-white/30 backdrop-blur-lg rounded-[1.5rem] p-5 shadow-md flex flex-col items-center border border-white/50 hover:scale-[1.02] transition-transform">
             <div class="w-full bg-white rounded-2xl p-4 shadow-sm flex items-center gap-4 relative overflow-hidden">
-                <img src="assets/pao-besar.png" alt="Pao Mascot" class="w-20 h-20 object-contain drop-shadow-md z-10">
+                <img src="assets/kira-besar.png" alt="Kira Mascot" class="w-20 h-20 object-contain drop-shadow-md z-10">
                 <div class="z-10">
-                    <h3 class="font-bold text-2xl text-gray-800">Pao <span class="text-pink-400 text-lg">♥</span></h3>
+                    <h3 class="font-bold text-2xl text-gray-800">Kira <span class="text-pink-400 text-lg">♥</span></h3>
                     <p class="text-xs text-gray-600 font-medium">Teman terbaikmu</p>
                     <span class="mt-2 inline-block bg-[#edfce3] text-[#5a7a6c] text-[10px] font-bold px-3 py-1 rounded-full border border-green-200">
                         Pendengar Setia
                     </span>
                 </div>
-                <img src="assets/daun-hiasan.png" class="absolute right-0 top-0 w-16 opacity-30" alt="">
             </div>
             <p class="text-xs text-gray-800 mt-4 text-center leading-relaxed font-medium">
-                Pao selalu siap mendengar cerita kamu, memberi semangat, dan menemanimu melewati hari-harimu. 🌼
+                Kira selalu siap mendengar cerita kamu, memberi semangat, dan menemanimu melewati hari-harimu. 🌼
             </p>
         </div>
 
-        <!-- Mood Tracker Card -->
         <div class="bg-white/30 backdrop-blur-lg rounded-[1.5rem] p-5 shadow-md border border-white/50 hover:scale-[1.02] transition-transform">
             <div class="flex items-center gap-2 mb-3">
                 <i data-lucide="smile" class="w-5 h-5 text-gray-700"></i>
-                <h3 class="font-bold text-sm text-gray-800">Mood Pao Hari Ini</h3>
+                <h3 class="font-bold text-sm text-gray-800">Mood Kira Hari Ini</h3>
             </div>
-            <p class="text-[11px] text-gray-700 mb-4">Pao lagi semangat nemenin kamu!</p>
+            <p class="text-[11px] text-gray-700 mb-4">Kira lagi semangat nemenin kamu!</p>
             <div class="flex justify-center">
                 <img src="assets/matahari-senyum.png" alt="Matahari Senang" class="w-16 h-16 drop-shadow-md animate-pulse">
             </div>
         </div>
 
-        <!-- Suggestion Card (Topik) -->
         <div class="bg-white/30 backdrop-blur-lg rounded-[1.5rem] p-5 shadow-md border border-white/50 flex-1 hover:scale-[1.02] transition-transform">
             <div class="flex items-center gap-2 mb-4">
                 <i data-lucide="check-square" class="w-5 h-5 text-gray-700"></i>
                 <h3 class="font-bold text-sm text-gray-800">Topik yang Bisa Kamu Ceritakan</h3>
             </div>
             <div class="flex flex-col gap-2.5">
-                <button class="bg-white/80 hover:bg-white text-left px-4 py-2.5 rounded-xl shadow-sm text-xs font-medium text-gray-700 flex items-center gap-3 transition-colors">
+                <button onclick="fillInput('Cerita hari ini')" class="bg-white/80 hover:bg-white text-left px-4 py-2.5 rounded-xl shadow-sm text-xs font-medium text-gray-700 flex items-center gap-3 transition-colors">
                     <i data-lucide="book" class="w-4 h-4 text-gray-500"></i> Cerita hari ini
                 </button>
-                <button class="bg-white/80 hover:bg-white text-left px-4 py-2.5 rounded-xl shadow-sm text-xs font-medium text-gray-700 flex items-center gap-3 transition-colors">
+                <button onclick="fillInput('Aku lagi ada beban pikiran')" class="bg-white/80 hover:bg-white text-left px-4 py-2.5 rounded-xl shadow-sm text-xs font-medium text-gray-700 flex items-center gap-3 transition-colors">
                     <i data-lucide="cloud" class="w-4 h-4 text-gray-500"></i> Masalah atau beban pikiran
                 </button>
-                <button class="bg-white/80 hover:bg-white text-left px-4 py-2.5 rounded-xl shadow-sm text-xs font-medium text-gray-700 flex items-center gap-3 transition-colors">
+                <button onclick="fillInput('Hal yang bikin aku senang')" class="bg-white/80 hover:bg-white text-left px-4 py-2.5 rounded-xl shadow-sm text-xs font-medium text-gray-700 flex items-center gap-3 transition-colors">
                     <i data-lucide="star" class="w-4 h-4 text-gray-500"></i> Hal yang bikin senang
-                </button>
-                <button class="bg-white/80 hover:bg-white text-left px-4 py-2.5 rounded-xl shadow-sm text-xs font-medium text-gray-700 flex items-center gap-3 transition-colors">
-                    <i data-lucide="navigation" class="w-4 h-4 text-gray-500"></i> Cita-cita dan rencana
-                </button>
-                <button class="bg-white/80 hover:bg-white text-left px-4 py-2.5 rounded-xl shadow-sm text-xs font-medium text-gray-700 flex items-center gap-3 transition-colors">
-                    <i data-lucide="more-horizontal" class="w-4 h-4 text-gray-500"></i> Lainnya...
                 </button>
             </div>
         </div>
-
-        <!-- Quotes Card -->
-        <div class="bg-white/30 backdrop-blur-lg rounded-[1.5rem] p-5 shadow-md border border-white/50 relative overflow-hidden hover:scale-[1.02] transition-transform">
-            <i data-lucide="quote" class="absolute -top-2 -left-2 w-12 h-12 text-white/40 fill-white/40 z-0"></i>
-            <p class="text-xs font-medium text-gray-800 leading-relaxed relative z-10 italic">
-                "Kamu berharga, kamu berarti, dan kamu penting. Jangan lupa itu yaa! 💚"<br>
-                <span class="text-gray-600 mt-1 block font-normal">- Pao</span>
-            </p>
-            <img src="assets/bunga-kecil-sudut.png" alt="" class="absolute bottom-0 right-0 w-10 opacity-80 z-0">
-        </div>
-
     </aside>
 
-    <!-- Inisialisasi Lucide Icons -->
     <script>
         lucide.createIcons();
 
-        // --- SCRIPT UNTUK SIDEBAR AUTO-COLLAPSE ---
+        // --- Logic Sidebar Collapse ---
         document.addEventListener("DOMContentLoaded", () => {
             const sidebar = document.getElementById("sidebar");
             let isAutoCollapsed = false;
 
-            // Fungsi untuk mengecilkan sidebar
-            const collapseSidebar = () => {
-                sidebar.classList.add("collapsed");
-                isAutoCollapsed = true;
-            };
+            setTimeout(() => { sidebar.classList.add("collapsed"); isAutoCollapsed = true; }, 5000);
 
-            // Fungsi untuk membesarkan sidebar kembali
-            const expandSidebar = () => {
-                sidebar.classList.remove("collapsed");
-            };
-
-            // Set waktu 5 detik (5000 milidetik) sebelum otomatis mengecil
-            setTimeout(() => {
-                collapseSidebar();
-            }, 5000);
-
-            // Buka sidebar saat kursor diarahkan ke area sidebar
-            sidebar.addEventListener("mouseenter", () => {
-                if (isAutoCollapsed) {
-                    expandSidebar();
-                }
-            });
-
-            // Tutup sidebar saat kursor dijauhkan dari area sidebar
-            sidebar.addEventListener("mouseleave", () => {
-                if (isAutoCollapsed) {
-                    collapseSidebar();
-                }
-            });
+            sidebar.addEventListener("mouseenter", () => { if (isAutoCollapsed) sidebar.classList.remove("collapsed"); });
+            sidebar.addEventListener("mouseleave", () => { if (isAutoCollapsed) sidebar.classList.add("collapsed"); });
         });
+
+        // --- Logic Chat Kira ---
+        const chatBox = document.getElementById('chatBox');
+        const userInput = document.getElementById('userInput');
+        const sendBtn = document.getElementById('sendBtn');
+        const typingIndicator = document.getElementById('typingIndicator');
+
+        function appendMessage(sender, text) {
+            const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            let msgHtml = '';
+
+            if (sender === 'user') {
+                msgHtml = `
+                    <div class="flex gap-3 max-w-[85%] self-end flex-row-reverse animate-msg">
+                        <div class="flex flex-col items-end">
+                            <div class="bg-[#edfce3] p-4 py-3 rounded-2xl rounded-br-none shadow-sm text-sm text-gray-800 relative pr-14">
+                                ${text}
+                                <div class="absolute bottom-2 right-3 flex items-center gap-1">
+                                    <span class="text-[9px] text-gray-500">${time}</span>
+                                    <i data-lucide="check-check" class="w-3 h-3 text-green-600"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`;
+            } else {
+                msgHtml = `
+                    <div class="flex gap-3 max-w-[85%] animate-msg">
+                        <img src="assets/kira-avatar.png" alt="Kira" class="w-12 h-12 object-contain drop-shadow-sm self-end" />
+                        <div>
+                            <span class="text-xs font-bold text-gray-700 ml-2">Kira <span class="text-pink-400">♥</span></span>
+                            <div class="bg-white p-4 rounded-2xl rounded-bl-none shadow-sm mt-1 text-sm text-gray-700 leading-relaxed relative pr-12">
+                                ${text}
+                                <span class="text-[9px] text-gray-400 absolute bottom-2 right-3">${time}</span>
+                            </div>
+                        </div>
+                    </div>`;
+            }
+
+            typingIndicator.insertAdjacentHTML('beforebegin', msgHtml);
+            lucide.createIcons();
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        function getKiraResponse(input) {
+            const msg = input.toLowerCase();
+            if (msg.includes("halo") || msg.includes("hai")) return "Haii manis! 🌸 Kira senang sekali kamu sapa. Ada cerita seru apa hari ini?";
+            if (msg.includes("capek") || msg.includes("lelah") || msg.includes("sedih")) return "Aww, sini Kira dengerin... 🥺 Kadang hidup memang berat, tapi kamu nggak sendirian kok. Istirahat dulu ya?";
+            if (msg.includes("tugas") || msg.includes("numpuk")) return "Semangat ya ngerjain tugasnya! ✍️ Jangan lupa minum air putih dan istirahat sebentar biar otak segar lagi.";
+            if (msg.includes("terima kasih") || msg.includes("makasih")) return "Sama-sama! Kira selalu bahagia bisa nemenin kamu. ♡";
+            return "Kira dengerin kok... Ceritain lebih lanjut dong, Kira pengen tahu perasaanmu hari ini. 💚";
+        }
+
+     async function handleSendMessage() {
+    const text = userInput.value.trim();
+    if (!text) return;
+
+    console.log("Tombol diklik, mencoba mengirim pesan:", text); // Cek di F12 Browser
+
+    appendMessage('user', text);
+    userInput.value = '';
+
+    typingIndicator.classList.remove('hidden');
+    chatBox.scrollTop = chatBox.scrollHeight;
+
+    try {
+        console.log("Menghubungi server...");
+        const response = await fetch('http://localhost:3000/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message: text })
+        });
+
+        if (!response.ok) {
+            throw new Error(`Server bermasalah: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log("Balasan server diterima:", data);
+        
+        typingIndicator.classList.add('hidden');
+        appendMessage('kira', data.reply);
+    } catch (error) {
+        console.error("EROR TERJADI:", error); // Muncul di F12 Browser
+        typingIndicator.classList.add('hidden');
+        appendMessage('kira', "Aduh, maaf ya.. koneksiku lagi bermasalah. Coba lagi? 🥺");
+    }
+}
+
+        sendBtn.addEventListener('click', handleSendMessage);
+        userInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') handleSendMessage(); });
+
+        function fillInput(val) {
+            userInput.value = val;
+            userInput.focus();
+        }
     </script>
 </body>
 </html>
