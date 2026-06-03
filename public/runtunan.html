@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selera - Runtunan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Patrick+Hand&family=Sacramento&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #fde8ed; }
+        .font-logo { font-family: 'Sacramento', cursive; }
+        .font-diary { font-family: 'Patrick Hand', cursive; }
+
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background-color: #fbcfe8; border-radius: 10px; }
+
+        .speech-bubble {
+            position: relative;
+            background: #ffffff;
+            border-radius: 1.5rem;
+            padding: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        }
+        .speech-bubble::before {
+            content: '';
+            position: absolute;
+            left: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            border-width: 10px 15px 10px 0;
+            border-style: solid;
+            border-color: transparent #ffffff transparent transparent;
+        }
+
+        /* Sidebar collapse */
+        #sidebar {
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-x: hidden;
+            white-space: nowrap;
+        }
+        #sidebar.collapsed {
+            width: 88px;
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+        #sidebar.collapsed .hide-on-collapse {
+            display: none !important;
+        }
+        #sidebar.collapsed .nav-item {
+            justify-content: center;
+            padding-left: 0;
+            padding-right: 0;
+        }
+        #sidebar.collapsed .nav-icon {
+            margin-right: 0 !important;
+        }
+        #sidebar.collapsed .sidebar-bottom {
+            display: none !important;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex p-4 gap-4 text-gray-800">
+
+    <!-- SIDEBAR KIRI -->
+    <aside id="sidebar" class="w-[280px] bg-[#edfce3] rounded-[2rem] flex flex-col justify-between p-6 shadow-md z-10 relative flex-shrink-0">
+        <div>
+            <div class="text-center mb-8 flex flex-col items-center hide-on-collapse">
+                <img src="assets/Selera.png" alt="Logo Selera" class="w-full max-w-[200px] h-auto object-contain mb-2 drop-shadow-sm"/>
+                <div class="h-1 w-full bg-gradient-to-r from-transparent via-yellow-600 to-transparent mb-2 rounded-full opacity-50"></div>
+                <p class="text-xs text-gray-600 px-4">Tempat terbaik untuk menjadi dirimu sendiri</p>
+            </div>
+
+            <nav class="space-y-2">
+                <a href="homepage.html" class="nav-item w-full flex items-center px-4 py-3 rounded-2xl transition-colors text-gray-600 hover:bg-[#dff0f6] hover:text-black hover:shadow-sm">
+                    <i data-lucide="home" class="nav-icon w-6 h-6 mr-4 flex-shrink-0"></i>
+                    <span class="text-sm hide-on-collapse">Home</span>
+                </a>
+                <a href="diary.html" class="nav-item w-full flex items-center px-4 py-3 rounded-2xl transition-colors text-gray-600 hover:bg-[#dff0f6] hover:text-black hover:shadow-sm">
+                    <i data-lucide="book" class="nav-icon w-6 h-6 mr-4 flex-shrink-0"></i>
+                    <span class="text-sm hide-on-collapse">Diary</span>
+                </a>
+                <a href="todolist.html" class="nav-item w-full flex items-center px-4 py-3 rounded-2xl transition-colors text-gray-600 hover:bg-[#dff0f6] hover:text-black hover:shadow-sm">
+                    <i data-lucide="check-square" class="nav-icon w-6 h-6 mr-4 flex-shrink-0"></i>
+                    <span class="text-sm hide-on-collapse">To Do List</span>
+                </a>
+                <a href="chatkira.html" class="nav-item w-full flex items-center px-4 py-3 rounded-2xl transition-colors text-gray-600 hover:bg-[#dff0f6] hover:text-black hover:shadow-sm">
+                    <i data-lucide="message-circle" class="nav-icon w-6 h-6 mr-4 flex-shrink-0"></i>
+                    <span class="text-sm hide-on-collapse">Chat Kira</span>
+                </a>
+                <a href="runtunan.html" class="nav-item w-full flex items-center px-4 py-3 rounded-2xl transition-colors bg-[#dff0f6] text-black font-semibold shadow-sm">
+                    <i data-lucide="star" class="nav-icon w-5 h-5 mr-4 flex-shrink-0"></i>
+                    <span class="text-sm hide-on-collapse">Runtunan</span>
+                </a>
+                <a href="#" class="nav-item w-full flex items-center px-4 py-2.5 rounded-2xl transition-colors text-gray-600 hover:bg-[#dff0f6] hover:text-black hover:shadow-sm">
+                    <i data-lucide="smile" class="nav-icon w-5 h-5 mr-4 flex-shrink-0"></i>
+                    <span class="text-sm hide-on-collapse">Mood Tracker</span>
+                </a>
+                <button onclick="prosesLogout()" class="w-full flex items-center px-4 py-2.5 rounded-2xl transition-colors text-red-500 hover:bg-red-50/60 mt-4 group text-left">
+    <i data-lucide="log-out" class="w-5 h-5 mr-4 group-hover:scale-110 transition-transform"></i>
+    <span class="text-sm font-medium">Keluar</span>
+</button>
+            </nav>
+        </div>
+
+        <div class="sidebar-bottom flex flex-col items-center mt-10 relative group">
+            <div class="absolute -top-16 left-2 z-20 transition-transform duration-300 group-hover:-translate-y-2 group-hover:scale-110">
+                <img src="assets/e.bahagia2.png" alt="Kira Mascot" class="w-24 h-24 object-contain drop-shadow-md"/>
+            </div>
+            <div class="bg-[#feffb5] w-full p-4 pt-8 rounded-xl shadow-md text-center text-sm font-medium relative z-10 border border-yellow-200 transition-all duration-300 hover:shadow-lg hover:scale-[1.02]">
+                Kira akan selalu ada di sisimu :)
+            </div>
+            <button class="mt-8 bg-[#fcdcdc] hover:bg-[#f5c6c6] hover:scale-105 transition-all duration-300 py-2 px-8 rounded-xl font-medium shadow-md text-sm">
+                By Lucinee
+            </button>
+        </div>
+    </aside>
+
+    <!-- AREA KONTEN UTAMA (TENGAH) -->
+    <main class="flex-[2] overflow-y-auto custom-scrollbar flex flex-col gap-5 pr-2 z-10">
+        
+        <div class="flex flex-col gap-2 mb-2 px-2">
+            <div class="flex items-center gap-3">
+                <button class="text-gray-600 hover:text-black transition-colors"><i data-lucide="arrow-left" class="w-6 h-6"></i></button>
+                <h1 class="text-3xl font-diary font-bold tracking-wide text-[#2f4f3e]">Runtunan</h1>
+            </div>
+            <p class="text-sm text-gray-600 pl-9">
+                Jaga runtunanmu dengan baik, setiap hari yang kamu lewati<br>adalah bukti bahwa kamu hebat! 🌸
+            </p>
+        </div>
+
+        <!-- Kartu Runtunan Saat Ini -->
+        <div class="bg-white/60 backdrop-blur-md rounded-[2rem] p-6 shadow-sm hover:shadow-md hover:scale-[1.01] transition-all duration-300 border border-white/60 flex items-center justify-between">
+            <div class="flex-1 flex flex-col gap-2">
+                <span class="text-sm font-semibold text-gray-600">Runtunan Saat Ini</span>
+                <div class="flex items-center gap-3">
+                    <i data-lucide="flame" class="w-10 h-10 text-orange-500 fill-orange-500 animate-pulse"></i>
+                    <div class="flex items-baseline gap-1">
+                        <span class="text-4xl font-extrabold text-gray-800">12</span>
+                        <span class="text-lg font-bold text-gray-600">hari</span>
+                    </div>
+                </div>
+                <span class="text-xs text-gray-500">Terbaik: 23 hari</span>
+            </div>
+            <div class="flex-1 flex items-center justify-end gap-4 relative">
+                <img src="assets/pao-senang-runtunan.png" alt="Pao Mascot" class="w-32 object-contain drop-shadow-md z-10" />
+                <div class="bg-white p-3 rounded-2xl shadow-sm text-xs text-gray-700 leading-relaxed border border-pink-100 max-w-[200px] z-0 -ml-4 pl-6 relative">
+                    Wah! Kamu sudah menjaga runtunanmu selama 12 hari berturut-turut! 💖<br>Pertahankan ya, kamu bisa!
+                </div>
+            </div>
+        </div>
+
+        <!-- Kalender Runtunan -->
+        <div class="bg-white/60 backdrop-blur-md rounded-[2rem] p-6 shadow-sm hover:shadow-md hover:scale-[1.01] transition-all duration-300 border border-white/60 flex gap-6">
+            <div class="flex-1">
+                <div class="flex items-center gap-2 mb-6">
+                    <i data-lucide="calendar" class="w-5 h-5 text-gray-700"></i>
+                    <h3 class="font-bold text-gray-800">Kalender Runtunan</h3>
+                </div>
+                <div class="flex justify-between items-center mb-4 px-2">
+                    <button class="text-gray-500 hover:text-gray-800"><i data-lucide="chevron-left" class="w-4 h-4"></i></button>
+                    <span class="font-bold text-sm text-gray-800">April 2026</span>
+                    <button class="text-gray-500 hover:text-gray-800"><i data-lucide="chevron-right" class="w-4 h-4"></i></button>
+                </div>
+                <div class="grid grid-cols-7 text-center text-xs text-gray-500 font-medium mb-3">
+                    <div>Sen</div><div>Sel</div><div>Rab</div><div>Kam</div><div>Jum</div><div>Sab</div><div>Min</div>
+                </div>
+                <div class="grid grid-cols-7 text-center text-sm gap-y-4 gap-x-2 font-medium items-center justify-items-center">
+                    <div class="text-gray-300">30</div><div class="text-gray-300">31</div>
+                    <div class="flex flex-col items-center gap-1">1 <div class="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center text-white"><i data-lucide="check" class="w-3 h-3"></i></div></div>
+                    <div class="flex flex-col items-center gap-1">2 <div class="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center text-white"><i data-lucide="check" class="w-3 h-3"></i></div></div>
+                    <div class="flex flex-col items-center gap-1">3 <div class="w-4 h-4 bg-pink-400 rounded-full flex items-center justify-center text-white"><i data-lucide="heart" class="w-3 h-3 fill-white"></i></div></div>
+                    <div class="flex flex-col items-center gap-1">4 <div class="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center text-white"><i data-lucide="check" class="w-3 h-3"></i></div></div>
+                    <div class="flex flex-col items-center gap-1">5 <div class="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center text-white"><i data-lucide="check" class="w-3 h-3"></i></div></div>
+                    <div class="flex flex-col items-center gap-1">6 <div class="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center text-white"><i data-lucide="check" class="w-3 h-3"></i></div></div>
+                    <div class="flex flex-col items-center gap-1">7 <div class="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center text-white"><i data-lucide="check" class="w-3 h-3"></i></div></div>
+                    <div class="flex flex-col items-center gap-1">8 <div class="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center text-white"><i data-lucide="check" class="w-3 h-3"></i></div></div>
+                    <div class="flex flex-col items-center gap-1">9 <div class="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center text-white"><i data-lucide="check" class="w-3 h-3"></i></div></div>
+                    <div class="flex flex-col items-center gap-1">10 <div class="w-4 h-4 bg-pink-400 rounded-full flex items-center justify-center text-white"><i data-lucide="heart" class="w-3 h-3 fill-white"></i></div></div>
+                    <div class="flex flex-col items-center gap-1">11 <div class="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center text-white"><i data-lucide="check" class="w-3 h-3"></i></div></div>
+                    <div class="flex flex-col items-center gap-1">12 <div class="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center text-white"><i data-lucide="check" class="w-3 h-3"></i></div></div>
+                    <div class="flex flex-col items-center gap-1">13 <div class="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center text-white"><i data-lucide="check" class="w-3 h-3"></i></div></div>
+                    <div class="flex flex-col items-center gap-1">14 <div class="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center text-white"><i data-lucide="check" class="w-3 h-3"></i></div></div>
+                    <div class="flex flex-col items-center gap-1">15 <div class="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center text-white"><i data-lucide="check" class="w-3 h-3"></i></div></div>
+                    <div class="flex flex-col items-center gap-1">16 <div class="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center text-white"><i data-lucide="check" class="w-3 h-3"></i></div></div>
+                    <div class="flex flex-col items-center gap-1">17 <div class="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center text-white"><i data-lucide="check" class="w-3 h-3"></i></div></div>
+                    <div class="flex flex-col items-center gap-1">18 <div class="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center text-white"><i data-lucide="check" class="w-3 h-3"></i></div></div>
+                    <div class="flex flex-col items-center gap-1">19 <div class="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center text-white"><i data-lucide="check" class="w-3 h-3"></i></div></div>
+                    <div class="flex flex-col items-center gap-1 relative">
+                        <span class="w-6 h-6 bg-[#6b9080] text-white rounded-full flex items-center justify-center -ml-1 shadow-sm">20</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-1">21 <div class="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center text-white"><i data-lucide="check" class="w-3 h-3"></i></div></div>
+                    <div class="flex flex-col items-center gap-1">22 <div class="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center text-white"><i data-lucide="check" class="w-3 h-3"></i></div></div>
+                    <div class="flex flex-col items-center gap-1">23 <div class="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center text-white"><i data-lucide="check" class="w-3 h-3"></i></div></div>
+                    <div class="flex flex-col items-center gap-1">24 </div>
+                    <div class="text-gray-300">25</div><div class="text-gray-300">26</div>
+                </div>
+                <div class="flex items-center gap-4 mt-6 text-[10px] text-gray-600 justify-center border-t border-white/50 pt-4">
+                    <div class="flex items-center gap-1"><div class="w-3 h-3 bg-green-500 rounded-full flex items-center justify-center text-white"><i data-lucide="check" class="w-2 h-2"></i></div> Selesai</div>
+                    <div class="flex items-center gap-1"><div class="w-3 h-3 bg-pink-400 rounded-full flex items-center justify-center text-white"><i data-lucide="heart" class="w-2 h-2 fill-white"></i></div> Momen Spesial</div>
+                    <div class="flex items-center gap-1"><div class="w-3 h-3 bg-white border border-gray-300 rounded-full"></div> Belum Selesai</div>
+                    <div class="flex items-center gap-1"><i data-lucide="snowflake" class="w-3 h-3 text-blue-400"></i> Hari Pembeku</div>
+                </div>
+            </div>
+            <div class="w-1/3 flex flex-col justify-center items-center gap-4 relative">
+                <img src="assets/pao-peluk-hati.png" alt="Pao Hug Heart" class="w-40 object-contain drop-shadow-md z-10" />
+                <div class="speech-bubble text-center border border-pink-100 z-10 w-full mt-2">
+                    <h4 class="font-bold text-pink-500 mb-1 text-sm">Kamu hebat!</h4>
+                    <p class="text-xs text-gray-600 leading-relaxed">Runtunanmu aman<br>sampai hari ini.<br>Jangan lupa jaga<br>konsistensimu ya! ✨</p>
+                </div>
+                <div class="mt-4 bg-[#f2f8f2] border border-green-100 rounded-xl p-3 flex items-start gap-2 w-full text-[10px] text-gray-600 shadow-sm">
+                    <i data-lucide="info" class="w-4 h-4 text-green-600 shrink-0 mt-0.5"></i>
+                    <p>Runtunan akan terjaga jika kamu menyelesaikan minimal 1 aktivitas penting setiap hari.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pembeku Runtunan -->
+        <div class="bg-white/60 backdrop-blur-md rounded-[2rem] p-6 shadow-sm hover:shadow-md hover:scale-[1.01] transition-all duration-300 border border-white/60">
+            <div class="flex items-center gap-2 mb-2">
+                <i data-lucide="snowflake" class="w-5 h-5 text-blue-400"></i>
+                <h3 class="font-bold text-gray-800">Pembeku Runtunan</h3>
+            </div>
+            <p class="text-xs text-gray-500 mb-6">Gunakan pembeku untuk melindungi runtunanmu jika kamu tidak bisa menyelesaikan tugas hari ini!</p>
+            <div class="flex items-center gap-6">
+                <div class="relative flex-shrink-0">
+                    <img src="assets/pao-musim-dingin.png" alt="Pao Winter" class="w-40 object-contain drop-shadow-md" />
+                    <div class="absolute -right-8 top-10 bg-white px-3 py-2 rounded-xl rounded-bl-none shadow-sm text-[10px] text-gray-700 font-medium border border-blue-50">
+                        Tenang, Pao punya<br>pembeku untuk<br>menjagamu! ❄️
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl p-4 shadow-sm border border-blue-100 flex flex-col items-center justify-center flex-1 text-center">
+                    <h4 class="text-xs font-semibold text-blue-600 mb-2">Pembeku Tersedia</h4>
+                    <div class="flex items-center gap-2 mb-2">
+                        <i data-lucide="snowflake" class="w-8 h-8 text-blue-400"></i>
+                        <span class="text-3xl font-extrabold text-gray-800">2</span>
+                    </div>
+                    <p class="text-[9px] text-gray-500">Dapatkan lebih banyak<br>pembeku di toko Peku! 🛒</p>
+                </div>
+                <div class="bg-[#f4faff] rounded-2xl p-4 shadow-sm border border-blue-50 flex-[1.5]">
+                    <h4 class="text-xs font-semibold text-blue-600 mb-3">Cara Kerja Pembeku</h4>
+                    <div class="flex flex-col gap-3">
+                        <div class="flex items-start gap-2">
+                            <span class="w-4 h-4 bg-blue-100 text-blue-600 text-[9px] font-bold rounded-full flex items-center justify-center shrink-0">1</span>
+                            <p class="text-[10px] text-gray-600">Gunakan pembeku sebelum hari berakhir (jam 23.59)</p>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <span class="w-4 h-4 bg-blue-100 text-blue-600 text-[9px] font-bold rounded-full flex items-center justify-center shrink-0">2</span>
+                            <p class="text-[10px] text-gray-600">Runtunanmu tetap aman meskipun kamu tidak menyelesaikan aktivitas</p>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <span class="w-4 h-4 bg-blue-100 text-blue-600 text-[9px] font-bold rounded-full flex items-center justify-center shrink-0">3</span>
+                            <p class="text-[10px] text-gray-600">Pembeku hanya bisa digunakan 1 kali per hari</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Perjalanan Runtunan -->
+        <div class="bg-white/60 backdrop-blur-md rounded-[2rem] p-6 shadow-sm hover:shadow-md hover:scale-[1.01] transition-all duration-300 border border-white/60 mb-6">
+            <div class="flex items-center gap-2 mb-1">
+                <i data-lucide="leaf" class="w-5 h-5 text-green-600"></i>
+                <h3 class="font-bold text-gray-800">Perjalanan Runtunanmu</h3>
+            </div>
+            <p class="text-[10px] text-gray-500 mb-8">Setiap konsistensi kecil membawamu ke versi terbaik dirimu 🌱</p>
+            <div class="relative px-4">
+                <div class="absolute top-4 left-6 right-6 h-1 rounded-full bg-gradient-to-r from-[#6b9080] via-orange-300 to-gray-300 z-0"></div>
+                <div class="flex justify-between items-center relative z-10 text-center">
+                    <div class="flex flex-col items-center gap-2 group cursor-pointer">
+                        <div class="w-9 h-9 bg-white rounded-full border-2 border-[#6b9080] flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform">
+                            <i data-lucide="sprout" class="w-5 h-5 text-green-500"></i>
+                        </div>
+                        <div><p class="text-xs font-bold text-gray-800">3 hari</p><p class="text-[10px] text-gray-500">Pemula</p></div>
+                    </div>
+                    <div class="flex flex-col items-center gap-2 group cursor-pointer">
+                        <div class="w-9 h-9 bg-white rounded-full border-2 border-[#6b9080] flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform">
+                            <i data-lucide="leaf" class="w-4 h-4 text-green-600"></i>
+                        </div>
+                        <div><p class="text-xs font-bold text-gray-800">7 hari</p><p class="text-[10px] text-gray-500">Tumbuh</p></div>
+                    </div>
+                    <div class="flex flex-col items-center gap-2 group cursor-pointer">
+                        <div class="w-9 h-9 bg-orange-100 rounded-full border-2 border-orange-400 flex items-center justify-center shadow-md ring-4 ring-orange-50 group-hover:scale-110 transition-transform relative">
+                            <i data-lucide="flower-2" class="w-5 h-5 text-orange-500"></i>
+                            <span class="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full animate-ping"></span>
+                        </div>
+                        <div><p class="text-xs font-bold text-orange-600">14 hari</p><p class="text-[10px] text-gray-500">Berkembang</p></div>
+                    </div>
+                    <div class="flex flex-col items-center gap-2 group cursor-pointer">
+                        <div class="w-9 h-9 bg-gray-100 rounded-full border-2 border-gray-300 flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform grayscale opacity-60">
+                            <i data-lucide="flower" class="w-4 h-4 text-purple-500"></i>
+                        </div>
+                        <div><p class="text-xs font-bold text-gray-500">30 hari</p><p class="text-[10px] text-gray-400">Bersinar</p></div>
+                    </div>
+                    <div class="flex flex-col items-center gap-2 group cursor-pointer">
+                        <div class="w-9 h-9 bg-gray-100 rounded-full border-2 border-gray-300 flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform grayscale opacity-60">
+                            <i data-lucide="lock" class="w-4 h-4 text-gray-500"></i>
+                        </div>
+                        <div><p class="text-xs font-bold text-gray-500">60 hari</p><p class="text-[10px] text-gray-400">Legenda</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- SIDEBAR KANAN (Toko Peku) -->
+    <aside class="w-[340px] flex flex-col gap-4 flex-shrink-0 overflow-y-auto custom-scrollbar z-10 pr-2">
+        <div class="bg-white/60 backdrop-blur-md rounded-[1.5rem] p-5 shadow-sm border border-white/60">
+            <div class="flex justify-between items-start mb-2">
+                <div>
+                    <h2 class="text-lg font-bold text-gray-800">Toko Peku</h2>
+                    <p class="text-[10px] text-gray-500 leading-tight mt-1">Belanja barang untuk membantumu<br>menjaga runtunanmu!</p>
+                </div>
+                <div class="bg-orange-50 border border-orange-100 px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow-sm">
+                    <i data-lucide="leaf" class="w-4 h-4 text-green-600"></i>
+                    <span class="font-bold text-gray-800 text-sm">120</span>
+                </div>
+            </div>
+            <div class="flex gap-2 mt-4 text-[10px] font-semibold">
+                <button class="bg-[#edf6eb] text-green-700 px-3 py-1.5 rounded-full border border-green-200 shadow-sm">Semua</button>
+                <button class="bg-white text-gray-500 hover:bg-gray-50 px-3 py-1.5 rounded-full border border-transparent">Pembeku</button>
+                <button class="bg-white text-gray-500 hover:bg-gray-50 px-3 py-1.5 rounded-full border border-transparent">Booster</button>
+                <button class="bg-white text-gray-500 hover:bg-gray-50 px-3 py-1.5 rounded-full border border-transparent">Dekorasi</button>
+            </div>
+        </div>
+
+        <div class="flex flex-col gap-3">
+            <div class="bg-white/80 backdrop-blur-md rounded-2xl p-3 shadow-sm hover:shadow-md transition-shadow border border-white flex items-center gap-3">
+                <div class="w-14 h-14 bg-blue-50 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <img src="assets/item-salju.png" alt="Pembeku Salju" class="w-10 h-10 object-contain drop-shadow-sm">
+                </div>
+                <div class="flex-1">
+                    <h4 class="font-bold text-xs text-gray-800">Pembeku Salju</h4>
+                    <p class="text-[9px] text-gray-500 leading-tight my-1">Membekukan 1 hari agar runtunanmu tetap aman.</p>
+                    <div class="flex items-center gap-1 text-[10px] font-bold text-gray-700"><i data-lucide="leaf" class="w-3 h-3 text-green-600"></i> 50</div>
+                </div>
+                <button class="bg-[#6b9080] hover:bg-[#5a7a6c] text-white text-[10px] font-bold px-4 py-1.5 rounded-lg shadow-sm transition-transform hover:scale-105">Beli</button>
+            </div>
+            <div class="bg-white/80 backdrop-blur-md rounded-2xl p-3 shadow-sm hover:shadow-md transition-shadow border border-white flex items-center gap-3">
+                <div class="w-14 h-14 bg-blue-50 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <img src="assets/item-kristal.png" alt="Pembeku Kristal" class="w-10 h-10 object-contain drop-shadow-sm">
+                </div>
+                <div class="flex-1">
+                    <h4 class="font-bold text-xs text-gray-800">Pembeku Kristal</h4>
+                    <p class="text-[9px] text-gray-500 leading-tight my-1">Melindungi runtunanmu dari kegagalan 1 hari.</p>
+                    <div class="flex items-center gap-1 text-[10px] font-bold text-gray-700"><i data-lucide="leaf" class="w-3 h-3 text-green-600"></i> 80</div>
+                </div>
+                <button class="bg-[#6b9080] hover:bg-[#5a7a6c] text-white text-[10px] font-bold px-4 py-1.5 rounded-lg shadow-sm transition-transform hover:scale-105">Beli</button>
+            </div>
+            <div class="bg-white/80 backdrop-blur-md rounded-2xl p-3 shadow-sm hover:shadow-md transition-shadow border border-white flex items-center gap-3">
+                <div class="w-14 h-14 bg-red-50 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <img src="assets/item-ramuan-merah.png" alt="Booster Semangat" class="w-10 h-10 object-contain drop-shadow-sm">
+                </div>
+                <div class="flex-1">
+                    <h4 class="font-bold text-xs text-gray-800">Booster Semangat</h4>
+                    <p class="text-[9px] text-gray-500 leading-tight my-1">Menambah +1 motivasi hari ini. Meningkatkan mood!</p>
+                    <div class="flex items-center gap-1 text-[10px] font-bold text-gray-700"><i data-lucide="leaf" class="w-3 h-3 text-green-600"></i> 40</div>
+                </div>
+                <button class="bg-[#6b9080] hover:bg-[#5a7a6c] text-white text-[10px] font-bold px-4 py-1.5 rounded-lg shadow-sm transition-transform hover:scale-105">Beli</button>
+            </div>
+            <div class="bg-white/80 backdrop-blur-md rounded-2xl p-3 shadow-sm hover:shadow-md transition-shadow border border-white flex items-center gap-3">
+                <div class="w-14 h-14 bg-green-50 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <img src="assets/item-ramuan-hijau.png" alt="Booster Fokus" class="w-10 h-10 object-contain drop-shadow-sm">
+                </div>
+                <div class="flex-1">
+                    <h4 class="font-bold text-xs text-gray-800">Booster Fokus</h4>
+                    <p class="text-[9px] text-gray-500 leading-tight my-1">Membantu fokus lebih lama saat mengerjakan tugas.</p>
+                    <div class="flex items-center gap-1 text-[10px] font-bold text-gray-700"><i data-lucide="leaf" class="w-3 h-3 text-green-600"></i> 40</div>
+                </div>
+                <button class="bg-[#6b9080] hover:bg-[#5a7a6c] text-white text-[10px] font-bold px-4 py-1.5 rounded-lg shadow-sm transition-transform hover:scale-105">Beli</button>
+            </div>
+            <div class="bg-white/80 backdrop-blur-md rounded-2xl p-3 shadow-sm hover:shadow-md transition-shadow border border-white flex items-center gap-3">
+                <div class="w-14 h-14 bg-orange-50 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <img src="assets/item-stiker-bunga.png" alt="Stiker Bunga" class="w-10 h-10 object-contain drop-shadow-sm">
+                </div>
+                <div class="flex-1">
+                    <h4 class="font-bold text-xs text-gray-800">Stiker Bunga</h4>
+                    <p class="text-[9px] text-gray-500 leading-tight my-1">Dekorasi lucu untuk kalender runtunanmu!</p>
+                    <div class="flex items-center gap-1 text-[10px] font-bold text-gray-700"><i data-lucide="leaf" class="w-3 h-3 text-green-600"></i> 30</div>
+                </div>
+                <button class="bg-[#6b9080] hover:bg-[#5a7a6c] text-white text-[10px] font-bold px-4 py-1.5 rounded-lg shadow-sm transition-transform hover:scale-105">Beli</button>
+            </div>
+            <a href="#" class="text-[10px] text-gray-500 hover:text-gray-800 text-right mt-1 hover:underline">Lihat semua produk ></a>
+        </div>
+
+        <div class="bg-white/60 backdrop-blur-md rounded-[1.5rem] p-5 shadow-sm border border-white/60 mt-2">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="font-bold text-sm text-gray-800">Koleksi Peku-mu</h3>
+                <a href="#" class="text-[9px] text-gray-500 hover:underline">Lihat semua ></a>
+            </div>
+            <div class="grid grid-cols-4 gap-2">
+                <div class="flex flex-col items-center">
+                    <div class="w-12 h-12 bg-white rounded-xl shadow-sm border border-gray-100 flex items-center justify-center relative mb-1">
+                        <img src="assets/item-salju.png" class="w-8 h-8 object-contain" alt="">
+                        <span class="absolute -bottom-1 -right-1 bg-gray-600 text-white text-[8px] font-bold px-1 rounded-sm">x2</span>
+                    </div>
+                    <span class="text-[8px] text-gray-600 text-center leading-tight">Pembeku Salju</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="w-12 h-12 bg-white rounded-xl shadow-sm border border-gray-100 flex items-center justify-center relative mb-1">
+                        <img src="assets/item-kristal.png" class="w-8 h-8 object-contain" alt="">
+                        <span class="absolute -bottom-1 -right-1 bg-gray-600 text-white text-[8px] font-bold px-1 rounded-sm">x1</span>
+                    </div>
+                    <span class="text-[8px] text-gray-600 text-center leading-tight">Pembeku Kristal</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="w-12 h-12 bg-white rounded-xl shadow-sm border border-gray-100 flex items-center justify-center relative mb-1">
+                        <img src="assets/item-ramuan-merah.png" class="w-8 h-8 object-contain" alt="">
+                        <span class="absolute -bottom-1 -right-1 bg-gray-600 text-white text-[8px] font-bold px-1 rounded-sm">x3</span>
+                    </div>
+                    <span class="text-[8px] text-gray-600 text-center leading-tight">Booster Semangat</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="w-12 h-12 bg-white rounded-xl shadow-sm border border-gray-100 flex items-center justify-center relative mb-1">
+                        <img src="assets/item-ramuan-hijau.png" class="w-8 h-8 object-contain" alt="">
+                        <span class="absolute -bottom-1 -right-1 bg-gray-600 text-white text-[8px] font-bold px-1 rounded-sm">x1</span>
+                    </div>
+                    <span class="text-[8px] text-gray-600 text-center leading-tight">Booster Fokus</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-gradient-to-r from-pink-100 to-rose-50 rounded-[1.5rem] p-4 shadow-sm border border-pink-200 mt-2 flex items-center justify-between relative overflow-hidden mb-8">
+            <img src="assets/pao-bawah-kanan.png" class="absolute -left-2 -bottom-2 w-20 drop-shadow-md z-0" alt="">
+            <div class="ml-16 z-10">
+                <h4 class="font-bold text-xs text-gray-800">Konsistensi adalah kunci!</h4>
+                <p class="text-[9px] text-gray-600 leading-tight mt-1">Kamu sedang membangun<br>masa depan yang hebat! 💖</p>
+            </div>
+        </div>
+    </aside>
+
+ <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // ==========================================
+        // 1. KONEKSI UTAMA SUPABASE (SUDAH DISAMAKAN)
+        // ==========================================
+        const supabaseUrl = 'https://cyxmsawygqrunhinfvyj.supabase.co'; 
+        const supabaseKey = 'sb_publishable_3cxazIXr7B0ypa2fN6YVxw_jQyA6TDY';        
+        const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+
+        lucide.createIcons();
+        let currentUser = null;
+
+        // ==========================================
+        // 2. PROTEKSI HALAMAN OTOMATIS (ANTI LOGOUT SENDIRI)
+        // ==========================================
+        function proteksiHalamanOtomatis() {
+            // Supabase akan otomatis mendeteksi sesi login yang tersimpan di browser
+            supabaseClient.auth.onAuthStateChange((event, session) => {
+                if (session && session.user) {
+                    // JIKA USER SUDAH LOGIN:
+                    currentUser = session.user;
+                    console.log("Sesi aktif ditemukan di Runtunan untuk:", currentUser.email);
+                    
+                    // Muat angka runtunan saat ini ke UI halaman runtunan
+                    tampilkanRuntunanUI();
+                } else {
+                    // JIKA USER BELUM LOGIN ATAU SESI HABIS:
+                    alert("Akses ditolak. Yuk login terlebih dahulu! 🌸");
+                    window.location.href = "login.html";
+                }
+            });
+        }
+
+        // ==========================================
+        // 3. FITUR SINKRONISASI RUNTUNAN (LOCALSTORAGE)
+        // ==========================================
+        // Fungsi untuk menampilkan angka streak ke elemen HTML halaman runtunan
+        function tampilkanRuntunanUI() {
+            let streakSaatIni = localStorage.getItem('user_streak_score');
+            
+            // Jika memori masih kosong, berikan nilai awal bawaan 130
+            if (streakSaatIni === null) {
+                streakSaatIni = 130;
+                localStorage.setItem('user_streak_score', 130);
+            }
+
+            // MENCARI ELEMEN ANGKA STREAK DI HALAMAN RUNTUNAN
+            // Gantilah '.text-5xl.font-bold' di bawah ini jika class pembungkus angka streak di halaman runtunan berbeda
+            const elemenStreakRuntunan = document.querySelector('.text-5xl.font-bold') || document.getElementById('runtunanCount');
+            if (elemenStreakRuntunan) {
+                elemenStreakRuntunan.innerText = streakSaatIni;
+            }
+        }
+
+        // FUNGSI UTAMA: Panggil fungsi ini lewat tombol "Memperpanjang" kamu!
+        // Contoh di HTML kamu nanti: <button onclick="perpanjangRuntunanHariIni()">Memperpanjang</button>
+        function perpanjangRuntunanHariIni() {
+            let streakSekarang = parseInt(localStorage.getItem('user_streak_score')) || 130;
+            
+            // Tambah 1 poin streak runtunan
+            streakSekarang += 1; 
+            
+            // Simpan angka baru ke memori browser agar diakses oleh homepage.html
+            localStorage.setItem('user_streak_score', streakSekarang);
+            
+            // Perbarui tampilan angka di halaman ini secara instan
+            tampilkanRuntunanUI();
+            
+            alert("Hore! Runtunanmu berhasil diperpanjang menjadi " + streakSekarang + " hari! 🌟 Tampilan di Homepage otomatis berubah.");
+        }
+
+        // ==========================================
+        // 4. LOGIKA PROSES LOGOUT
+        // ==========================================
+        async function prosesLogout() {
+            const konfirmasi = confirm("Apakah kamu yakin ingin keluar dari Selera? Kira bakal kangen kamu 🌸");
+            if (!konfirmasi) return;
+
+            const { error } = await supabaseClient.auth.signOut();
+            if (error) {
+                alert("Gagal logout: " + error.message);
+            } else {
+                sessionStorage.removeItem('startTime');
+                window.location.href = 'login.html';
+            }
+        }
+
+        // ==========================================
+        // 5. EKSEKUSI UTAMA (PERBAIKAN EROR)
+        // ==========================================
+        // Memanggil fungsi pelacak otomatis yang benar, bukan proteksiHalaman() yang salah nama.
+        proteksiHalamanOtomatis();
+    </script>
+</body>
+</html>

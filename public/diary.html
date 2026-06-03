@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selera - Diaryku</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Patrick+Hand&family=Sacramento&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #cddbce; }
+        .font-logo { font-family: 'Sacramento', cursive; }
+        .font-diary { font-family: 'Patrick Hand', cursive; }
+
+        .diary-paper {
+            background-color: transparent;
+            background-image: linear-gradient(transparent, transparent 31px, #e5e7eb 31px, #e5e7eb 32px);
+            background-size: 100% 32px;
+            line-height: 32px;
+            padding: 8px 16px;
+            resize: none;
+        }
+        .diary-paper:focus { outline: none; }
+
+        .speech-bubble-left {
+            position: relative;
+            background: #ffffff;
+            border-radius: 2rem;
+            border-bottom-left-radius: 0.5rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        }
+        .speech-bubble-right {
+            position: relative;
+            background: #ffffff;
+            border-radius: 2rem;
+            border-bottom-right-radius: 0.5rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        }
+
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background-color: #a3b8a6; border-radius: 10px; }
+
+        .fade-enter { opacity: 0; transform: translateY(10px); transition: all 0.5s ease; }
+        .fade-enter-active { opacity: 1; transform: translateY(0); }
+
+        /* Sidebar collapse */
+        #sidebar {
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-x: hidden;
+            white-space: nowrap;
+        }
+        #sidebar.collapsed {
+            width: 88px;
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+        #sidebar.collapsed .hide-on-collapse {
+            display: none !important;
+        }
+        #sidebar.collapsed .nav-item {
+            justify-content: center;
+            padding-left: 0;
+            padding-right: 0;
+        }
+        #sidebar.collapsed .nav-icon {
+            margin-right: 0 !important;
+        }
+        #sidebar.collapsed .sidebar-bottom {
+            display: none !important;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex p-4 gap-4 text-gray-800">
+
+    <!-- SIDEBAR KIRI -->
+    <aside id="sidebar" class="w-[280px] bg-[#edfce3] rounded-[2rem] flex flex-col justify-between p-6 shadow-md z-10 relative flex-shrink-0">
+        <div>
+            <div class="text-center mb-8 flex flex-col items-center hide-on-collapse">
+                <img src="assets/Selera.png" alt="Logo Selera" class="w-full max-w-[200px] h-auto object-contain mb-2 drop-shadow-sm"/>
+                <div class="h-1 w-full bg-gradient-to-r from-transparent via-yellow-600 to-transparent mb-2 rounded-full opacity-50"></div>
+                <p class="text-xs text-gray-600 px-4">Tempat terbaik untuk menjadi dirimu sendiri</p>
+            </div>
+
+            <nav class="space-y-2">
+                <a href="index.html" class="nav-item w-full flex items-center px-4 py-3 rounded-2xl transition-colors text-gray-600 hover:bg-[#dff0f6] hover:text-black hover:shadow-sm">
+                    <i data-lucide="home" class="nav-icon w-6 h-6 mr-4 flex-shrink-0"></i>
+                    <span class="text-sm hide-on-collapse">Home</span>
+                </a>
+                <a href="diary.html" class="nav-item w-full flex items-center px-4 py-3 rounded-2xl transition-colors bg-[#dff0f6] text-black font-semibold shadow-sm">
+                    <i data-lucide="book" class="nav-icon w-6 h-6 mr-4 flex-shrink-0"></i>
+                    <span class="text-sm hide-on-collapse">Diary</span>
+                </a>
+                <a href="todolist.html" class="nav-item w-full flex items-center px-4 py-3 rounded-2xl transition-colors text-gray-600 hover:bg-[#dff0f6] hover:text-black hover:shadow-sm">
+                    <i data-lucide="check-square" class="nav-icon w-6 h-6 mr-4 flex-shrink-0"></i>
+                    <span class="text-sm hide-on-collapse">To Do List</span>
+                </a>
+                <a href="chatkira.html" class="nav-item w-full flex items-center px-4 py-3 rounded-2xl transition-colors text-gray-600 hover:bg-[#dff0f6] hover:text-black hover:shadow-sm">
+                    <i data-lucide="message-circle" class="nav-icon w-6 h-6 mr-4 flex-shrink-0"></i>
+                    <span class="text-sm hide-on-collapse">Chat Kira</span>
+                </a>
+                <a href="runtunan.html" class="nav-item w-full flex items-center px-4 py-2.5 rounded-2xl transition-colors text-gray-600 hover:bg-[#dff0f6] hover:text-black hover:shadow-sm">
+                    <i data-lucide="star" class="nav-icon w-5 h-5 mr-4 flex-shrink-0"></i>
+                    <span class="text-sm hide-on-collapse">Runtunan</span>
+                </a>
+                <a href="#" class="nav-item w-full flex items-center px-4 py-2.5 rounded-2xl transition-colors text-gray-600 hover:bg-[#dff0f6] hover:text-black hover:shadow-sm">
+                    <i data-lucide="smile" class="nav-icon w-5 h-5 mr-4 flex-shrink-0"></i>
+                    <span class="text-sm hide-on-collapse">Mood Tracker</span>
+                </a>
+               <button onclick="prosesLogout()" class="w-full flex items-center px-4 py-2.5 rounded-2xl transition-colors text-red-500 hover:bg-red-50/60 mt-4 group text-left">
+    <i data-lucide="log-out" class="w-5 h-5 mr-4 group-hover:scale-110 transition-transform"></i>
+    <span class="text-sm font-medium">Keluar</span>
+</button>
+            </nav>
+        </div>
+
+        <div class="sidebar-bottom flex flex-col items-center mt-10 relative group">
+            <div class="absolute -top-16 left-2 z-20 transition-transform duration-300 group-hover:-translate-y-2 group-hover:scale-110">
+                <img src="assets/e.bahagia2.png" alt="Kira Mascot" class="w-24 h-24 object-contain drop-shadow-md"/>
+            </div>
+            <div class="bg-[#feffb5] w-full p-4 pt-8 rounded-xl shadow-md text-center text-sm font-medium relative z-10 border border-yellow-200 transition-all duration-300 hover:shadow-lg hover:scale-[1.02]">
+                Kira akan selalu ada di sisimu :)
+            </div>
+            <button class="mt-8 bg-[#fcdcdc] hover:bg-[#f5c6c6] hover:scale-105 transition-all duration-300 py-2 px-8 rounded-xl font-medium shadow-md text-sm">
+                By Lucinee
+            </button>
+        </div>
+    </aside>
+
+    <!-- AREA KONTEN UTAMA KANAN -->
+    <main class="flex-1 flex flex-col gap-4 overflow-hidden">
+        
+        <div class="bg-[#f7f8eb] rounded-[2rem] flex-1 shadow-md relative overflow-hidden flex flex-col">
+            
+            <img src="assets/hiasan-kupu-kupu.png" class="absolute top-4 right-4 w-32 opacity-80 pointer-events-none z-10" alt="Butterfly">
+
+            <div class="flex justify-between items-center p-8 pb-0 z-10 relative">
+                <div class="flex items-center gap-2 text-xs font-medium text-gray-600">
+                    <i data-lucide="calendar" class="w-4 h-4"></i>
+                    <span id="currentDate">Senin, 20 April 2026</span>
+                </div>
+                <div class="absolute left-1/2 transform -translate-x-1/2 top-6">
+                    <h1 class="text-4xl font-diary font-bold tracking-widest text-[#2f4f3e] flex items-start gap-1">
+                        DIARYKU <img src="assets/ikon-hati-kecil.png" class="w-4 h-4 mt-1" alt="">
+                    </h1>
+                </div>
+                <div class="flex items-center gap-2 text-xs font-medium text-gray-600">
+                    <span id="currentTime">11:34</span>
+                    <i data-lucide="clock" class="w-4 h-4"></i>
+                </div>
+            </div>
+
+            <div class="flex-1 relative p-8 pt-6 z-10 flex flex-col justify-center">
+
+                <!-- TAHAP 1: PILIH MOOD -->
+                <div id="step-1" class="fade-enter fade-enter-active w-full flex items-center justify-center gap-8 h-full">
+                    <div class="w-1/3 flex justify-center">
+                        <img src="assets/images/m.membacabukutengah.png" alt="Pao Mascot" class="w-64 h-64 object-contain drop-shadow-xl animate-pulse">
+                    </div>
+                    <div class="w-2/3 flex flex-col items-center">
+                        <div class="speech-bubble-left mb-8 max-w-md">
+                            <p class="text-gray-700 text-sm leading-relaxed font-medium">
+                                Hai! 🌸<br>
+                                Gimana harimu hari ini?<br>
+                                Aku siap mendengarkan cerita kamu yaa!
+                            </p>
+                        </div>
+                        <h3 class="text-gray-700 font-semibold mb-4">Bagaimana perasaanmu?</h3>
+                        <div class="flex gap-4">
+                            <button onclick="pilihMood('Senang')" class="bg-white hover:bg-orange-50 border-2 border-transparent hover:border-orange-300 rounded-3xl p-4 flex flex-col items-center gap-2 shadow-sm transition-all hover:scale-105 group">
+                                <img src="assets/images/e.bahagia2.png" alt="Senang" class="w-12 h-12 object-contain group-hover:scale-110 transition-transform">
+                                <span class="text-xs font-bold text-orange-400">Senang</span>
+                            </button>
+                            <button onclick="pilihMood('Biasa aja')" class="bg-white hover:bg-green-50 border-2 border-transparent hover:border-green-300 rounded-3xl p-4 flex flex-col items-center gap-2 shadow-sm transition-all hover:scale-105 group">
+                                <img src="assets/images/e.bahagia.png" alt="Biasa aja" class="w-12 h-12 object-contain group-hover:scale-110 transition-transform">
+                                <span class="text-xs font-bold text-green-500">Biasa aja</span>
+                            </button>
+                            <button onclick="pilihMood('Sedih')" class="bg-white hover:bg-blue-50 border-2 border-transparent hover:border-blue-300 rounded-3xl p-4 flex flex-col items-center gap-2 shadow-sm transition-all hover:scale-105 group">
+                                <img src="assets/images/e.sedih.png" alt="Sedih" class="w-12 h-12 object-contain group-hover:scale-110 transition-transform">
+                                <span class="text-xs font-bold text-blue-400">Sedih</span>
+                            </button>
+                            <button onclick="pilihMood('Kesal')" class="bg-white hover:bg-red-50 border-2 border-transparent hover:border-red-300 rounded-3xl p-4 flex flex-col items-center gap-2 shadow-sm transition-all hover:scale-105 group">
+                                <img src="assets/images/e.marah.png" alt="Kesal" class="w-12 h-12 object-contain group-hover:scale-110 transition-transform">
+                                <span class="text-xs font-bold text-red-400">Kesal</span>
+                            </button>
+                            <button onclick="pilihMood('Lelah')" class="bg-white hover:bg-purple-50 border-2 border-transparent hover:border-purple-300 rounded-3xl p-4 flex flex-col items-center gap-2 shadow-sm transition-all hover:scale-105 group">
+                                <img src="assets/images/e.bingung.png" alt="Lelah" class="w-12 h-12 object-contain group-hover:scale-110 transition-transform">
+                                <span class="text-xs font-bold text-purple-400">Lelah</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAHAP 2: MENULIS DIARY -->
+                <div id="step-2" class="fade-enter hidden w-full h-full flex flex-col">
+                    <div class="flex justify-center mb-4">
+                        <div class="text-center text-sm font-medium text-gray-700">
+                            Bagus! Terima kasih sudah berbagi perasaanmu 💚<br>
+                            Sekarang, mau cerita apa hari ini?
+                        </div>
+                    </div>
+                    <div class="flex-1 bg-[#fdfaf2] rounded-3xl border border-orange-100 shadow-inner p-6 flex relative overflow-hidden">
+                        <div class="absolute left-2 top-0 bottom-0 w-8 flex flex-col justify-between py-8">
+                            <div class="w-4 h-4 rounded-full bg-[#f7f8eb] shadow-inner"></div>
+                            <div class="w-4 h-4 rounded-full bg-[#f7f8eb] shadow-inner"></div>
+                            <div class="w-4 h-4 rounded-full bg-[#f7f8eb] shadow-inner"></div>
+                            <div class="w-4 h-4 rounded-full bg-[#f7f8eb] shadow-inner"></div>
+                            <div class="w-4 h-4 rounded-full bg-[#f7f8eb] shadow-inner"></div>
+                            <div class="w-4 h-4 rounded-full bg-[#f7f8eb] shadow-inner"></div>
+                            <div class="w-4 h-4 rounded-full bg-[#f7f8eb] shadow-inner"></div>
+                        </div>
+                        <div class="ml-8 w-full h-full relative">
+                            <textarea id="diaryInput" class="diary-paper w-full h-full text-gray-700 text-[15px]" placeholder="Tuliskan ceritamu di sini..."></textarea>
+                        </div>
+                        <img src="assets/hiasan-tumpukan-buku.png" class="absolute bottom-0 left-0 w-32 pointer-events-none" alt="Books">
+                        <img src="assets/pao-kecil-semangat.png" class="absolute bottom-4 right-4 w-24 pointer-events-none drop-shadow-md" alt="Pao">
+                    </div>
+                    <div class="flex justify-center items-center gap-4 mt-6">
+                        <button onclick="kembaliKeAwal()" class="bg-white border border-gray-200 text-gray-600 px-6 py-2.5 rounded-xl text-sm font-semibold flex items-center gap-2 shadow-sm hover:bg-gray-50 transition-all hover:scale-105">
+                            <i data-lucide="x" class="w-4 h-4"></i> Batal
+                        </button>
+                        <button onclick="simpanDiary()" class="bg-[#5a866c] text-white px-10 py-3 rounded-xl text-sm font-bold flex items-center gap-2 shadow-md hover:bg-[#4a7259] transition-all hover:scale-105">
+                            <i data-lucide="save" class="w-4 h-4"></i> Simpan
+                        </button>
+                        <button class="bg-white border border-gray-200 text-gray-600 px-6 py-2.5 rounded-xl text-sm font-semibold flex items-center gap-2 shadow-sm hover:bg-gray-50 transition-all hover:scale-105">
+                            <i data-lucide="edit-3" class="w-4 h-4"></i> Edit
+                        </button>
+                        <button class="bg-red-50 border border-red-100 text-red-500 px-6 py-2.5 rounded-xl text-sm font-semibold flex items-center gap-2 shadow-sm hover:bg-red-100 transition-all hover:scale-105">
+                            <i data-lucide="trash-2" class="w-4 h-4"></i> Hapus
+                        </button>
+                    </div>
+                    <div class="text-center mt-6">
+                        <p class="text-sm font-diary text-gray-600 tracking-wide">
+                            "Setiap hari adalah kesempatan baru untuk menjadi versi terbaik dari dirimu. 🌸✨"
+                        </p>
+                    </div>
+                </div>
+
+                <!-- TAHAP 3: SUKSES -->
+                <div id="step-3" class="fade-enter hidden w-full h-full flex flex-col items-center justify-center relative">
+                    <div class="flex flex-col items-center gap-6 z-10">
+                        <div class="speech-bubble-left text-center max-w-sm">
+                            <p class="text-sm font-medium text-gray-700 leading-relaxed">
+                                Terima kasih sudah cerita hari ini! ✨<br>
+                                Aku senang bisa jadi bagian dari harimu.<br>
+                                Jangan lupa istirahat yaa! 💜
+                            </p>
+                        </div>
+                        <div class="bg-white border border-green-200 rounded-2xl p-4 px-6 flex items-center gap-4 shadow-md animate-bounce">
+                            <div class="bg-green-100 p-2 rounded-full text-green-600">
+                                <i data-lucide="check" class="w-6 h-6"></i>
+                            </div>
+                            <div class="text-left">
+                                <h4 class="font-bold text-sm text-green-700">Diary berhasil disimpan!</h4>
+                                <p class="text-xs text-gray-500" id="savedTime"></p>
+                            </div>
+                        </div>
+                        <button onclick="kembaliKeAwal()" class="mt-4 text-sm text-gray-500 hover:text-gray-800 underline">Tulis diary baru</button>
+                    </div>
+                    <img src="assets/hiasan-tumpukan-buku.png" class="absolute bottom-0 left-10 w-32 drop-shadow-sm" alt="Books">
+                    <img src="assets/pao-besar-duduk.png" class="absolute bottom-0 right-10 w-40 drop-shadow-md" alt="Pao">
+                </div>
+
+            </div>
+            
+            <div class="text-center pb-4 text-[10px] text-gray-400 font-medium">
+                © 2026 Diaryku. Semua ceritamu berharga. 💚
+            </div>
+        </div>
+
+        <!-- AREA BAWAH -->
+        <div class="flex gap-4 h-[120px] flex-shrink-0">
+            <div class="bg-[#edf6eb] rounded-[2rem] flex-1 p-4 px-6 flex items-center justify-between shadow-sm border border-white">
+                <div class="flex items-center gap-3">
+                    <img src="assets/ikon-fitur-tulis.png" class="w-10 h-10 object-contain drop-shadow-sm" alt="">
+                    <div>
+                        <h4 class="font-bold text-xs text-[#2f4f3e]">Tulis bebas</h4>
+                        <p class="text-[9px] text-gray-500 leading-tight">ceritakan semua<br>yang kamu rasakan</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <img src="assets/ikon-fitur-hati.png" class="w-10 h-10 object-contain drop-shadow-sm" alt="">
+                    <div>
+                        <h4 class="font-bold text-xs text-[#2f4f3e]">Ekspresikan perasaan</h4>
+                        <p class="text-[9px] text-gray-500 leading-tight">pilih mood yang sesuai<br>dengan harimu</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <img src="assets/ikon-fitur-gembok.png" class="w-10 h-10 object-contain drop-shadow-sm" alt="">
+                    <div>
+                        <h4 class="font-bold text-xs text-[#2f4f3e]">Privasi terjaga</h4>
+                        <p class="text-[9px] text-gray-500 leading-tight">semua ceritamu<br>aman dan rahasia</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <img src="assets/ikon-fitur-bintang.png" class="w-10 h-10 object-contain drop-shadow-sm" alt="">
+                    <div>
+                        <h4 class="font-bold text-xs text-[#2f4f3e]">Lihat kembali</h4>
+                        <p class="text-[9px] text-gray-500 leading-tight">kenangan indahmu<br>kapan pun kamu mau</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-[#edf6eb] rounded-[2rem] w-[350px] p-4 flex flex-col shadow-sm border border-white">
+                <div class="flex justify-between items-center mb-2 px-2">
+                    <h3 class="font-bold text-xs text-[#2f4f3e]">Riwayat Diary</h3>
+                    <a href="#" class="text-[10px] text-green-600 font-medium hover:underline">Lihat semua</a>
+                </div>
+                <div class="flex-1 flex gap-2 overflow-x-auto custom-scrollbar items-center pb-1">
+                    <div class="min-w-[130px] bg-white rounded-xl p-2.5 shadow-sm border border-gray-50 h-full flex flex-col justify-between cursor-pointer hover:shadow-md transition-shadow">
+                        <div class="flex justify-between items-start">
+                            <span class="text-[9px] font-bold text-gray-600">20 Apr 2026<br><span class="text-gray-400 font-normal">11:35</span></span>
+                            <img src="assets/mood-senang-ikon.png" class="w-5 h-5" alt="">
+                        </div>
+                        <p class="text-[9px] text-gray-600 line-clamp-2 mt-1">Hari ini aku belajar banyak hal baru di...</p>
+                    </div>
+                    <div class="min-w-[130px] bg-white rounded-xl p-2.5 shadow-sm border border-gray-50 h-full flex flex-col justify-between cursor-pointer hover:shadow-md transition-shadow">
+                        <div class="flex justify-between items-start">
+                            <span class="text-[9px] font-bold text-gray-600">19 Apr 2026<br><span class="text-gray-400 font-normal">21:12</span></span>
+                            <img src="assets/mood-sedih-ikon.png" class="w-5 h-5" alt="">
+                        </div>
+                        <p class="text-[9px] text-gray-600 line-clamp-2 mt-1">Aku sedikit sedih karena hujan seharian...</p>
+                    </div>
+                    <button class="bg-white rounded-full p-2 shadow-sm text-gray-400 hover:text-gray-800 ml-1">
+                        <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script>
+        // ==========================================
+        // KONEKSI UTAMA SUPABASE (Gunakan milikmu)
+        // ==========================================
+        const supabaseUrl = 'https://cyxmsawygqrunhinfvyj.supabase.co'; 
+        const supabaseKey = 'sb_publishable_3cxazIX...'; // 👈 Isi dengan anon key panjangmu
+        const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+
+        lucide.createIcons();
+
+        // 1. Inisialisasi Elemen HTML & Variabel Global
+        const step1 = document.getElementById('step-1');
+        const step2 = document.getElementById('step-2');
+        const step3 = document.getElementById('step-3');
+        const diaryInput = document.getElementById('diaryInput');
+        let moodTerpilih = ""; 
+        let currentUser = null; // 👈 Menampung data pengguna yang aktif
+
+        // ==========================================
+        // DETEKTOR SESI OTOMATIS & PROTEKSI HALAMAN (FITUR BARU)
+        // ==========================================
+        function proteksiHalamanOtomatis() {
+            supabaseClient.auth.onAuthStateChange((event, session) => {
+                if (session && session.user) {
+                    // JIKA USER SUDAH LOGIN AMAN:
+                    currentUser = session.user;
+                    console.log("Sesi aktif di diary:", currentUser.email);
+                } else {
+                    // JIKA USER BELUM LOGIN: langsung kunci dan lempar ke login
+                    alert("Akses ditolak. Yuk login terlebih dahulu! 🌸");
+                    window.location.href = "login.html";
+                }
+            });
+        }
+        // Jalankan pengunci halaman langsung saat file dibuka
+        proteksiHalamanOtomatis();
+
+        // ==========================================
+        // LOGIKA PROSES LOGOUT (UNTUK SIDEBAR BUTTON)
+        // ==========================================
+        async function prosesLogout() {
+            const konfirmasi = confirm("Apakah kamu yakin ingin keluar dari Selera? Kira bakal kangen kamu 🌸");
+            if (!konfirmasi) return;
+
+            const { error } = await supabaseClient.auth.signOut();
+            if (error) {
+                alert("Gagal logout: " + error.message);
+            } else {
+                sessionStorage.removeItem('startTime');
+                window.location.href = 'login.html';
+            }
+        }
+
+        // 2. Fungsi Animasi Perpindahan Halaman
+        function gantiStep(tutupElemen, bukaElemen) {
+            tutupElemen.classList.remove('fade-enter-active');
+            setTimeout(() => {
+                tutupElemen.classList.add('hidden');
+                bukaElemen.classList.remove('hidden');
+                setTimeout(() => { bukaElemen.classList.add('fade-enter-active'); }, 10);
+            }, 300);
+        }
+
+        // 3. Fungsi Saat Mood Diklik
+        function pilihMood(mood) {
+            moodTerpilih = mood; 
+            gantiStep(step1, step2);
+            setTimeout(() => { diaryInput.focus(); }, 400);
+        }
+
+        // 4. Fungsi Kirim Data ke Supabase 
+        async function simpanDiary() {
+            const ceritaUser = diaryInput.value;
+
+            if (ceritaUser.trim() === '') {
+                alert("Jangan lupa tulis ceritamu dulu ya sebelum disimpan! 🌸");
+                return;
+            }
+
+            // Memastikan variabel currentUser hasil deteksi otomatis sudah siap
+            if (!currentUser) {
+                alert('Kamu harus login terlebih dahulu untuk menyimpan diary! 🔐');
+                window.location.href = "login.html";
+                return;
+            }
+
+            // Kirim data cerita, mood, DAN user_id ke tabel 'diary'
+            const { data, error } = await supabaseClient
+                .from('diary')
+                .insert([
+                    { 
+                        cerita: ceritaUser,
+                        mood: moodTerpilih,
+                        user_id: currentUser.id // 👈 Menggunakan id dari sesi detektor otomatis
+                    }
+                ]);
+
+            if (error) {
+                console.error('Database Error:', error);
+                alert('Aduh, gagal menyimpan cerita ke database 😢');
+            } else {
+                // JIKA BERHASIL: Tampilkan waktu sukses di UI (Step 3)
+                const now = new Date();
+                const months = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+                
+                document.getElementById('savedTime').innerText =
+                    `${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()} - ${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
+                
+                gantiStep(step2, step3);
+            }
+        }
+
+        // 5. Fungsi Reset Tampilan / Mulai Ulang
+        function kembaliKeAwal() {
+            diaryInput.value = '';
+            moodTerpilih = ""; 
+            if (!step2.classList.contains('hidden')) gantiStep(step2, step1);
+            else if (!step3.classList.contains('hidden')) gantiStep(step3, step1);
+        }
+
+        // 6. Sistem Update Waktu Otomatis di Pojok Atas
+        function updateDateTime() {
+            const now = new Date();
+            const days = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
+            const months = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+            document.getElementById('currentDate').innerText = `${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
+            document.getElementById('currentTime').innerText = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
+        }
+        setInterval(updateDateTime, 1000);
+        updateDateTime();
+
+        // 7. Fitur Sidebar Auto-Collapse
+        document.addEventListener("DOMContentLoaded", () => {
+            const sidebar = document.getElementById("sidebar");
+            let isAutoCollapsed = false;
+            setTimeout(() => { sidebar.classList.add("collapsed"); isAutoCollapsed = true; }, 3000);
+            sidebar.addEventListener("mouseenter", () => { if (isAutoCollapsed) sidebar.classList.remove("collapsed"); });
+            sidebar.addEventListener("mouseleave", () => { if (isAutoCollapsed) sidebar.classList.add("collapsed"); });
+        });
+    </script>
+</body>
+</html>

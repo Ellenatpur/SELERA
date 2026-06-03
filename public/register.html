@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selera - Register</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sacramento&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .font-logo { font-family: 'Sacramento', cursive; }
+        
+        /* Bubble Chat Custom (Ekor Kanan untuk halaman ini) */
+        .speech-bubble-right {
+            position: relative;
+            background: #ffffff;
+            border-radius: 2rem;
+            padding: 1rem 1.5rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+        .speech-bubble-right::before {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            right: 20px;
+            border-width: 15px 0 0 15px;
+            border-style: solid;
+            border-color: #ffffff transparent transparent transparent;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body class="min-h-screen flex bg-white overflow-hidden">
+
+    <div id="left-panel" class="hidden lg:flex w-1/2 bg-[#e6f3e6] relative overflow-hidden flex-col p-12 z-10 border-r border-gray-100">
+        
+        <img src="assets/images/bungapink.png" class="absolute top-0 left-0 w-full h-full object-cover opacity-50 z-0" alt="">
+        <img src="assets/images/bungaindah.png" class="absolute bottom-0 left-0 w-full object-contain z-10" alt="">
+
+        <div class="flex flex-col items-start relative z-20">
+            <div class="relative flex items-center">
+                <img src="assets/images/Selera.png" alt="Logo Selera" class="h-12 w-auto object-contain">
+                <img src="assets/images/bintang.png" alt="Heart" class="w-4 h-4 ml-2 mb-4">
+            </div>
+            <p class="text-[10px] text-gray-500 mt-1 flex items-center gap-1">
+                Tempat terbaik untuk dirimu sendiri <img src="assets/images/daunjatuh.png" class="w-3 h-3" alt="">
+            </p>
+        </div>
+
+        <div class="flex-1 flex items-center justify-center relative z-20">
+            <div class="absolute top-10 right-10 z-30 animate-pulse">
+                <div class="speech-bubble-right text-center border border-pink-100">
+                    <p class="text-xs font-medium text-gray-700">
+                        Yay! Gabung yuk! <span class="text-pink-400">♥</span><br>
+                        Buat akunmu dan mulai<br>perjalanan seru bersama<br>Kira 🌸
+                    </p>
+                </div>
+            </div>
+            
+            <img src="assets/images/m.membacabukutengah.png" alt="Kira Mascot" class="w-[450px] object-contain drop-shadow-xl hover:-translate-y-2 transition-transform duration-500 mt-10">
+        </div>
+    </div>
+
+    <div class="w-full lg:w-1/2 bg-[#fdfefb] flex flex-col p-8 lg:p-12 relative overflow-y-auto justify-center z-0">
+        
+        <div class="m-auto w-full max-w-md flex flex-col">
+            
+            <div class="text-left mb-8">
+                <h1 class="text-3xl font-bold text-[#2f4f3e] flex items-center gap-2 mb-2">
+                    REGISTER <img src="assets/images/daunsemanggi.png" class="w-6 h-6" alt="">
+                </h1>
+                <p class="text-sm text-gray-500">Buat akun untuk memulai<br>perjalanan seru bersama Kira 🌸</p>
+            </div>
+
+            <form class="flex flex-col gap-3.5" onsubmit="event.preventDefault();">
+                <div class="flex items-center bg-white border border-gray-200 rounded-xl px-4 py-3 focus-within:border-pink-300 focus-within:ring-2 focus-within:ring-pink-100 focus-within:-translate-y-1 focus-within:shadow-md transition-all duration-300 shadow-sm">
+                    <i data-lucide="user" class="w-5 h-5 text-pink-400 mr-3"></i>
+                    <input type="text" id="regNama" placeholder="Nama lengkap" class="flex-1 bg-transparent outline-none text-sm text-gray-700 placeholder-gray-400" required>
+                </div>
+
+                <div class="flex items-center bg-white border border-gray-200 rounded-xl px-4 py-3 focus-within:border-pink-300 focus-within:ring-2 focus-within:ring-pink-100 focus-within:-translate-y-1 focus-within:shadow-md transition-all duration-300 shadow-sm">
+                    <i data-lucide="mail" class="w-5 h-5 text-pink-400 mr-3"></i>
+                    <input type="email" id="regEmail" placeholder="Email" class="flex-1 bg-transparent outline-none text-sm text-gray-700 placeholder-gray-400" required>
+                </div>
+
+                <div class="flex items-center bg-white border border-gray-200 rounded-xl px-4 py-3 focus-within:border-pink-300 focus-within:ring-2 focus-within:ring-pink-100 focus-within:-translate-y-1 focus-within:shadow-md transition-all duration-300 shadow-sm">
+                    <i data-lucide="lock" class="w-5 h-5 text-pink-400 mr-3"></i>
+                    <input type="password" id="regPassword" placeholder="Password" class="flex-1 bg-transparent outline-none text-sm text-gray-700 placeholder-gray-400" required>
+                </div>
+
+                <div class="flex items-center bg-white border border-gray-200 rounded-xl px-4 py-3 focus-within:border-pink-300 focus-within:ring-2 focus-within:ring-pink-100 focus-within:-translate-y-1 focus-within:shadow-md transition-all duration-300 shadow-sm">
+                    <i data-lucide="lock" class="w-5 h-5 text-pink-400 mr-3"></i>
+                    <input type="password" id="regKonfirmasiPassword" placeholder="Konfirmasi password" class="flex-1 bg-transparent outline-none text-sm text-gray-700 placeholder-gray-400" required>
+                </div>
+
+                <div class="flex items-start gap-2 mt-2 mb-2 px-1">
+                    <input type="checkbox" id="regSetuju" class="w-4 h-4 mt-0.5 rounded border-gray-300 text-pink-400 focus:ring-pink-300 accent-pink-400 cursor-pointer" required>
+                    <label for="regSetuju" class="text-[11px] text-gray-600 leading-tight cursor-pointer">
+                        Saya setuju dengan <a href="#" class="text-pink-500 hover:underline">Syarat & Ketentuan</a> dan <a href="#" class="text-pink-500 hover:underline">Kebijakan Privasi</a>
+                    </label>
+                </div>
+
+                <button type="button" onclick="prosesRegister()" class="w-full bg-[#f98ab3] hover:bg-[#f074a1] text-white font-bold py-3.5 rounded-xl shadow-md transition-transform hover:scale-[1.02] flex items-center justify-center gap-2">
+                    Daftar <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+            </form>
+
+            <p class="text-xs text-center text-gray-500 mt-8">
+                Sudah punya akun? <a href="login.html" class="text-pink-500 hover:text-pink-600 font-semibold hover:underline">Masuk di sini</a>
+            </p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // 1. KONEKSI SUPABASE
+        const supabaseUrl = 'https://cyxmsawygqrunhinfvyj.supabase.co'; // Ganti dengan URL Supabase aslimu
+        const supabaseKey = 'sb_publishable_3cxazIXr7B0ypa2fN6YVxw_jQyA6TDY';        // Ganti dengan anon key Supabase aslimu
+        const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+
+        // Inisialisasi Ikon Lucide
+        lucide.createIcons();
+
+        // 2. LOGIKA REGISTER
+        async function prosesRegister() {
+            const nama = document.getElementById('regNama').value.trim();
+            const email = document.getElementById('regEmail').value.trim();
+            const password = document.getElementById('regPassword').value;
+            const konfirmasiPassword = document.getElementById('regKonfirmasiPassword').value;
+            const setujuCheckbox = document.getElementById('regSetuju').checked;
+
+            // Validasi input kosong
+            if (!nama || !email || !password || !konfirmasiPassword) {
+                alert('Semua kolom formulir harus diisi yaa! 🌸');
+                return;
+            }
+
+            // Validasi kesamaan password
+            if (password !== konfirmasiPassword) {
+                alert('Password dan Konfirmasi Password belum sama, coba dicek lagi ya! 🍯');
+                return;
+            }
+
+            // Validasi checkbox S&K
+            if (!setujuCheckbox) {
+                alert('Kamu harus menyetujui Syarat & Ketentuan terlebih dahulu ✨');
+                return;
+            }
+
+            // Mengirim data pendaftaran ke Supabase Auth
+            const { data, error } = await supabaseClient.auth.signUp({
+                email: email,
+                password: password,
+                options: {
+                    data: {
+                        display_name: nama // Menyimpan nama lengkap ke dalam metadata user
+                    }
+                }
+            });
+
+            if (error) {
+                console.error('Pendaftaran gagal:', error.message);
+                alert('Aduh, gagal mendaftar: ' + error.message);
+            } else {
+                alert('Yeeay! Akunmu berhasil dibuat. Sekarang yuk kita login! 🥰🌸');
+                window.location.href = 'login.html';
+            }
+        }
+    </script>
+</body>
+</html>

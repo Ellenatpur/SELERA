@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selera - Chat Kira</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght=400;500;600;700&family=Playfair+Display:ital,wght=1,700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #B7B1F2; }
+
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background-color: #ffffff90; border-radius: 20px; }
+
+        /* Sidebar collapse */
+        #sidebar {
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-x: hidden;
+            white-space: nowrap;
+        }
+        #sidebar.collapsed {
+            width: 88px;
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+        #sidebar.collapsed .hide-on-collapse {
+            display: none !important;
+        }
+        #sidebar.collapsed .nav-item {
+            justify-content: center;
+            padding-left: 0;
+            padding-right: 0;
+        }
+        #sidebar.collapsed .nav-icon {
+            margin-right: 0 !important;
+        }
+        #sidebar.collapsed .sidebar-bottom {
+            display: none !important;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-msg { animation: fadeIn 0.3s ease-out forwards; }
+    </style>
+</head>
+<body class="min-h-screen flex p-4 gap-4 text-gray-800">
+
+    <aside id="sidebar" class="w-[280px] bg-[#edfce3] rounded-[2rem] flex flex-col justify-between p-6 shadow-md z-10 relative flex-shrink-0">
+        <div>
+            <div class="text-center mb-8 flex flex-col items-center hide-on-collapse">
+                <img src="assets/images/Selera.png" alt="Logo Selera" class="w-full max-w-[200px] h-auto object-contain mb-2 drop-shadow-sm"/>
+                <div class="h-1 w-full bg-gradient-to-r from-transparent via-yellow-600 to-transparent mb-2 rounded-full opacity-50"></div>
+                <p class="text-xs text-gray-600 px-4">Tempat terbaik untuk menjadi dirimu sendiri</p>
+            </div>
+
+            <nav class="space-y-2">
+                <a href="homepage.html" class="nav-item w-full flex items-center px-4 py-3 rounded-2xl transition-colors text-gray-600 hover:bg-[#dff0f6] hover:text-black hover:shadow-sm">
+                    <i data-lucide="home" class="nav-icon w-6 h-6 mr-4 flex-shrink-0"></i>
+                    <span class="text-sm hide-on-collapse">Home</span>
+                </a>
+                <a href="diary.html" class="nav-item w-full flex items-center px-4 py-3 rounded-2xl transition-colors text-gray-600 hover:bg-[#dff0f6] hover:text-black hover:shadow-sm">
+                    <i data-lucide="book" class="nav-icon w-6 h-6 mr-4 flex-shrink-0"></i>
+                    <span class="text-sm hide-on-collapse">Diary</span>
+                </a>
+                <a href="todolist.html" class="nav-item w-full flex items-center px-4 py-3 rounded-2xl transition-colors text-gray-600 hover:bg-[#dff0f6] hover:text-black hover:shadow-sm">
+                    <i data-lucide="check-square" class="nav-icon w-6 h-6 mr-4 flex-shrink-0"></i>
+                    <span class="text-sm hide-on-collapse">To Do List</span>
+                </a>
+                <a href="chatkira.html" class="nav-item w-full flex items-center px-4 py-3 rounded-2xl transition-colors bg-[#dff0f6] text-black font-semibold shadow-sm">
+                    <i data-lucide="message-circle" class="nav-icon w-6 h-6 mr-4 flex-shrink-0"></i>
+                    <span class="text-sm hide-on-collapse">Chat Kira</span>
+                </a>
+                <a href="runtunan.html" class="nav-item w-full flex items-center px-4 py-2.5 rounded-2xl transition-colors text-gray-600 hover:bg-[#dff0f6] hover:text-black hover:shadow-sm">
+                    <i data-lucide="star" class="nav-icon w-5 h-5 mr-4 flex-shrink-0"></i>
+                    <span class="text-sm hide-on-collapse">Runtunan</span>
+                </a>
+                <a href="#" class="nav-item w-full flex items-center px-4 py-2.5 rounded-2xl transition-colors text-gray-600 hover:bg-[#dff0f6] hover:text-black hover:shadow-sm">
+                    <i data-lucide="smile" class="nav-icon w-5 h-5 mr-4 flex-shrink-0"></i>
+                    <span class="text-sm hide-on-collapse">Mood Tracker</span>
+                </a>
+                <button onclick="prosesLogout()" class="w-full flex items-center px-4 py-2.5 rounded-2xl transition-colors text-red-500 hover:bg-red-50/60 mt-4 group text-left">
+                    <i data-lucide="log-out" class="w-5 h-5 mr-4 group-hover:scale-110 transition-transform"></i>
+                    <span class="text-sm font-medium">Keluar</span>
+                </button>
+            </nav>
+        </div>
+
+        <div class="sidebar-bottom flex flex-col items-center mt-10 relative group">
+            <div class="absolute -top-16 left-2 z-20 transition-transform duration-300 group-hover:-translate-y-2 group-hover:scale-110">
+                <img src="assets/images/e.bahagia2.png" alt="Kira Mascot" class="w-24 h-24 object-contain drop-shadow-md"/>
+            </div>
+            <div class="bg-[#feffb5] w-full p-4 pt-8 rounded-xl shadow-md text-center text-sm font-medium relative z-10 border border-yellow-200 transition-all duration-300 hover:shadow-lg hover:scale-[1.02]">
+                Kira akan selalu ada di sisimu :)
+            </div>
+            <button class="mt-8 bg-[#fcdcdc] hover:bg-[#f5c6c6] hover:scale-105 transition-all duration-300 py-2 px-8 rounded-xl font-medium shadow-md text-sm">
+                By Lucinee
+            </button>
+        </div>
+    </aside>
+
+    <main class="flex-[2] bg-white/30 backdrop-blur-lg rounded-[2rem] overflow-hidden flex flex-col shadow-md relative border border-white/50 z-10 transition-all duration-500">
+        
+        <header class="bg-white/40 backdrop-blur-sm p-6 py-4 flex justify-between items-center border-b border-white/30 z-10">
+            <div class="flex items-center gap-3">
+                <i data-lucide="message-circle" class="w-6 h-6 text-gray-700"></i>
+                <div>
+                    <h2 class="text-xl font-bold text-gray-800">Chat dengan Kira</h2>
+                    <p class="text-xs text-gray-600">Ngobrol bebas dengan Kira, kapan pun kamu mau! 🌸</p>
+                </div>
+            </div>
+            <button class="bg-white/60 hover:bg-white text-gray-700 px-4 py-2 rounded-full text-xs font-semibold flex items-center gap-2 shadow-sm transition-all hover:scale-105">
+                <i data-lucide="clock" class="w-4 h-4"></i> Riwayat Chat
+            </button>
+        </header>
+
+        <div id="chatBox" class="flex-1 p-6 overflow-y-auto custom-scrollbar flex flex-col gap-6 relative z-10">
+            
+            <div class="flex gap-3 max-w-[85%] animate-msg">
+                <img src="assets/images/e.bahagia2.png" alt="Kira" class="w-12 h-12 object-contain drop-shadow-sm self-end" />
+                <div>
+                    <span class="text-xs font-bold text-gray-700 ml-2">Kira <span class="text-pink-400">♥</span></span>
+                    <div class="bg-white p-4 rounded-2xl rounded-bl-none shadow-sm mt-1 text-sm text-gray-700 leading-relaxed relative">
+                        Haii, Lucinee! 🌸<br>
+                        Mau cerita apa hari ini? Aku siap jadi pendengar setia dan menemanimu melewati hari!
+                        <span class="text-[9px] text-gray-400 absolute bottom-2 right-3">Baru saja</span>
+                    </div>
+                </div>
+            </div>
+
+            <div id="typingIndicator" class="flex gap-3 mt-2 hidden animate-msg">
+                <img src="assets/images/e.bahagia2.png" alt="Kira" class="w-10 h-10 object-contain opacity-70 self-end" />
+                <div class="bg-white/80 p-3 px-5 rounded-2xl rounded-bl-none shadow-sm flex items-center gap-2">
+                    <span class="text-xs font-medium text-gray-500 mr-2">sedang mengetik</span>
+                    <div class="flex gap-1">
+                        <div class="w-1.5 h-1.5 bg-[#6b9080] rounded-full animate-bounce"></div>
+                        <div class="w-1.5 h-1.5 bg-[#6b9080] rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
+                        <div class="w-1.5 h-1.5 bg-[#6b9080] rounded-full animate-bounce" style="animation-delay: 0.4s"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="absolute bottom-20 right-0 left-0 z-0 pointer-events-none flex justify-center opacity-80">
+            
+        </div>
+
+        <div class="p-4 bg-white/40 backdrop-blur-md border-t border-white/30 z-10">
+            <div class="flex items-center gap-3 bg-white p-2 rounded-2xl shadow-sm">
+                <button class="p-2 text-gray-400 hover:text-gray-600 transition-colors bg-[#edfce3] rounded-xl">
+                    <img src="assets/images/e.bahagia2.png" class="w-6 h-6 object-contain" alt="Kira Icon">
+                </button>
+                <input id="userInput" type="text" placeholder="Ketik pesanmu di sini..." onkeypress="handleKeyPress(event)"
+                    class="flex-1 bg-transparent outline-none text-sm text-gray-700 px-2 placeholder-gray-400"/>
+                <button class="p-2 text-gray-400 hover:text-gray-600 transition-colors">
+                    <i data-lucide="smile" class="w-6 h-6"></i>
+                </button>
+                <button id="sendBtn" onclick="kirimPesan()" class="p-3 bg-[#6b9080] hover:bg-[#5a7a6c] text-white rounded-xl shadow-md transition-all hover:scale-105">
+                    <i data-lucide="send" class="w-5 h-5"></i>
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <aside class="w-[320px] flex flex-col gap-4 flex-shrink-0 z-10">
+        <div class="bg-white/30 backdrop-blur-lg rounded-[1.5rem] p-5 shadow-md flex flex-col items-center border border-white/50 hover:scale-[1.02] transition-transform">
+            <div class="w-full bg-white rounded-2xl p-4 shadow-sm flex items-center gap-4 relative overflow-hidden">
+                <img src="assets/images/e.bahagia2.png" alt="Kira Mascot" class="w-20 h-20 object-contain drop-shadow-md z-10">
+                <div class="z-10">
+                    <h3 class="font-bold text-2xl text-gray-800">Kira <span class="text-pink-400 text-lg">♥</span></h3>
+                    <p class="text-xs text-gray-600 font-medium">Teman terbaikmu</p>
+                    <span class="mt-2 inline-block bg-[#edfce3] text-[#5a7a6c] text-[10px] font-bold px-3 py-1 rounded-full border border-green-200">Pendengar Setia</span>
+                </div>
+            </div>
+            <p class="text-xs text-gray-800 mt-4 text-center leading-relaxed font-medium">
+                Kira selalu siap mendengar cerita kamu, memberi semangat, dan menemanimu melewati hari-harimu. 🌼
+            </p>
+        </div>
+
+        <div class="bg-white/30 backdrop-blur-lg rounded-[1.5rem] p-5 shadow-md border border-white/50 hover:scale-[1.02] transition-transform">
+            <div class="flex items-center gap-2 mb-3">
+                <i data-lucide="smile" class="w-5 h-5 text-gray-700"></i>
+                <h3 class="font-bold text-sm text-gray-800">Mood Kira Hari Ini</h3>
+            </div>
+            <p class="text-[11px] text-gray-700 mb-4">Kira lagi semangat nemenin kamu!</p>
+            <div class="flex justify-center">
+                <img src="assets/images/e.bahagia.png" alt="Matahari Senang" class="w-16 h-16 drop-shadow-md animate-pulse">
+            </div>
+        </div>
+
+        <div class="bg-white/30 backdrop-blur-lg rounded-[1.5rem] p-5 shadow-md border border-white/50 flex-1 hover:scale-[1.02] transition-transform">
+            <div class="flex items-center gap-2 mb-4">
+                <i data-lucide="check-square" class="w-5 h-5 text-gray-700"></i>
+                <h3 class="font-bold text-sm text-gray-800">Topik yang Bisa Kamu Ceritakan</h3>
+            </div>
+            <div class="flex flex-col gap-2.5">
+                <button onclick="fillInput('Cerita hari ini')" class="bg-white/80 hover:bg-white text-left px-4 py-2.5 rounded-xl shadow-sm text-xs font-medium text-gray-700 flex items-center gap-3 transition-colors">
+                    <i data-lucide="book" class="w-4 h-4 text-gray-500"></i> Cerita hari ini
+                </button>
+                <button onclick="fillInput('Aku lagi ada beban pikiran nih, Kira...')" class="bg-white/80 hover:bg-white text-left px-4 py-2.5 rounded-xl shadow-sm text-xs font-medium text-gray-700 flex items-center gap-3 transition-colors">
+                    <i data-lucide="cloud" class="w-4 h-4 text-gray-500"></i> Masalah atau beban pikiran
+                </button>
+                <button onclick="fillInput('Ada hal yang bikin aku seneng banget hari ini!')" class="bg-white/80 hover:bg-white text-left px-4 py-2.5 rounded-xl shadow-sm text-xs font-medium text-gray-700 flex items-center gap-3 transition-colors">
+                    <i data-lucide="star" class="w-4 h-4 text-gray-500"></i> Hal yang bikin senang
+                </button>
+            </div>
+        </div>
+    </aside>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // ==========================================
+        // 1. KONEKSI SUPABASE
+        // ==========================================
+        const supabaseUrl = 'https://cyxmsawygqrunhinfvyj.supabase.co'; 
+        const supabaseKey = 'sb_publishable_3cxazIXr7B0ypa2fN6YVxw_jQyA6TDY';        
+        const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+
+        lucide.createIcons();
+        let currentUser = null;
+
+        // ==========================================
+        // 2. DETEKSI LOGIN RESMI (SUDAH DIPERBAIKI)
+        // ==========================================
+        function proteksiHalamanOtomatis() {
+            supabaseClient.auth.onAuthStateChange((event, session) => {
+                if (session && session.user) {
+                    currentUser = session.user;
+                    console.log("Sesi aktif Chat Kira ditemukan untuk:", currentUser.email);
+                } else {
+                    alert("Akses ditolak. Yuk login terlebih dahulu! 🌸");
+                    window.location.href = "login.html";
+                }
+            });
+        }
+
+        // Jalankan pengunci halaman dengan nama fungsi yang benar
+        proteksiHalamanOtomatis();
+
+        // ==========================================
+        // 3. LOGIKA INTERAKSI CHAT ENGINE
+        // ==========================================
+        function fillInput(text) {
+            const inputField = document.getElementById('userInput');
+            inputField.value = text;
+            inputField.focus();
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                kirimPesan();
+            }
+        }
+
+        function kirimPesan() {
+            const inputField = document.getElementById('userInput');
+            const pesanTeks = inputField.value.trim();
+            if (!pesanTeks) return;
+
+            const chatBox = document.getElementById('chatBox');
+            const typingIndicator = document.getElementById('typingIndicator');
+
+            // 1. Cetak Pesan User ke Layar
+            const userBubble = `
+                <div class="flex gap-3 max-w-[85%] align-self-end ml-auto justify-end animate-msg">
+                    <div class="text-right">
+                        <span class="text-xs font-bold text-gray-700 mr-2">Kamu</span>
+                        <div class="bg-[#6b9080] text-white p-4 rounded-2xl rounded-br-none shadow-sm mt-1 text-sm leading-relaxed relative text-left">
+                            ${pesanTeks}
+                            <span class="text-[9px] text-gray-200/70 block text-right mt-2">Baru saja</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Masukkan sebelum indikator mengetik
+            typingIndicator.insertAdjacentHTML('beforebegin', userBubble);
+            inputField.value = '';
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            // 2. Munculkan Efek Mengetik Kira
+            typingIndicator.classList.remove('hidden');
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            // 3. Jawaban Pintar Simulasi Kira (Delay 2 Detik)
+            setTimeout(() => {
+                typingIndicator.classList.add('hidden');
+
+                let balasanKira = `Wah, terima kasih sudah berbagi cerita denganku! Aku senang sekali bisa mendengarkanmu. Tetap semangat ya, kamu tidak sendirian! ✨🌸`;
+                
+                if (pesanTeks.toLowerCase().includes('beban') || pesanTeks.toLowerCase().includes('pikir')) {
+                    balasanKira = `Meskipun harimu terasa berat, ingat ya kalau kamu sudah berusaha melakukan yang terbaik. Tarik napas pelan-pelan, aku di sini siap menemanimu kok. Semangat, Lucinee! 🥺💕`;
+                } else if (pesanTeks.toLowerCase().includes('senang') || pesanTeks.toLowerCase().includes('senen')) {
+                    balasanKira = `Yeay! Ikut seneng dengernya! 🥰 Semoga kebahagiaan ini bertahan lama dan hari-harimu ke depan selalu dipenuhi senyuman indah ya!`;
+                }
+
+                const kiraBubble = `
+                    <div class="flex gap-3 max-w-[85%] animate-msg">
+                        <img src="assets/images/e.bahagia2.png" alt="Kira" class="w-12 h-12 object-contain drop-shadow-sm self-end" />
+                        <div>
+                            <span class="text-xs font-bold text-gray-700 ml-2">Kira <span class="text-pink-400">♥</span></span>
+                            <div class="bg-white p-4 rounded-2xl rounded-bl-none shadow-sm mt-1 text-sm text-gray-700 leading-relaxed relative">
+                                ${balasanKira}
+                                <span class="text-[9px] text-gray-400 absolute bottom-2 right-3">Baru saja</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                typingIndicator.insertAdjacentHTML('beforebegin', kiraBubble);
+                chatBox.scrollTop = chatBox.scrollHeight;
+                lucide.createIcons();
+            }, 2000);
+        }
+
+        // ==========================================
+        // 4. LOGOUT ENGINE
+        // ==========================================
+        async function prosesLogout() {
+            const konfirmasi = confirm("Apakah kamu yakin ingin keluar dari Selera? Kira bakal kangen kamu 🌸");
+            if (!konfirmasi) return;
+
+            const { error } = await supabaseClient.auth.signOut();
+            if (error) {
+                alert("Gagal logout: " + error.message);
+            } else {
+                sessionStorage.removeItem('startTime');
+                window.location.href = 'login.html';
+            }
+        }
+    </script>
+</body>
+</html>

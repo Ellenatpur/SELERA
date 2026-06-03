@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selera - Tempat terbaik untuk dirimu sendiri</title>
+    
+    <!-- Menggunakan Tailwind CSS untuk styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Menggunakan Google Fonts (Nunito untuk kesan membulat dan lucu) -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Menggunakan Phosphor Icons untuk ikon yang lembut -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Nunito', 'sans-serif'],
+                    },
+                    colors: {
+                        pastel: {
+                            blue: '#D6EAF8',
+                            blueDark: '#A9CCE3',
+                            pink: '#FADBD8',
+                            pinkDark: '#F5B7B1',
+                            yellow: '#FCF3CF',
+                            green: '#D5F5E3',
+                            purple: '#E8DAEF',
+                            text: '#4A4A4A',
+                            textLight: '#7B7B7B'
+                        }
+                    },
+                    boxShadow: {
+                        'soft': '0 10px 40px -10px rgba(0,0,0,0.08)',
+                        'float': '0 20px 40px -5px rgba(0,0,0,0.1)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            /* Warna background diubah menjadi #FFDCDC */
+            background-color: #FFDCDC;
+            min-height: 100vh;
+        }
+        
+        .floating-bubble {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        /* Animasi masuk untuk elemen */
+        .fade-in-up {
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Efek blur transisi lembut di tepi gambar agar menyatu dengan background */
+        .feather-blur-edges {
+            box-shadow: 0 0 40px 20px #FFDCDC;
+        }
+    </style>
+</head>
+<body class="text-pastel-text font-sans antialiased overflow-x-hidden selection:bg-pastel-pink selection:text-pastel-text">
+
+    <div class="max-w-6xl mx-auto px-6 py-8 relative">
+        
+        <!-- ================= GAMBAR DEKORASI LATAR BELAKANG ================= -->
+        <!-- Silakan ganti src dengan gambar bintang, awan, daun, atau bunga kecil Anda -->
+        <img src="assets/images/bintang.png" alt="Dekorasi Bintang" class="absolute top-10 right-10 lg:right-20 w-16 md:w-24 floating-bubble opacity-70 hidden md:block z-0">
+        <img src="assets/images/kupukupuungu.png" alt="Dekorasi Awan" class="absolute top-1/3 -left-10 w-20 md:w-32 floating-bubble opacity-60 hidden lg:block z-0" style="animation-delay: 1.5s;">
+        <img src="assets/images/kupukupuputih.png" alt="Dekorasi Daun" class="absolute top-2/3 right-0 w-16 md:w-20 floating-bubble opacity-80 hidden md:block z-0" style="animation-delay: 0.5s;">
+        <!-- ================================================================== -->
+
+        <!-- Header Kecil Kiri Atas -->
+        <header class="mb-12 fade-in-up relative z-10" style="animation-delay: 0.1s;">
+            <!-- Gunakan gambar logo untuk text atas -->
+            <div class="flex flex-col">
+                <!-- LOGO DIPERBESAR (dari h-8 menjadi h-16 / md:h-24) -->
+                <img src="assets/images/Selera.png" alt="Selera Logo" class="h-16 md:h-24 object-contain object-left mb-2">
+                <span class="text-sm md:text-base text-pastel-textLight font-semibold tracking-wide">Tempat terbaik untuk dirimu sendiri</span>
+            </div>
+        </header>
+
+        <!-- Hero Section Utama -->
+        <main class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            
+            <!-- Kolom Kiri: Teks & Fitur -->
+            <div class="lg:col-span-6 space-y-8 fade-in-up" style="animation-delay: 0.2s;">
+                
+                <div>
+                    <h2 class="text-xl md:text-2xl font-bold text-pastel-textLight mb-2">Hi, selamat datang di</h2>
+                    
+                    <!-- TULISAN SELERA DIKEMBALIKAN MENJADI TEKS -->
+                    <h1 class="text-6xl md:text-[5.5rem] font-black text-[#4A4A4A] tracking-tight mb-4 drop-shadow-sm leading-none">
+                        Selera
+                    </h1>
+                         
+                    <p class="text-lg md:text-xl text-pastel-textLight leading-relaxed">
+                        Selera hadir untuk menemanimu menulis, merencanakan, dan mengekspresikan perasaan dengan lebih mudah.
+                    </p>
+                </div>
+
+                <!-- List Fitur -->
+                <div class="space-y-4">
+                    <!-- Fitur 1 -->
+                    <div class="bg-white/70 backdrop-blur-sm p-4 rounded-2xl shadow-soft flex items-center gap-4 hover:bg-white transition duration-300 transform hover:-translate-y-1">
+                        <div class="w-12 h-12 rounded-full bg-pastel-green flex items-center justify-center shrink-0 text-green-600">
+                            <i class="ph-fill ph-plant text-2xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-md">Tulis diary harianmu</h4>
+                            <p class="text-sm text-pastel-textLight">Luapkan isi hati dan kenanganmu kapan saja.</p>
+                        </div>
+                    </div>
+
+                    <!-- Fitur 2 -->
+                    <div class="bg-white/70 backdrop-blur-sm p-4 rounded-2xl shadow-soft flex items-center gap-4 hover:bg-white transition duration-300 transform hover:-translate-y-1">
+                        <div class="w-12 h-12 rounded-full bg-pastel-pink flex items-center justify-center shrink-0 text-red-400">
+                            <i class="ph-fill ph-clipboard-text text-2xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-md">Buat to-do list & atur aktivitas</h4>
+                            <p class="text-sm text-pastel-textLight">Bantu kamu lebih produktif dan terorganisir.</p>
+                        </div>
+                    </div>
+
+                    <!-- Fitur 3 -->
+                    <div class="bg-white/70 backdrop-blur-sm p-4 rounded-2xl shadow-soft flex items-center gap-4 hover:bg-white transition duration-300 transform hover:-translate-y-1">
+                        <div class="w-12 h-12 rounded-full bg-pastel-blueDark flex items-center justify-center shrink-0 text-blue-600 opacity-80">
+                            <i class="ph-fill ph-heart text-2xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-md">Kenali & ekspresikan perasaanmu</h4>
+                            <p class="text-sm text-pastel-textLight">Pahami emosi, jaga kesehatan mentalmu.</p>
+                        </div>
+                    </div>
+
+                    <!-- Fitur 4 -->
+                    <div class="bg-white/70 backdrop-blur-sm p-4 rounded-2xl shadow-soft flex items-center gap-4 hover:bg-white transition duration-300 transform hover:-translate-y-1">
+                        <div class="w-12 h-12 rounded-full bg-pastel-yellow flex items-center justify-center shrink-0 text-yellow-600">
+                            <i class="ph-fill ph-star text-2xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-md">Desain cantik & mudah digunakan</h4>
+                            <p class="text-sm text-pastel-textLight">Pengalaman yang nyaman, ringan, dan menyenangkan.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kolom Kanan: Ilustrasi & Bubble Text -->
+            <div class="lg:col-span-6 relative flex justify-center items-center fade-in-up" style="animation-delay: 0.4s;">
+                <!-- Bubble Chat -->
+                <div class="absolute top-0 right-4 lg:-top-10 lg:right-10 bg-white/90 backdrop-blur px-6 py-4 rounded-3xl rounded-br-none shadow-float max-w-[250px] z-20 floating-bubble border-2 border-white">
+                    <p class="text-sm text-center font-semibold text-pastel-text">
+                        "Setiap perasaan berharga, dan setiap langkah kecil berarti." 🌸
+                    </p>
+                    <!-- Ekor bubble -->
+                    <div class="absolute -bottom-3 right-4 w-6 h-6 bg-white/90 transform rotate-45 border-b-2 border-r-2 border-white"></div>
+                </div>
+
+                <!-- Wadah Gambar dengan Efek Blur Halus di Tepi -->
+                <div class="relative w-full max-w-md aspect-square mt-10 flex items-center justify-center">
+                    
+                    <!-- Lapisan Glow di Belakang Gambar -->
+                    <div class="absolute inset-4 bg-white/50 rounded-[2.5rem] filter blur-2xl opacity-80 mix-blend-screen"></div>
+                    
+                    <!-- Tag img kosong (hanya src="") dengan efek glow & blur di semua sisi -->
+                    <!-- Saat Anda memasukkan URL gambar di src, semua sudutnya akan terlihat berbaur lembut dengan background pink FFDCDC -->
+                    <img src="assets/images/Ketika berusaha, pasti memiliki hasil yang sesuai dengan usaha kita (Logo Beranimasi).jpg" 
+                         alt="Ilustrasi" 
+                         class="relative z-10 w-full h-full object-cover rounded-[3rem] shadow-[0_0_45px_15px_rgba(255,220,220,0.95)]">
+                         
+                    <!-- Overlay Bayangan Tepi Tambahan untuk Memaksimalkan Efek Blur di Semua Sisi -->
+                    <div class="absolute inset-0 pointer-events-none rounded-[3rem] z-20 shadow-[inset_0_0_35px_15px_#FFDCDC] border border-[#FFDCDC]/10"></div>
+                </div>
+            </div>
+            
+        </main>
+
+        <!-- Call To Action (Tombol Login & Register) -->
+        <section class="mt-20 relative flex flex-col items-center bg-white/40 backdrop-blur-md rounded-[3rem] p-8 md:p-12 shadow-sm border border-white/60 fade-in-up" style="animation-delay: 0.6s;">
+            
+            <!-- ================= GAMBAR DEKORASI AREA CTA ================= -->
+            <img src="https://placehold.co/100x100/FFDCDC/FFA07A?text=Bunga" alt="Dekorasi Bunga" class="absolute -top-12 -left-8 w-20 md:w-28 floating-bubble transform -rotate-12 opacity-90 hidden sm:block z-10">
+            <img src="https://placehold.co/80x80/FFDCDC/87CEFA?text=Pita" alt="Dekorasi Pita" class="absolute -bottom-10 -right-5 w-16 md:w-24 floating-bubble transform rotate-12 opacity-80 hidden sm:block z-10" style="animation-delay: 1s;">
+            <!-- ============================================================ -->
+
+            <h3 class="text-2xl md:text-3xl font-extrabold mb-2 text-center text-pastel-text">Tertarik dengan Selera ?</h3>
+            <p class="text-lg text-pastel-textLight mb-10 text-center">Yuk, mulai perjalanan seru bersama Kira sekarang! ✨</p>
+            
+            <div class="flex flex-col sm:flex-row gap-8 w-full max-w-2xl justify-center">
+                
+                <!-- Tombol Register -->
+                <div class="flex flex-col items-center group w-full sm:w-1/2">
+                    <a href="register.html" class="w-full text-center relative overflow-hidden bg-gradient-to-r from-pastel-pinkDark to-pink-300 text-white font-bold text-xl py-5 rounded-full shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105 active:scale-95 group">
+                        <span class="relative z-10 flex items-center justify-center gap-2">
+                            REGISTER <i class="ph-bold ph-arrow-right"></i>
+                        </span>
+                        <!-- Efek kilau -->
+                        <div class="absolute top-0 -left-[100%] w-1/2 h-full bg-white/30 skew-x-12 group-hover:animate-[shine_1s_ease-in-out]"></div>
+                    </a>
+                    <span class="mt-4 text-sm text-pastel-textLight font-medium">Belum punya akun?</span>
+                </div>
+
+                <!-- Tombol Login -->
+                <div class="flex flex-col items-center group w-full sm:w-1/2">
+                    <a href="login.html" class="w-full text-center relative overflow-hidden bg-gradient-to-r from-pastel-blueDark to-blue-300 text-white font-bold text-xl py-5 rounded-full shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105 active:scale-95 group">
+                        <span class="relative z-10 flex items-center justify-center gap-2">
+                            LOGIN <i class="ph-bold ph-arrow-right"></i>
+                        </span>
+                        <!-- Efek kilau -->
+                        <div class="absolute top-0 -left-[100%] w-1/2 h-full bg-white/30 skew-x-12 group-hover:animate-[shine_1s_ease-in-out]"></div>
+                    </a>
+                    <span class="mt-4 text-sm text-pastel-textLight font-medium">Sudah punya akun?</span>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Footer / Navigasi Bawah -->
+        <footer class="mt-8 bg-white/60 backdrop-blur-md rounded-3xl p-6 shadow-sm border border-white/50 flex flex-col md:flex-row items-center justify-between gap-6 fade-in-up" style="animation-delay: 0.8s;">
+            
+            <!-- Quote -->
+            <div class="flex items-start gap-4 md:w-1/2">
+                <i class="ph-fill ph-quotes text-3xl text-pastel-blueDark"></i>
+                <p class="font-semibold text-pastel-text italic">
+                    Selera bukan sekadar catatan,<br>ini tentang kamu, perasaanmu,<br>dan perjalananmu.
+                </p>
+            </div>
+
+            <!-- Ikon Navigasi Bawah -->
+            <div class="flex justify-around items-center w-full md:w-1/2 gap-2">
+                <div class="flex flex-col items-center gap-2 cursor-pointer group">
+                    <div class="bg-pink-100 p-3 rounded-2xl group-hover:scale-110 transition">
+                        <i class="ph-fill ph-book-open text-3xl text-pink-500"></i>
+                    </div>
+                    <span class="text-xs font-bold text-pastel-textLight">Diary</span>
+                </div>
+                
+                <div class="flex flex-col items-center gap-2 cursor-pointer group">
+                    <div class="bg-green-100 p-3 rounded-2xl group-hover:scale-110 transition">
+                        <i class="ph-fill ph-check-square-offset text-3xl text-green-500"></i>
+                    </div>
+                    <span class="text-xs font-bold text-pastel-textLight">To-do List</span>
+                </div>
+
+                <div class="flex flex-col items-center gap-2 cursor-pointer group">
+                    <div class="bg-purple-100 p-3 rounded-2xl group-hover:scale-110 transition">
+                        <i class="ph-fill ph-heart text-3xl text-purple-500"></i>
+                    </div>
+                    <span class="text-xs font-bold text-pastel-textLight">Mood Tracker</span>
+                </div>
+
+                <div class="flex flex-col items-center gap-2 cursor-pointer group">
+                    <div class="bg-yellow-100 p-3 rounded-2xl group-hover:scale-110 transition">
+                        <i class="ph-fill ph-star text-3xl text-yellow-500"></i>
+                    </div>
+                    <span class="text-xs font-bold text-pastel-textLight">Inspirasi</span>
+                </div>
+            </div>
+
+        </footer>
+
+    </div>
+
+    <style>
+        @keyframes shine {
+            100% { left: 200%; }
+        }
+    </style>
+</body>
+</html>

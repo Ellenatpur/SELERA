@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selera</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@1,700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .font-serif-italic {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+        }
+        
+        /* Custom Scrollbar for Dashboard Grid */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #fbcfe8;
+            border-radius: 20px;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body class="bg-[#dff0f6] text-gray-800 min-h-screen p-4 flex">
+
+    <aside class="w-[280px] bg-[#edfce3] rounded-[2rem] flex flex-col justify-between p-6 shadow-md z-10 relative flex-shrink-0">
+        <div>
+            <div class="text-center mb-8 flex flex-col items-center">
+                <img 
+                    src="assets/images/Selera.png" 
+                    alt="Logo Selera" 
+                    class="w-full max-w-[200px] h-auto object-contain mb-2 drop-shadow-sm"
+                />
+                <div class="h-1 w-full bg-gradient-to-r from-transparent via-yellow-600 to-transparent mb-2 rounded-full opacity-50"></div>
+                <p class="text-xs text-gray-600 px-4">Tempat terbaik untuk menjadi dirimu sendiri</p>
+            </div>
+
+            <nav class="space-y-2">
+                <a href="homepage.html" class="w-full flex items-center px-4 py-3 rounded-2xl transition-colors bg-[#dff0f6] text-black font-semibold shadow-sm">
+                    <i data-lucide="home" class="w-6 h-6 mr-4"></i>
+                    <span class="text-sm">Home</span>
+                </a>
+                <a href="diary.html" class="w-full flex items-center px-4 py-3 rounded-2xl transition-colors text-gray-600 hover:bg-[#dff0f6] hover:text-black hover:shadow-sm">
+                    <i data-lucide="book" class="w-6 h-6 mr-4"></i>
+                    <span class="text-sm">Diary</span>
+                </a>
+                <a href="todolist.html" class="w-full flex items-center px-4 py-3 rounded-2xl transition-colors text-gray-600 hover:bg-[#dff0f6] hover:text-black hover:shadow-sm">
+                    <i data-lucide="check-square" class="w-6 h-6 mr-4"></i>
+                    <span class="text-sm">To Do List</span>
+                </a>
+                <a href="chatkira.html" class="w-full flex items-center px-4 py-3 rounded-2xl transition-colors text-gray-600 hover:bg-[#dff0f6] hover:text-black hover:shadow-sm">
+                    <i data-lucide="message-circle" class="w-6 h-6 mr-4"></i>
+                    <span class="text-sm">Chat Kira</span>
+                </a>
+                <a href="runtunan.html" class="nav-item w-full flex items-center px-4 py-2.5 rounded-2xl transition-colors text-gray-600 hover:bg-white/50 hover:text-black group">
+                    <i data-lucide="star" class="w-5 h-5 mr-4 group-hover:scale-110 transition-transform"></i>
+                    <span class="text-sm font-medium">Runtunan</span>
+                </a>
+                <a href="#" class="nav-item w-full flex items-center px-4 py-2.5 rounded-2xl transition-colors text-gray-600 hover:bg-white/50 hover:text-black group">
+                    <i data-lucide="smile" class="w-5 h-5 mr-4 group-hover:scale-110 transition-transform"></i>
+                    <span class="text-sm font-medium">Mood Tracker</span>
+                </a>
+                <button onclick="prosesLogout()" class="w-full flex items-center px-4 py-2.5 rounded-2xl transition-colors text-red-500 hover:bg-red-50/50 mt-4 group">
+    <i data-lucide="log-out" class="w-5 h-5 mr-4 group-hover:scale-110 transition-transform"></i>
+    <span class="text-sm font-medium">Keluar</span>
+</button>
+            </nav>
+        </div>
+
+        <div class="flex flex-col items-center mt-10 relative group">
+            <div class="absolute -top-16 left-2 z-20 transition-transform duration-300 group-hover:-translate-y-2 group-hover:scale-110">
+                <img 
+                    src="assets/images/e.bahagia2.png" 
+                    alt="Kira Mascot" 
+                    class="w-24 h-24 object-contain drop-shadow-md"
+                />
+            </div>
+            
+            <div class="bg-[#feffb5] w-full p-4 pt-8 rounded-xl shadow-md text-center text-sm font-medium relative z-10 border border-yellow-200 transition-all duration-300 hover:shadow-lg hover:scale-[1.02]">
+                Kira akan selalu ada di sisimu :)
+            </div>
+
+            <button class="mt-8 bg-[#fcdcdc] hover:bg-[#f5c6c6] hover:scale-105 transition-all duration-300 py-2 px-8 rounded-xl font-medium shadow-md text-sm">
+                By Lucinee
+            </button>
+        </div>
+    </aside>
+
+    <main class="flex-1 bg-[#fae8e8] rounded-[2rem] ml-4 overflow-hidden flex flex-col shadow-md relative">
+        
+        <header class="flex justify-between items-start p-8 pb-4 relative flex-shrink-0">
+            <div class="max-w-md z-10">
+                <h2 class="text-3xl font-bold text-gray-800 mb-2">Hai Lucinee..</h2>
+                <p class="text-gray-600 text-sm leading-relaxed">
+                    Bagaimana perasaanmu hari ini? Jika ada apa-apa ceritakan pada Kira saja.
+                </p>
+            </div>
+
+            <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 z-0 hover:scale-105 transition-transform duration-500">
+                <img 
+                    src="assets/images/Maskotbesar.png" 
+                    alt="Kira Big Mascot" 
+                    class="w-60 h-60 object-contain drop-shadow-xl" 
+                />
+            </div>
+
+            <div class="flex items-center space-x-4 z-10">
+                <button class="p-2 bg-white/50 rounded-full hover:bg-white/80 hover:scale-110 shadow-sm transition-all">
+                    <i data-lucide="bell" class="w-6 h-6"></i>
+                </button>
+                <div class="flex items-center bg-[#fcdcdc] py-2 px-4 rounded-full shadow-sm hover:shadow-md transition-all cursor-pointer hover:scale-105">
+                    <img 
+                        src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=64&h=64" 
+                        alt="Profile" 
+                        class="w-8 h-8 rounded-full object-cover mr-3"
+                    />
+                    <span class="font-medium text-sm">Hai Lucinee</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="flex-1 p-8 pt-2 overflow-y-auto custom-scrollbar flex gap-6 z-10">
+            
+            <div class="flex-1 flex flex-col gap-6">
+                
+                <div class="flex gap-6">
+                    <div class="bg-[#fadcdc] p-6 rounded-[1.5rem] flex-1 flex items-center justify-center shadow-md hover:shadow-xl hover:scale-[1.02] transition-all duration-300 min-h-[160px] overflow-hidden">
+                        <img id="motivationImage" src="assets/images/mtv/" alt="Motivasi" class="w-full h-full object-cover rounded-[1rem]">
+                    </div>
+
+                    <div class="bg-[#fadcdc] p-6 rounded-[1.5rem] flex-[1.5] flex flex-col justify-between shadow-md hover:shadow-xl hover:scale-[1.02] transition-all duration-300 min-h-[160px]">
+                        <div>
+                            <h3 class="font-semibold text-lg mb-1">Gimana perasaanmu hari ini?</h3>
+                            <p class="text-xs text-gray-600">Yuk pilih mood-mu sekarang agar Kira tahu harus berbuat apa :)</p>
+                        </div>
+                        
+                        <div class="flex justify-between mt-4 px-2">
+                            <button class="flex flex-col items-center gap-2 group">
+                                <img src="assets/images/e.kaget2.png" alt="Mood Terkejut" class="w-16 h-16 object-contain drop-shadow-md group-hover:scale-125 group-hover:-translate-y-2 transition-all duration-300" />
+                                <span class="text-xs font-medium text-gray-600 group-hover:text-gray-900 transition-all">Terkejut</span>
+                            </button>
+                            <button class="flex flex-col items-center gap-2 group">
+                                <img src="assets/images/e.marah.png" alt="Mood Marah" class="w-16 h-16 object-contain drop-shadow-md group-hover:scale-125 group-hover:-translate-y-2 transition-all duration-300" />
+                                <span class="text-xs font-medium text-gray-600 group-hover:text-gray-900 transition-all">Marah</span>
+                            </button>
+                            <button class="flex flex-col items-center gap-2 group">
+                                <img src="assets/images/e.sedih.png" alt="Mood Sedih" class="w-16 h-16 object-contain drop-shadow-md group-hover:scale-125 group-hover:-translate-y-2 transition-all duration-300" />
+                                <span class="text-xs font-medium text-gray-600 group-hover:text-gray-900 transition-all">Sedih</span>
+                            </button>
+                            <button class="flex flex-col items-center gap-2 group">
+                                <img src="assets/images/e.bahagia2.png" alt="Mood Senang" class="w-16 h-16 object-contain drop-shadow-md group-hover:scale-125 group-hover:-translate-y-2 transition-all duration-300" />
+                                <span class="text-xs font-medium text-gray-600 group-hover:text-gray-900 transition-all">Senang</span>
+                            </button>
+                            <button class="flex flex-col items-center gap-2 group">
+                                <img src="assets/images/e.takut.png" alt="Mood Takut" class="w-16 h-16 object-contain drop-shadow-md group-hover:scale-125 group-hover:-translate-y-2 transition-all duration-300" />
+                                <span class="text-xs font-medium text-gray-600 group-hover:text-gray-900 transition-all">Takut</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-[#fadcdc] p-6 rounded-[1.5rem] flex-1 flex flex-col shadow-md hover:shadow-xl hover:scale-[1.02] transition-all duration-300">
+                    <div class="flex justify-between items-center mb-6">
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="check-square" class="w-5 h-5 text-gray-700"></i>
+                            <h3 class="font-semibold text-lg">Tugas Mendatang</h3>
+                        </div>
+                        <button class="text-xs text-gray-500 hover:text-gray-800 flex items-center hover:translate-x-1 transition-transform">
+                            Lihat semua <i data-lucide="chevron-right" class="w-3.5 h-3.5 ml-1"></i>
+                        </button>
+                    </div>
+
+                    <div class="flex flex-col gap-4">
+                        <div class="flex items-center justify-between group cursor-pointer hover:bg-white/30 p-2 -mx-2 rounded-xl transition-colors">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-xl flex items-center justify-center bg-yellow-100 shadow-sm group-hover:scale-110 transition-transform">
+                                    <i data-lucide="atom" class="w-5 h-5"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-sm text-gray-800">Belajar Fisika</h4>
+                                    <p class="text-[11px] text-gray-500">Jangan lupa belajar yaa</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-6">
+                                <div class="text-right">
+                                    <p class="text-[10px] font-medium text-gray-600">20 April 2026</p>
+                                    <p class="text-[10px] text-gray-500">00:00</p>
+                                </div>
+                                <button class="bg-gray-100/80 hover:bg-gray-200 px-3 py-1.5 rounded-lg flex items-center text-xs font-medium text-gray-700 transition-all">
+                                    <i data-lucide="bell-ring" class="w-3.5 h-3.5 mr-1.5"></i> Ingatkan
+                                </button>
+                            </div>
+                        </div>
+                        <div class="border-b border-pink-200/50"></div>
+                        </div>
+                </div>
+            </div>
+
+            <div class="w-[320px] flex flex-col gap-6 relative flex-shrink-0">
+                <div class="absolute -top-3 right-4 z-20 transition-transform hover:rotate-12 duration-300">
+                    <img src="assets/images/bungapng.png" alt="Flower" class="w-8 h-8 drop-shadow-sm" />
+                </div>
+
+                <div class="bg-[#fadcdc] p-6 rounded-[1.5rem] flex flex-col flex-1 relative z-10 shadow-md hover:shadow-xl hover:scale-[1.02] transition-all duration-300">
+                    <div class="flex justify-between items-center mb-4">
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="list-todo" class="w-4 h-4 text-gray-700"></i>
+                            <h3 class="font-semibold text-[15px]">Rencana Hari Ini :</h3>
+                        </div>
+                        <button class="bg-[#6b9080] text-white text-[10px] px-2 py-1 rounded-full flex items-center shadow-sm hover:bg-[#5a7a6c] transition-all">
+                            <i data-lucide="plus" class="w-2.5 h-2.5 mr-1"></i> Tambah
+                        </button>
+                    </div>
+
+                    <div class="flex flex-col gap-3 mt-2 flex-1">
+                        <div class="flex items-center border-b border-dashed border-pink-300 pb-2 hover:translate-x-1 transition-transform cursor-pointer">
+                            <div class="w-3 h-3 rounded-full bg-[#6b9080] mr-3 shrink-0"></div>
+                            <p class="text-[11px] text-gray-600 truncate">Aku harus bernafas</p>
+                        </div>
+                        <div class="flex items-center border-b border-dashed border-pink-300 pb-2 hover:translate-x-1 transition-transform cursor-pointer">
+                            <div class="w-3 h-3 rounded-full bg-[#6b9080] mr-3 shrink-0"></div>
+                            <p class="text-[11px] text-gray-600 truncate">Selesaikan tugas desain</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 text-right">
+                        <button class="text-[11px] text-gray-500 hover:text-gray-800 flex items-center justify-end w-full hover:translate-x-1 transition-transform">
+                            Lihat semua <i data-lucide="chevron-right" class="w-3 h-3 ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-[#fadcdc] p-6 rounded-[1.5rem] text-center shadow-md hover:shadow-xl hover:scale-[1.02] transition-all duration-300">
+                    <p class="text-sm font-medium text-gray-700 mb-2">Waktu Pemakaian SELERA</p>
+                    <h2 id="usageTime" class="text-4xl font-bold drop-shadow-sm">0dtk</h2>
+                </div>
+
+                <div class="bg-[#fadcdc] p-6 rounded-[1.5rem] text-center relative shadow-md hover:shadow-xl hover:scale-[1.02] transition-all duration-300 group">
+                    <h3 class="text-lg font-semibold mb-2">Runtunan</h3>
+                    <div class="flex items-center justify-center gap-2 mb-4 group-hover:scale-105 transition-transform duration-300">
+                        <i data-lucide="flame" class="text-orange-500 fill-orange-500 w-10 h-10 drop-shadow-md"></i>
+                        <span class="text-5xl font-bold drop-shadow-sm">130</span>
+                    </div>
+                    <div class="flex justify-center gap-2">
+                        <div class="w-4 h-4 bg-[#6b9080] rounded-full opacity-80 shadow-inner"></div>
+                        <div class="w-4 h-4 bg-[#6b9080] rounded-full opacity-80 shadow-inner"></div>
+                        <div class="w-4 h-4 bg-[#6b9080] rounded-full opacity-80 shadow-inner"></div>
+                        <div class="w-4 h-4 bg-[#6b9080] rounded-full opacity-80 shadow-inner"></div>
+                        <div class="w-4 h-4 bg-[#6b9080] rounded-full opacity-80 shadow-inner"></div>
+                        <div class="w-4 h-4 bg-[#6b9080] rounded-full opacity-80 shadow-inner"></div>
+                        <div class="w-4 h-4 bg-[#6b9080] rounded-full opacity-80 shadow-inner"></div>
+                    </div>
+
+                    <div class="absolute -bottom-6 -right-6 transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6">
+                        <img src="assets/images/e.bahagia2.png" alt="Kira Small" class="w-20 h-20 object-contain drop-shadow-md" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // ==========================================
+        // 1. KONEKSI UTAMA SUPABASE
+        // ==========================================
+        const supabaseUrl = 'https://cyxmsawygqrunhinfvyj.supabase.co'; 
+        const supabaseKey = 'sb_publishable_3cxazIXr7B0ypa2fN6YVxw_jQyA6TDY'; 
+        const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+
+        lucide.createIcons();
+        let currentUser = null;
+
+        // ==========================================
+        // 2. DETEKTOR SESI OTOMATIS & PROTEKSI HALAMAN
+        // ==========================================
+        function proteksiDanMuatHalaman() {
+            supabaseClient.auth.onAuthStateChange((event, session) => {
+                if (session && session.user) {
+                    currentUser = session.user;
+                    console.log("Sesi aktif di Dashboard:", currentUser.email);
+
+                    // 💡 CATATAN: Baris pengubah nama otomatis dicopot agar nama di UI tetap "Lucinee" sesuai template aslimu!
+
+                    // Jalankan fungsi pengambil data database
+                    muatRencanaHariIni();
+                    muatRuntunanStreakLokal();
+                } else {
+                    alert("Akses ditolak. Yuk login terlebih dahulu! 🌸");
+                    window.location.href = "login.html";
+                }
+            });
+        }
+
+        // ==========================================
+        // 3. AMBIL DATA TO-DO LIST (SINKRON DENGAN DATABASE)
+        // ==========================================
+        async function muatRencanaHariIni() {
+            if (!currentUser) return;
+
+            const { data: todos, error } = await supabaseClient
+                .from('todos') 
+                .select('*')
+                .eq('user_id', currentUser.id)
+                .eq('is_completed', false) 
+                .limit(2);
+
+            if (error) {
+                console.error("Gagal memuat rencana:", error.message);
+                return;
+            }
+
+            const containerRencana = document.querySelector('.flex.flex-col.gap-3.mt-2.flex-1');
+            if (!containerRencana) return;
+
+            containerRencana.innerHTML = '';
+
+            if (!todos || todos.length === 0) {
+                containerRencana.innerHTML = `
+                    <div class="text-[11px] text-gray-500 italic text-center py-4">
+                        Belum ada rencana hari ini. Santai dulu! 🍓
+                    </div>`;
+                return;
+            }
+
+            todos.forEach(todo => {
+                const itemHTML = `
+                    <div class="flex items-center border-b border-dashed border-pink-300 pb-2 hover:translate-x-1 transition-transform cursor-pointer">
+                        <div class="w-3 h-3 rounded-full bg-[#6b9080] mr-3 shrink-0"></div>
+                        <p class="text-[11px] text-gray-600 truncate">${todo.tugas}</p> 
+                    </div>
+                `;
+                containerRencana.insertAdjacentHTML('beforeend', itemHTML);
+            });
+        }
+
+        // ==========================================
+        // 4. TOMBOL TAMBAH TUGAS LANGSUNG DARI HOMEPAGE
+        // ==========================================
+        document.querySelector('button.bg-\\[\\#6b9080\\]').onclick = async function() {
+            if (!currentUser) return;
+
+            const teksTugas = prompt("Tuliskan rencana baru kamu untuk hari ini: 🌸");
+            
+            if (!teksTugas || teksTugas.trim() === "") {
+                return;
+            }
+
+            const { data, error } = await supabaseClient
+                .from('todos')
+                .insert([
+                    {
+                        tugas: teksTugas,
+                        is_completed: false,
+                        user_id: currentUser.id
+                    }
+                ]);
+
+            if (error) {
+                alert("Gagal menambah tugas: " + error.message);
+            } else {
+                alert("Rencana berhasil ditambahkan! Otomatis terhubung ke To Do List. ✨");
+                muatRencanaHariIni(); 
+            }
+        };
+
+        // ==========================================
+        // 5. FITUR RUNTUNAN (MENGUTIP DATA DARI PAGE RUNTUNAN)
+        // ==========================================
+        function muatRuntunanStreakLokal() {
+            // Mengambil data simpanan dari halaman runtunan.html
+            // Jika belum pernah menekan tombol di sana, set default bawaan awalmu yaitu 130
+            let streakSaatIni = localStorage.getItem('user_streak_score');
+            
+            if (streakSaatIni === null) {
+                streakSaatIni = 130; // Angka awal bawaan desain kamoo
+                localStorage.setItem('user_streak_score', 130);
+            }
+
+            const elemenStreak = document.querySelector('.text-5xl.font-bold');
+            if (elemenStreak) {
+                elemenStreak.innerText = streakSaatIni; 
+            }
+        }
+
+        // ==========================================
+        // 6. LOGIKA PROSES LOGOUT
+        // ==========================================
+        async function prosesLogout() {
+            const konfirmasi = confirm("Apakah kamu yakin ingin keluar dari Selera? Kira bakal kangen kamu 🌸");
+            if (!konfirmasi) return;
+
+            const { error } = await supabaseClient.auth.signOut();
+            if (error) {
+                alert("Gagal logout: " + error.message);
+            } else {
+                sessionStorage.removeItem('startTime'); 
+                window.location.href = 'login.html';
+            }
+        }
+
+        // ==========================================
+        // 7. FITUR PENDUKUNG (GAMBAR MOTIVASI & WAKTU)
+        // ==========================================
+        function updateMotivationImage() {
+            const totalImages = 29; 
+            const folderPath = 'assets/images/mtv/'; 
+            const imgElement = document.getElementById('motivationImage');
+
+            if (!imgElement) return;
+
+            const now = new Date();
+            const currentHour = now.getHours(); 
+            const imageNumber = (currentHour % totalImages) + 1;
+            imgElement.src = folderPath + imageNumber + '.png';
+        }
+
+        if (!sessionStorage.getItem('startTime')) {
+            sessionStorage.setItem('startTime', new Date().getTime());
+        }
+
+        function updateUsageTime() {
+            const startTime = parseInt(sessionStorage.getItem('startTime'));
+            const now = new Date().getTime();
+            const diffInSeconds = Math.floor((now - startTime) / 1000);
+
+            const hours = Math.floor(diffInSeconds / 3600);
+            const minutes = Math.floor((diffInSeconds % 3600) / 60);
+            const seconds = diffInSeconds % 60;
+
+            const timeDisplay = document.getElementById('usageTime');
+            if (!timeDisplay) return;
+
+            if (hours > 0) {
+                timeDisplay.innerText = `${hours}j, ${minutes}mnt`;
+            } else if (minutes > 0) {
+                timeDisplay.innerText = `${minutes}mnt, ${seconds}dtk`;
+            } else {
+                timeDisplay.innerText = `${seconds}dtk`;
+            }
+        }
+
+        // Eksekusi otomatis saat halaman siap
+        proteksiDanMuatHalaman();
+        updateMotivationImage();
+        updateUsageTime();
+
+        setInterval(updateUsageTime, 1000); 
+        setInterval(updateMotivationImage, 60000);
+    </script>
+</body>
+</html>

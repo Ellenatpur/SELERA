@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selera - To Do List</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@1,700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #CFECF3; }
+        .font-serif-italic { font-family: 'Playfair Display', serif; font-style: italic; }
+
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background-color: #ffffff90; border-radius: 20px; }
+
+        /* Sidebar collapse */
+        #sidebar {
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-x: hidden;
+            white-space: nowrap;
+        }
+        #sidebar.collapsed {
+            width: 88px;
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+        #sidebar.collapsed .hide-on-collapse {
+            display: none !important;
+        }
+        #sidebar.collapsed .nav-item {
+            justify-content: center;
+            padding-left: 0;
+            padding-right: 0;
+        }
+        #sidebar.collapsed .nav-icon {
+            margin-right: 0 !important;
+        }
+        #sidebar.collapsed .sidebar-bottom {
+            display: none !important;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex p-4 gap-4 text-gray-800">
+
+    <aside id="sidebar" class="w-[280px] bg-[#edfce3] rounded-[2rem] flex flex-col justify-between p-6 shadow-md z-10 relative flex-shrink-0">
+        <div>
+            <div class="text-center mb-8 flex flex-col items-center hide-on-collapse">
+                <img src="assets/images/Selera.png" alt="Logo Selera" class="w-full max-w-[200px] h-auto object-contain mb-2 drop-shadow-sm"/>
+                <div class="h-1 w-full bg-gradient-to-r from-transparent via-yellow-600 to-transparent mb-2 rounded-full opacity-50"></div>
+                <p class="text-xs text-gray-600 px-4">Tempat terbaik untuk menjadi dirimu sendiri</p>
+            </div>
+
+            <nav class="space-y-2">
+                <a href="homepage.html" class="nav-item w-full flex items-center px-4 py-3 rounded-2xl transition-colors text-gray-600 hover:bg-[#dff0f6] hover:text-black hover:shadow-sm">
+                    <i data-lucide="home" class="nav-icon w-6 h-6 mr-4 flex-shrink-0"></i>
+                    <span class="text-sm hide-on-collapse">Home</span>
+                </a>
+                <a href="diary.html" class="nav-item w-full flex items-center px-4 py-3 rounded-2xl transition-colors text-gray-600 hover:bg-[#dff0f6] hover:text-black hover:shadow-sm">
+                    <i data-lucide="book" class="nav-icon w-6 h-6 mr-4 flex-shrink-0"></i>
+                    <span class="text-sm hide-on-collapse">Diary</span>
+                </a>
+                <a href="todolist.html" class="nav-item w-full flex items-center px-4 py-3 rounded-2xl transition-colors bg-[#dff0f6] text-black font-semibold shadow-sm">
+                    <i data-lucide="check-square" class="nav-icon w-6 h-6 mr-4 flex-shrink-0"></i>
+                    <span class="text-sm hide-on-collapse">To Do List</span>
+                </a>
+                <a href="chatkira.html" class="nav-item w-full flex items-center px-4 py-3 rounded-2xl transition-colors text-gray-600 hover:bg-[#dff0f6] hover:text-black hover:shadow-sm">
+                    <i data-lucide="message-circle" class="nav-icon w-6 h-6 mr-4 flex-shrink-0"></i>
+                    <span class="text-sm hide-on-collapse">Chat Kira</span>
+                </a>
+                <a href="runtunan.html" class="nav-item w-full flex items-center px-4 py-2.5 rounded-2xl transition-colors text-gray-600 hover:bg-[#dff0f6] hover:text-black hover:shadow-sm">
+                    <i data-lucide="star" class="nav-icon w-5 h-5 mr-4 flex-shrink-0"></i>
+                    <span class="text-sm hide-on-collapse">Runtunan</span>
+                </a>
+                <a href="#" class="nav-item w-full flex items-center px-4 py-2.5 rounded-2xl transition-colors text-gray-600 hover:bg-[#dff0f6] hover:text-black hover:shadow-sm">
+                    <i data-lucide="smile" class="nav-icon w-5 h-5 mr-4 flex-shrink-0"></i>
+                    <span class="text-sm hide-on-collapse">Mood Tracker</span>
+                </a>
+                <button onclick="prosesLogout()" class="w-full flex items-center px-4 py-2.5 rounded-2xl transition-colors text-red-500 hover:bg-red-50/60 mt-4 group text-left">
+                    <i data-lucide="log-out" class="w-5 h-5 mr-4 group-hover:scale-110 transition-transform"></i>
+                    <span class="text-sm font-medium">Keluar</span>
+                </button>
+            </nav>
+        </div>
+
+        <div class="sidebar-bottom flex flex-col items-center mt-10 relative group">
+            <div class="absolute -top-16 left-2 z-20 transition-transform duration-300 group-hover:-translate-y-2 group-hover:scale-110">
+                <img src="assets/images/e.bahagia2.png" alt="Kira Mascot" class="w-24 h-24 object-contain drop-shadow-md"/>
+            </div>
+            <div class="bg-[#feffb5] w-full p-4 pt-8 rounded-xl shadow-md text-center text-sm font-medium relative z-10 border border-yellow-200 transition-all duration-300 hover:shadow-lg hover:scale-[1.02]">
+                Kira akan selalu ada di sisimu :)
+            </div>
+            <button class="mt-8 bg-[#fcdcdc] hover:bg-[#f5c6c6] hover:scale-105 transition-all duration-300 py-2 px-8 rounded-xl font-medium shadow-md text-sm">
+                By Lucinee
+            </button>
+        </div>
+    </aside>
+
+    <main class="flex-[2] overflow-y-auto custom-scrollbar flex flex-col gap-5 z-10 pr-2">
+        
+        <div class="bg-white/40 backdrop-blur-lg rounded-[2rem] p-6 shadow-md hover:shadow-lg hover:scale-[1.01] transition-all duration-300 border border-white/50 flex justify-between items-center relative overflow-hidden">
+            <div class="max-w-[60%] z-10">
+                <h1 class="text-4xl font-serif-italic font-bold text-gray-800 mb-2">To Do List</h1>
+                <p class="text-sm text-gray-600 leading-relaxed">
+                    Rencanakan harimu dengan baik, selangkah lebih dekat dengan versi terbaik dirimu! ✨
+                </p>
+            </div>
+            <div class="flex items-center gap-4 z-10 relative">
+                <div class="bg-white p-3 rounded-2xl rounded-tr-none shadow-sm text-xs text-gray-700 relative z-10">
+                    <span class="font-bold block mb-1">Hai, kamu! 🌸</span>
+                    Semangat ya, aku yakin<br>kamu bisa selesaikan semua<br>rencana hari ini!
+                </div>
+                <img src="assets/images/m.senang.png" alt="Pao Mascot" class="w-28 h-28 object-contain drop-shadow-md transform translate-y-2">
+            </div>
+        </div>
+
+        <div class="bg-white/40 backdrop-blur-lg rounded-[1.5rem] p-5 shadow-md hover:shadow-lg hover:scale-[1.01] transition-all duration-300 border border-white/50 flex flex-col gap-3">
+            <label class="text-xs font-semibold text-gray-600 ml-1">Mau tambah rencana baru?</label>
+            <div class="flex items-center gap-3">
+                <div class="flex-1 bg-white p-2 rounded-xl shadow-sm flex items-center gap-3 border border-gray-100">
+                    <div class="p-2 bg-[#edfce3] text-gray-500 rounded-lg">
+                        <i data-lucide="edit" class="w-5 h-5"></i>
+                    </div>
+                    <input type="text" id="inputTugas" placeholder="Tulis rencananya di sini... (Ketik 'Penting' untuk tandai prioritas)" class="flex-1 bg-transparent outline-none text-sm text-gray-700 placeholder-gray-400">
+                    
+                    <div class="flex items-center gap-1 text-xs font-medium text-gray-500 px-2 py-1 bg-gray-50 rounded-lg">
+                        <i data-lucide="clock" class="w-4 h-4"></i>
+                        <input type="time" id="inputWaktu" class="bg-transparent outline-none cursor-pointer text-gray-600">
+                    </div>
+                </div>
+                <button onclick="tambahTodo()" class="bg-[#6b9080] hover:bg-[#5a7a6c] text-white px-5 py-3 rounded-xl shadow-md transition-all hover:scale-105 font-medium text-sm flex items-center gap-2">
+                    <i data-lucide="plus" class="w-4 h-4"></i> Tambah
+                </button>
+            </div>
+        </div>
+
+        <div class="flex gap-2 overflow-x-auto custom-scrollbar pb-1">
+            <button onclick="setFilter('semua')" id="btn-filter-semua" class="filter-btn bg-[#6b9080] text-white px-5 py-2 rounded-full text-xs font-medium flex items-center gap-2 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 whitespace-nowrap">
+                <i data-lucide="list" class="w-4 h-4"></i> Semua
+            </button>
+            <button onclick="setFilter('hari-ini')" id="btn-filter-hari-ini" class="filter-btn bg-white/60 hover:bg-white text-gray-600 px-5 py-2 rounded-full text-xs font-medium flex items-center gap-2 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 whitespace-nowrap">
+                <i data-lucide="sun" class="w-4 h-4 text-orange-400"></i> Hari Ini
+            </button>
+            <button onclick="setFilter('penting')" id="btn-filter-penting" class="filter-btn bg-white/60 hover:bg-white text-gray-600 px-5 py-2 rounded-full text-xs font-medium flex items-center gap-2 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 whitespace-nowrap">
+                <i data-lucide="flag" class="w-4 h-4 text-red-400"></i> Penting
+            </button>
+            <button onclick="setFilter('belum')" id="btn-filter-belum" class="filter-btn bg-white/60 hover:bg-white text-gray-600 px-5 py-2 rounded-full text-xs font-medium flex items-center gap-2 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 whitespace-nowrap">
+                <i data-lucide="circle" class="w-4 h-4"></i> Belum Selesai
+            </button>
+            <button onclick="setFilter('selesai')" id="btn-filter-selesai" class="filter-btn bg-white/60 hover:bg-white text-gray-600 px-5 py-2 rounded-full text-xs font-medium flex items-center gap-2 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 whitespace-nowrap">
+                <i data-lucide="check" class="w-4 h-4 text-green-500"></i> Selesai
+            </button>
+        </div>
+
+        <div class="flex flex-col gap-3">
+            <h3 class="text-sm font-bold text-[#5a7a6c] flex items-center gap-2 mb-1">
+                Kategori: <span id="labelKategoriAktif" class="capitalize">Semua</span> <span class="text-gray-400 font-normal text-xs" id="waktuRealtime">• Senin, 20 April 2026</span>
+            </h3>
+            
+            <div id="daftarTodoHariIni" class="flex flex-col gap-3">
+                <p class="text-xs text-gray-500 animate-pulse text-center py-4">Memuat rencanamu... 🌸</p>
+            </div>
+        </div>
+    </main>
+
+    <aside class="w-[300px] flex flex-col gap-4 flex-shrink-0 overflow-y-auto custom-scrollbar z-10 pr-2">
+        <div class="bg-white/40 backdrop-blur-lg rounded-[1.5rem] p-5 shadow-md hover:shadow-lg hover:scale-[1.02] transition-all duration-300 border border-white/50">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="font-bold text-sm text-gray-800">April 2026</h3>
+                <div class="flex gap-2">
+                    <button class="text-gray-500 hover:text-gray-800"><i data-lucide="chevron-left" class="w-4 h-4"></i></button>
+                    <button class="text-gray-500 hover:text-gray-800"><i data-lucide="chevron-right" class="w-4 h-4"></i></button>
+                </div>
+            </div>
+            <div class="grid grid-cols-7 text-center text-[10px] text-gray-500 font-medium mb-2 gap-y-2">
+                <div>Sen</div><div>Sel</div><div>Rab</div><div>Kam</div><div>Jum</div><div>Sab</div><div>Min</div>
+            </div>
+            <div class="grid grid-cols-7 text-center text-xs text-gray-700 gap-y-3 font-medium">
+                <div class="text-gray-400">30</div><div class="text-gray-400">31</div>
+                <div>1</div><div>2</div><div>3</div><div>4</div><div>5</div>
+                <div>6</div><div>7</div><div>8</div><div>9</div><div>10</div><div>11</div><div>12</div>
+                <div>13</div><div>14</div><div>15</div><div>16</div><div>17</div><div>18</div><div>19</div>
+                <div class="bg-[#6b9080] text-white rounded-full w-6 h-6 flex items-center justify-center mx-auto shadow-sm">20</div>
+                <div>21</div><div>22</div><div>23</div><div>24</div><div>25</div><div>26</div>
+                <div>27</div><div>28</div><div>29</div><div>30</div>
+            </div>
+        </div>
+
+        <div class="bg-white/40 backdrop-blur-lg rounded-[1.5rem] p-5 shadow-md hover:shadow-lg hover:scale-[1.02] transition-all duration-300 border border-white/50">
+            <div class="flex items-center gap-2 mb-4">
+                <i data-lucide="clipboard-list" class="w-4 h-4 text-gray-600"></i>
+                <h3 class="font-bold text-sm text-gray-800">Ringkasan Hari Ini</h3>
+            </div>
+            <div class="grid grid-cols-3 gap-2 text-center">
+                <div class="bg-green-50 rounded-xl p-2 border border-green-100">
+                    <span id="stat-total" class="block text-xl font-bold text-green-600">0</span>
+                    <span class="text-[9px] text-gray-500">Total Tugas</span>
+                </div>
+                <div class="bg-blue-50 rounded-xl p-2 border border-blue-100">
+                    <span id="stat-selesai" class="block text-xl font-bold text-blue-600">0</span>
+                    <span class="text-[9px] text-gray-500">Selesai</span>
+                </div>
+                <div class="bg-yellow-50 rounded-xl p-2 border border-yellow-100">
+                    <span id="stat-belum" class="block text-xl font-bold text-yellow-600">0</span>
+                    <span class="text-[9px] text-gray-500">Belum</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white/40 backdrop-blur-lg rounded-[1.5rem] p-5 shadow-md hover:shadow-lg hover:scale-[1.02] transition-all duration-300 border border-white/50">
+            <div class="flex justify-between items-center mb-3">
+                <h3 class="font-bold text-sm text-gray-800">Progres Hari Ini</h3>
+                <span id="text-progres" class="text-xs font-bold text-[#5a7a6c]">0%</span>
+            </div>
+            <div class="w-full bg-gray-200/50 rounded-full h-2.5 mb-3 shadow-inner">
+                <div id="bar-progres" class="bg-[#6b9080] h-2.5 rounded-full transition-all duration-500" style="width: 0%"></div>
+            </div>
+            <p id="quote-progres" class="text-[10px] text-gray-600">Yuk mulai cicil rencana baikmu hari ini! 💪</p>
+        </div>
+
+        <div class="bg-[#fef5ed]/80 backdrop-blur-lg rounded-[1.5rem] p-5 shadow-md hover:shadow-lg hover:scale-[1.02] transition-all duration-300 border border-orange-100 relative text-center">
+            <i data-lucide="quote" class="absolute top-3 left-3 w-6 h-6 text-orange-200 fill-orange-200"></i>
+            <i data-lucide="quote" class="absolute bottom-3 right-3 w-6 h-6 text-orange-200 fill-orange-200 transform rotate-180"></i>
+            <p class="text-xs font-semibold text-gray-700 relative z-10 px-4 py-2">
+                Disiplin hari ini adalah kesuksesan di masa depan. 🌱
+            </p>
+        </div>
+    </aside>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // ==========================================
+        // 1. KONEKSI UTAMA SUPABASE
+        // ==========================================
+        const supabaseUrl = 'https://cyxmsawygqrunhinfvyj.supabase.co'; 
+        const supabaseKey = 'sb_publishable_3cxazIXr7B0ypa2fN6YVxw_jQyA6TDY'; 
+        const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+
+        lucide.createIcons();
+        let currentUser = null;
+        let listSemuaTodo = []; 
+        let filterAktif = 'semua'; 
+
+        // ==========================================
+        // 2. DETEKTOR SESI LOGIN OTOMATIS
+        // ==========================================
+        function proteksiHalamanOtomatis() {
+            supabaseClient.auth.onAuthStateChange((event, session) => {
+                if (session && session.user) {
+                    currentUser = session.user;
+                    console.log("Sesi aktif ditemukan untuk:", currentUser.email);
+                    
+                    // Update header tanggal
+                    const opsiTanggal = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                    document.getElementById('waktuRealtime').innerText = `• ${new Date().toLocaleDateString('id-ID', opsiTanggal)}`;
+
+                    // Tarik data tugas
+                    muatSemuaTodo();
+                } else {
+                    alert("Akses ditolak. Yuk login terlebih dahulu! 🌸");
+                    window.location.href = "login.html";
+                }
+            });
+        }
+
+        // ==========================================
+        // 3. READ DATA DARI DATABASE
+        // ==========================================
+        async function muatSemuaTodo() {
+            if (!currentUser) return;
+
+            const { data: todos, error } = await supabaseClient
+                .from('todos') 
+                .select('*')
+                .eq('user_id', currentUser.id)
+                .order('id', { ascending: false });
+
+            if (error) {
+                console.error("Gagal mengambil data todo:", error.message);
+                return;
+            }
+
+            listSemuaTodo = todos || [];
+            prosesDanTampilkanUI();
+        }
+
+        // ==========================================
+        // 4. LOGIKA FILTER & ENGINE UI DINAMIS
+        // ==========================================
+        function prosesDanTampilkanUI() {
+            const container = document.getElementById('daftarTodoHariIni');
+            if (!container) return;
+            container.innerHTML = '';
+
+            // LOGIKA FILTERING DATA
+            let dataTerfilter = listSemuaTodo;
+            
+            if (filterAktif === 'belum') {
+                dataTerfilter = listSemuaTodo.filter(t => !t.is_completed);
+            } else if (filterAktif === 'selesai') {
+                dataTerfilter = listSemuaTodo.filter(t => t.is_completed);
+            } else if (filterAktif === 'penting') {
+                // Menyaring yang namanya mengandung kata 'penting' (Case-Insensitive)
+                dataTerfilter = listSemuaTodo.filter(t => t.tugas.toLowerCase().includes('penting'));
+            } else if (filterAktif === 'hari-ini') {
+                // Semua rencana tugas terdaftar dianggap untuk hari ini
+                dataTerfilter = listSemuaTodo; 
+            }
+
+            // HITUNG STATISTIK KANAN
+            const total = listSemuaTodo.length;
+            const selesai = listSemuaTodo.filter(t => t.is_completed).length;
+            const belum = total - selesai;
+
+            document.getElementById('stat-total').innerText = total;
+            document.getElementById('stat-selesai').innerText = selesai;
+            document.getElementById('stat-belum').innerText = belum;
+
+            // PERSENTASE BAR PROGRESS
+            const persen = total > 0 ? Math.round((selesai / total) * 100) : 0;
+            document.getElementById('text-progres').innerText = `${persen}%`;
+            document.getElementById('bar-progres').style.width = `${persen}%`;
+
+            // Cetak tugas ke dalam HTML
+            if (dataTerfilter.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-10 bg-white/20 rounded-2xl border border-dashed border-gray-300">
+                        <p class="text-xs text-gray-500 italic">Kategori ini masih kosong nih, Lucinee! 🌸</p>
+                    </div>`;
+                return;
+            }
+
+            dataTerfilter.forEach(todo => {
+                const isCheck = todo.is_completed;
+                const iconCheck = isCheck ? 'check-circle' : 'circle';
+                const warnaIcon = isCheck ? 'text-green-500 fill-green-100' : 'text-gray-300 hover:text-green-500';
+                const coretTeks = isCheck ? 'line-through text-gray-400' : 'text-gray-800';
+                const statusLabel = isCheck ? 'Selesai' : 'Belum';
+                const warnaLabel = isCheck ? 'bg-green-50 text-green-600' : 'bg-yellow-50 text-yellow-600';
+
+                // Deteksi prioritas icon visual tambahan jika mengandung kata penting
+                const isPenting = todo.tugas.toLowerCase().includes('penting');
+                const badgePenting = isPenting ? `<span class="bg-red-50 text-red-500 text-[9px] font-bold px-2 py-0.5 rounded border border-red-100 ml-2">Penting</span>` : '';
+
+                const itemHTML = `
+                    <div class="bg-white/60 hover:bg-white/90 backdrop-blur-md p-4 rounded-[1.5rem] shadow-sm hover:shadow-md hover:scale-[1.01] border border-white/50 flex items-center justify-between group transition-all duration-300">
+                        <div class="flex items-center gap-4 flex-1 min-w-0">
+                            <button onclick="ubahStatusTugas('${todo.id}', ${isCheck})" class="${warnaIcon} transition-colors shrink-0">
+                                <i data-lucide="${iconCheck}" class="w-6 h-6"></i>
+                            </button>
+                            <div class="w-10 h-10 rounded-xl bg-orange-100 flex items-center justify-center text-orange-500 shrink-0">
+                                <i data-lucide="sparkles" class="w-5 h-5"></i>
+                            </div>
+                            <div class="truncate pr-4">
+                                <div class="flex items-center">
+                                    <h4 class="font-bold text-sm ${coretTeks} truncate">${todo.tugas}</h4>
+                                    ${badgePenting}
+                                </div>
+                                <p class="text-[10px] text-gray-400">Rencana aktif kamu</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4 shrink-0">
+                            <span class="${warnaLabel} text-[10px] font-bold px-3 py-1 rounded-full border border-white/30">${statusLabel}</span>
+                            <button onclick="hapusTugas('${todo.id}')" class="text-gray-400 hover:text-red-500 transition-colors p-1">
+                                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                container.insertAdjacentHTML('beforeend', itemHTML);
+            });
+
+            lucide.createIcons();
+        }
+
+        // ==========================================
+        // 5. ATUR STATUS AKTIF TOMBOL FILTER
+        // ==========================================
+        function setFilter(kategori) {
+            filterAktif = kategori;
+            document.getElementById('labelKategoriAktif').innerText = kategori.replace('-', ' ');
+
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('bg-[#6b9080]', 'text-white');
+                btn.classList.add('bg-white/60', 'text-gray-600');
+            });
+
+            const btnAktif = document.getElementById(`btn-filter-${kategori}`);
+            if (btnAktif) {
+                btnAktif.classList.remove('bg-white/60', 'text-gray-600');
+                btnAktif.classList.add('bg-[#6b9080]', 'text-white');
+            }
+
+            prosesDanTampilkanUI();
+        }
+
+        // ==========================================
+        // 6. CREATE (TAMBAH TODO)
+        // ==========================================
+        async function tambahTodo() {
+            if (!currentUser) return;
+
+            const inputElement = document.getElementById('inputTugas');
+            const teksTugas = inputElement.value;
+
+            if (!teksTugas || teksTugas.trim() === "") {
+                alert("Tuliskan rencana tugasnya dulu ya, Lucinee! 🌸");
+                return;
+            }
+
+            const { data, error } = await supabaseClient
+                .from('todos')
+                .insert([
+                    {
+                        tugas: teksTugas.trim(),
+                        is_completed: false,
+                        user_id: currentUser.id
+                    }
+                ]);
+
+            if (error) {
+                alert("Gagal menambah tugas: " + error.message);
+            } else {
+                inputElement.value = ''; 
+                muatSemuaTodo(); 
+            }
+        }
+
+        // ==========================================
+        // 7. UPDATE STATUS (CENTANG JADI SELESAI / BELUM)
+        // ==========================================
+        async function ubahStatusTugas(idTodo, statusSekarang) {
+            const { error } = await supabaseClient
+                .from('todos')
+                .update({ is_completed: !statusSekarang })
+                .eq('id', idTodo);
+
+            if (error) {
+                alert("Gagal memperbarui rencana: " + error.message);
+            } else {
+                muatSemuaTodo(); 
+            }
+        }
+
+        // ==========================================
+        // 8. DELETE (HAPUS TODO)
+        // ==========================================
+        async function hapusTugas(idTodo) {
+            const konfirmasi = confirm("Hapus rencana tugas ini dari databasemu? 🌸");
+            if (!konfirmasi) return;
+
+            const { error } = await supabaseClient
+                .from('todos')
+                .delete()
+                .eq('id', idTodo);
+
+            if (error) {
+                alert("Gagal menghapus rencana: " + error.message);
+            } else {
+                muatSemuaTodo(); 
+            }
+        }
+
+        // ==========================================
+        // 9. LOGOUT
+        // ==========================================
+        async function prosesLogout() {
+            const konfirmasi = confirm("Apakah kamu yakin ingin keluar dari Selera? Kira bakal kangen kamu 🌸");
+            if (!konfirmasi) return;
+
+            const { error } = await supabaseClient.auth.signOut();
+            if (error) {
+                alert("Gagal logout: " + error.message);
+            } else {
+                sessionStorage.removeItem('startTime');
+                window.location.href = 'login.html';
+            }
+        }
+
+        proteksiHalamanOtomatis();
+    </script>
+</body>
+</html>
